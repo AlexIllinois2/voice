@@ -7,6 +7,7 @@ import voice.core.data.isAudioFile
 import voice.core.data.repo.ChapterRepo
 import voice.core.data.repo.getOrPut
 import voice.core.documentfile.CachedDocumentFile
+import voice.core.zip.ZipArchiveProvider
 import java.time.Instant
 
 internal data class ChapterParseResult(
@@ -18,6 +19,7 @@ internal data class ChapterParseResult(
 internal class ChapterParser(
   private val chapterRepo: ChapterRepo,
   private val mediaAnalyzer: MediaAnalyzer,
+  private val zipArchiveProvider: ZipArchiveProvider,
 ) {
 
   suspend fun parse(documentFile: CachedDocumentFile): ChapterParseResult {
@@ -49,6 +51,11 @@ internal class ChapterParser(
       } else if (file.isDirectory) {
         file.children
           .forEach {
+            parseChapters(it)
+          }
+      } else {
+        zipArchiveProvider.childrenIfZip(file)
+          ?.forEach {
             parseChapters(it)
           }
       }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.media3.common.C
 import androidx.media3.datasource.DataSpec
+import androidx.media3.datasource.DataSource
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.extractor.DefaultExtractorInput
 import dev.zacsweers.metro.Inject
@@ -20,8 +21,11 @@ internal class Mp4ChapterExtractor(
   private val chapterTrackProcessor: ChapterTrackProcessor,
 ) {
 
-  suspend fun extractChapters(uri: Uri): List<MarkData> = withContext(Dispatchers.IO) {
-    val dataSource = DefaultDataSource.Factory(context).createDataSource()
+  suspend fun extractChapters(
+    uri: Uri,
+    dataSourceFactory: DataSource.Factory = DefaultDataSource.Factory(context),
+  ): List<MarkData> = withContext(Dispatchers.IO) {
+    val dataSource = dataSourceFactory.createDataSource()
 
     try {
       dataSource.open(DataSpec(uri))

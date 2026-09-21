@@ -80,6 +80,10 @@
     <string name="settings.library.use_grid.title">使用网格布局</string>
     <string name="settings.playback.auto_rewind.title">自动回退</string>
     <string name="settings.playback.seek_time.title">跳过时间</string>
+    <string name="zip.password.title">需要密码</string>
+    <string name="zip.password.field">密码</string>
+    <string name="zip.password.wrong">密码错误</string>
+    <string name="zip.password.skip">跳过</string>
     <string name="settings.support.get_support.title">寻求支持</string>
     <string name="settings.support.help_translating.title">帮助翻译</string>
     <string name="settings.support.report_issue.title">报告问题</string>

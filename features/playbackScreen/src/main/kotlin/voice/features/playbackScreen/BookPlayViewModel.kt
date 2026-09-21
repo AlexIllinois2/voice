@@ -260,20 +260,24 @@ class BookPlayViewModel(
   fun onCurrentChapterClick() {
     scope.launch {
       val book = currentBook() ?: return@launch
-      dialogState.value = BookPlayDialogViewState.SelectChapterDialog(
-        items = book.chapters.flatMapIndexed { chapterIndex, chapter ->
-          chapter.chapterMarks.mapIndexed { markIndex, chapterMark ->
-            val previousChapters = book.chapters.take(chapterIndex)
-            BookPlayDialogViewState.SelectChapterDialog.ItemViewState(
-              number = previousChapters.sumOf { it.chapterMarks.count() } + markIndex + 1,
-              name = chapterMark.name ?: "",
-              active = chapterMark == book.currentMark && chapter == book.currentChapter,
-              time = formatTime(previousChapters.sumOf { it.duration } + chapterMark.startMs),
-            )
-          }
-        },
-      )
+      dialogState.value = selectChapterDialogState(book)
     }
+  }
+
+  private fun selectChapterDialogState(book: Book): BookPlayDialogViewState.SelectChapterDialog {
+    return BookPlayDialogViewState.SelectChapterDialog(
+      items = book.chapters.flatMapIndexed { chapterIndex, chapter ->
+        chapter.chapterMarks.mapIndexed { markIndex, chapterMark ->
+          val previousChapters = book.chapters.take(chapterIndex)
+          BookPlayDialogViewState.SelectChapterDialog.ItemViewState(
+            number = previousChapters.sumOf { it.chapterMarks.count() } + markIndex + 1,
+            name = chapterMark.name ?: "",
+            active = chapterMark == book.currentMark && chapter == book.currentChapter,
+            time = formatTime(previousChapters.sumOf { it.duration } + chapterMark.startMs),
+          )
+        }
+      },
+    )
   }
 
   fun onChapterClick(number: Int) {

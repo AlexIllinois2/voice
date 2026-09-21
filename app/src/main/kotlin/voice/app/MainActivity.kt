@@ -36,6 +36,8 @@ import voice.core.data.store.ThemeModeStore
 import voice.core.logging.api.Logger
 import voice.core.ui.LocalSharedTransitionScope
 import voice.core.ui.VoiceTheme
+import voice.core.zip.ZipPasswordRequester
+import voice.features.folderPicker.ZipPasswordDialogHost
 import voice.features.review.ReviewFeature
 import voice.navigation.Destination
 import voice.navigation.NavigationCommand
@@ -68,6 +70,9 @@ class MainActivity : AppCompatActivity() {
   @ThemeColorSchemeStore
   private lateinit var themeColorSchemeStore: DataStore<ThemeColorScheme>
 
+  @Inject
+  private lateinit var zipPasswordRequester: ZipPasswordRequester
+
   @OptIn(ExperimentalSharedTransitionApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     rootGraphAs<MainActivityGraph>().inject(this)
@@ -89,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         themeMode = themeMode,
         themeColorScheme = themeColorScheme,
       ) {
+        ZipPasswordDialogHost(zipPasswordRequester)
         val bottomSheetStrategy = remember { BottomSheetSceneStrategy<Destination.Compose>() }
         val dialogStrategy = remember { DialogSceneStrategy<Destination.Compose>() }
         val density = LocalDensity.current

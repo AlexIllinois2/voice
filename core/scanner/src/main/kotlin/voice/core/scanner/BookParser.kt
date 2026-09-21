@@ -11,6 +11,8 @@ import voice.core.data.toUri
 import voice.core.documentfile.CachedDocumentFile
 import voice.core.documentfile.CachedDocumentFileFactory
 import voice.core.logging.api.Logger
+import voice.core.zip.ZipArchiveProvider
+import voice.core.zip.ZipUriCodec
 import java.time.Instant
 
 @Inject
@@ -18,6 +20,7 @@ internal class BookParser(
   private val contentRepo: BookContentRepo,
   private val mediaAnalyzer: MediaAnalyzer,
   private val fileFactory: CachedDocumentFileFactory,
+  private val zipArchiveProvider: ZipArchiveProvider,
 ) {
 
   suspend fun parseAndStore(
@@ -28,9 +31,18 @@ internal class BookParser(
     val id = BookId(file.uri)
     return contentRepo.getOrPut(id) {
       val analyzed = firstChapterMetadata
-        ?: mediaAnalyzer.analyze(fileFactory.create(chapters.first().id.toUri()))
+        ?: mediaAnalyzer.analyze(fileForFallback(chapters))
       parse(chapters, id, analyzed, file)
     }
+  }
+
+  private suspend fun fileForFallback(chapters: List<Chapter>): CachedDocumentFile {
+    val uri = chapters.first().id.toUri()
+    if (ZipUriCodec.isZipUri(uri)) {
+      return zipArchiveProvider.entryFile(uri)
+        ?: throw IllegalStateException("Cannot resolve zip entry $uri")
+    }
+    return fileFactory.create(uri)
   }
 
   fun parse(

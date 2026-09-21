@@ -6,6 +6,9 @@ import androidx.media3.common.C
 import androidx.media3.common.FileTypes
 import androidx.media3.common.MediaItem
 import androidx.media3.container.MdtaMetadataEntry
+import androidx.media3.datasource.ByteArrayDataSource
+import androidx.media3.datasource.DataSource
+import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.source.TrackGroupArray
 import androidx.media3.extractor.DefaultExtractorsFactory
@@ -25,6 +28,8 @@ import voice.core.logging.api.Logger
 import voice.core.scanner.matroska.MatroskaMetaDataExtractor
 import voice.core.scanner.matroska.MatroskaParseException
 import voice.core.scanner.mp4.Mp4ChapterExtractor
+import voice.core.zip.ZipArchiveProvider
+import voice.core.zip.ZipUriCodec
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.microseconds
 
@@ -33,6 +38,7 @@ internal class MediaAnalyzer(
   private val context: Context,
   private val mp4ChapterExtractor: Mp4ChapterExtractor,
   private val matroskaExtractorFactory: MatroskaMetaDataExtractor.Factory,
+  private val zipArchiveProvider: ZipArchiveProvider,
 ) {
 
   // we use a custom MediaSourceFactory because the default one for the
@@ -44,14 +50,24 @@ internal class MediaAnalyzer(
 
   suspend fun analyze(file: CachedDocumentFile): Metadata? {
     val builder = Metadata.Builder(file.nameWithoutExtension())
-    val duration = retrieveDuration(file.uri)
+    val zipBytes = if (ZipUriCodec.isZipUri(file.uri)) {
+      runCatching { zipArchiveProvider.readEntryBytes(file.uri) }
+        .onFailure { Logger.w(it, "Failed to read zip entry ${file.uri}") }
+        .getOrNull()
+    } else {
+      null
+    }
+    val zipDataSourceFactory = zipBytes?.let { bytes ->
+      DataSource.Factory { ByteArrayDataSource(bytes) }
+    }
+    val duration = retrieveDuration(file.uri, zipDataSourceFactory)
       ?: return null
     if (duration <= Duration.ZERO) {
       Logger.w("Duration is zero or negative for file: ${file.uri}")
       return null
     }
 
-    val trackGroups = retrieveMetadata(file.uri)
+    val trackGroups = retrieveMetadata(file.uri, zipDataSourceFactory)
       ?: return null
 
     repeat(trackGroups.length) { trackGroupsIndex ->
@@ -77,10 +93,10 @@ internal class MediaAnalyzer(
     val fileType = FileTypes.inferFileTypeFromUri(file.uri)
     val extension = (file.name ?: "").substringAfterLast(delimiter = ".", missingDelimiterValue = "").lowercase()
     if (fileType == FileTypes.MP4 || extension == "mp4" || extension == "m4a" || extension == "m4b") {
-      parseMp4Chapters(file, builder)
+      parseMp4Chapters(file, builder, zipDataSourceFactory ?: DefaultDataSource.Factory(context))
     }
     if (fileType == FileTypes.MATROSKA || extension == "mka" || extension == "mkv") {
-      parseMatroskaMetaData(file, builder)
+      parseMatroskaMetaData(file, builder, zipBytes)
     }
 
     return builder.build(duration)
@@ -89,10 +105,16 @@ internal class MediaAnalyzer(
   private fun parseMatroskaMetaData(
     file: CachedDocumentFile,
     builder: Metadata.Builder,
+    zipBytes: ByteArray?,
   ) {
     try {
-      matroskaExtractorFactory.create(file.uri).use { extractor ->
-        val mediaInfo = extractor.readMediaInfo()
+      val extractor = if (zipBytes != null) {
+        matroskaExtractorFactory.create(zipBytes)
+      } else {
+        matroskaExtractorFactory.create(file.uri)
+      }
+      extractor.use {
+        val mediaInfo = it.readMediaInfo()
         builder.chapters.addAll(mediaInfo.chapters)
         builder.artist = builder.artist ?: mediaInfo.artist
         builder.album = builder.album ?: mediaInfo.album
@@ -106,8 +128,9 @@ internal class MediaAnalyzer(
   private suspend fun parseMp4Chapters(
     file: CachedDocumentFile,
     builder: Metadata.Builder,
+    dataSourceFactory: DataSource.Factory,
   ) {
-    val chapters = mp4ChapterExtractor.extractChapters(file.uri)
+    val chapters = mp4ChapterExtractor.extractChapters(file.uri, dataSourceFactory)
     builder.chapters += chapters
   }
 
@@ -195,10 +218,13 @@ internal class MediaAnalyzer(
     }
   }
 
-  private suspend fun retrieveMetadata(uri: Uri): TrackGroupArray? {
+  private suspend fun retrieveMetadata(
+    uri: Uri,
+    dataSourceFactory: DataSource.Factory? = null,
+  ): TrackGroupArray? {
     return try {
       MetadataRetriever.Builder(context, MediaItem.fromUri(uri))
-        .setMediaSourceFactory(mediaSourceFactory)
+        .setMediaSourceFactory(mediaSourceFor(dataSourceFactory))
         .build()
         .use {
           it.retrieveTrackGroups().await()
@@ -210,10 +236,13 @@ internal class MediaAnalyzer(
     }
   }
 
-  private suspend fun retrieveDuration(uri: Uri): Duration? {
+  private suspend fun retrieveDuration(
+    uri: Uri,
+    dataSourceFactory: DataSource.Factory? = null,
+  ): Duration? {
     return try {
       MetadataRetriever.Builder(context, MediaItem.fromUri(uri))
-        .setMediaSourceFactory(mediaSourceFactory)
+        .setMediaSourceFactory(mediaSourceFor(dataSourceFactory))
         .build()
         .use {
           it.retrieveDurationUs().await().microseconds
@@ -223,5 +252,13 @@ internal class MediaAnalyzer(
       Logger.w(e, "Error retrieving metadata")
       null
     }
+  }
+
+  private fun mediaSourceFor(dataSourceFactory: DataSource.Factory?): DefaultMediaSourceFactory {
+    if (dataSourceFactory == null) {
+      return mediaSourceFactory
+    }
+    return DefaultMediaSourceFactory(context, DefaultExtractorsFactory())
+      .setDataSourceFactory(dataSourceFactory)
   }
 }

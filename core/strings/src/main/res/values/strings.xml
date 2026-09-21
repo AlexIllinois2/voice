@@ -173,6 +173,7 @@
     <string name="playback.chapter.current.content_description">Current chapter</string>
     <!-- Content description for moving to the next chapter or track. -->
     <string name="playback.chapter.next">Next track</string>
+
     <!-- Content description for moving to the previous chapter or track. -->
     <string name="playback.chapter.previous">Previous track</string>
     <!-- Menu label for toggling silence skipping during playback. -->
@@ -238,6 +239,14 @@
     <string name="settings.playback.auto_rewind.title">Auto rewind</string>
     <!-- Title for the setting that controls skip-forward and rewind duration. -->
     <string name="settings.playback.seek_time.title">Skip amount</string>
+    <!-- Title for the dialog asking for a zip password. -->
+    <string name="zip.password.title">Password required</string>
+    <!-- Label for the zip password input field. -->
+    <string name="zip.password.field">Password</string>
+    <!-- Error shown after entering a wrong zip password. -->
+    <string name="zip.password.wrong">Wrong password</string>
+    <!-- Action to skip opening an encrypted zip. -->
+    <string name="zip.password.skip">Skip</string>
     <!-- Settings support row for opening the FAQ. -->
     <string name="settings.support.faq.title">FAQ</string>
     <!-- Settings support row for getting help. -->

@@ -20,6 +20,7 @@ captures
 google-services.json
 local.properties
 play_service_account.json
+/signing
 releases
 reports
 testResults

@@ -5,6 +5,7 @@ import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.Player
 import androidx.media3.common.TrackSelectionParameters
+import androidx.media3.datasource.DataSource
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
@@ -30,18 +31,32 @@ import voice.core.playback.playstate.PlayStateDelegatingListener
 import voice.core.playback.playstate.PositionUpdater
 import voice.core.playback.session.LibrarySessionCallback
 import voice.core.playback.session.PlaybackService
+import voice.core.playback.zip.SchemeDispatchingDataSourceFactory
+import voice.core.playback.zip.ZipEntryDataSource
+import voice.core.playback.zip.ZipPreloader
 import voice.core.strings.R as StringsR
+import voice.core.zip.ZipPlaybackCache
 
 @ContributesTo(PlaybackScope::class)
 interface PlaybackModule {
 
   @Provides
   @SingleIn(PlaybackScope::class)
-  fun mediaSourceFactory(context: Context): MediaSource.Factory {
+  fun mediaSourceFactory(
+    context: Context,
+    zipPlaybackCache: ZipPlaybackCache,
+  ): MediaSource.Factory {
     val dataSourceFactory = DefaultDataSource.Factory(context)
+    val zipDataSourceFactory = DataSource.Factory {
+      ZipEntryDataSource(zipPlaybackCache)
+    }
+    val dispatchingDataSourceFactory = SchemeDispatchingDataSourceFactory(
+      defaultFactory = dataSourceFactory,
+      zipFactory = zipDataSourceFactory,
+    )
     val extractorsFactory = DefaultExtractorsFactory()
       .setConstantBitrateSeekingEnabled(true)
-    return DefaultMediaSourceFactory(dataSourceFactory, extractorsFactory)
+    return DefaultMediaSourceFactory(dispatchingDataSourceFactory, extractorsFactory)
   }
 
   @Provides
@@ -54,6 +69,7 @@ interface PlaybackModule {
     positionUpdater: PositionUpdater,
     volumeGain: VolumeGain,
     durationInconsistenciesUpdater: DurationInconsistenciesUpdater,
+    zipPreloader: ZipPreloader,
     @Media3AudioOffloadFeatureFlagQualifier media3AudioOffloadFeatureFlag: FeatureFlag<Boolean>,
   ): Player {
     val audioAttributes = AudioAttributes.Builder()
@@ -82,6 +98,7 @@ interface PlaybackModule {
         playStateDelegatingListener.attachTo(player)
         positionUpdater.attachTo(player)
         durationInconsistenciesUpdater.attachTo(player)
+        zipPreloader.attachTo(player)
         player.onAudioSessionIdChanged {
           volumeGain.audioSessionId = it
         }

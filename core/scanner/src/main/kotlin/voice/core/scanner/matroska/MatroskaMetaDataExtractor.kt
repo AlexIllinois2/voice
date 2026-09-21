@@ -5,12 +5,13 @@ import android.net.Uri
 import dev.zacsweers.metro.Inject
 import org.ebml.EBMLReader
 import org.ebml.Element
+import org.ebml.io.DataSource
 import org.ebml.matroska.MatroskaDocTypes
 import voice.core.data.MarkData
 import java.util.Locale
 
 internal class MatroskaMetaDataExtractor(
-  private val dataSource: SafSeekableDataSource,
+  private val dataSource: DataSource,
   private val reader: EBMLReader,
 ) : AutoCloseable {
 
@@ -18,6 +19,12 @@ internal class MatroskaMetaDataExtractor(
   class Factory(private val context: Context) {
     fun create(uri: Uri): MatroskaMetaDataExtractor {
       val dataSource = SafSeekableDataSource(context.contentResolver, uri)
+      val reader = EBMLReader(dataSource)
+      return MatroskaMetaDataExtractor(dataSource, reader)
+    }
+
+    fun create(bytes: ByteArray): MatroskaMetaDataExtractor {
+      val dataSource = BytesSeekableDataSource(bytes)
       val reader = EBMLReader(dataSource)
       return MatroskaMetaDataExtractor(dataSource, reader)
     }
@@ -201,7 +208,9 @@ internal class MatroskaMetaDataExtractor(
   private inline fun Element.forEachChild(action: (Element) -> Unit) = forEachChild(dataSource, reader, action)
   private fun Element.readString(): String = readString(dataSource)
 
-  override fun close() = dataSource.close()
+  override fun close() {
+    (dataSource as? AutoCloseable)?.close()
+  }
 }
 
 private data class TagInfo(
