@@ -37,6 +37,7 @@ class SettingsViewModelTest {
   private val themeColorSchemeStore = MemoryDataStore(ThemeColorScheme.VoiceBlue)
   private val autoRewindAmountStore = MemoryDataStore(10)
   private val seekTimeStore = MemoryDataStore(30)
+  private val hiFiModeStore = MemoryDataStore(false)
   private val gridModeStore = MemoryDataStore(GridMode.GRID)
   private val sleepTimerPreferenceStore = MemoryDataStore(SleepTimerPreference.Default)
   private val analyticsConsentStore = MemoryDataStore(false)
@@ -63,6 +64,7 @@ class SettingsViewModelTest {
     themeColorSchemeStore = themeColorSchemeStore,
     autoRewindAmountStore = autoRewindAmountStore,
     seekTimeStore = seekTimeStore,
+    hiFiModeStore = hiFiModeStore,
     navigator = navigator,
     appInfoProvider = appInfoProvider,
     gridModeStore = gridModeStore,
@@ -225,6 +227,21 @@ class SettingsViewModelTest {
       awaitItem().let {
         assertEquals(expected = true, actual = it.kioskMode)
       }
+    }
+  }
+
+  @Test
+  fun `hifi mode toggle updates view state`() = scope.runTest {
+    backgroundScope.launchMolecule(RecompositionMode.Immediate) {
+      viewModel.viewState()
+    }.test {
+      assertEquals(expected = false, actual = awaitItem().hiFiModeEnabled)
+
+      viewModel.toggleHiFiMode()
+      assertEquals(expected = true, actual = awaitItem().hiFiModeEnabled)
+
+      viewModel.toggleHiFiMode()
+      assertEquals(expected = false, actual = awaitItem().hiFiModeEnabled)
     }
   }
 }

@@ -237,6 +237,10 @@
     <string name="settings.library.use_grid.title">Use grid layout</string>
     <!-- Title for the setting that rewinds automatically when playback resumes. -->
     <string name="settings.playback.auto_rewind.title">Auto rewind</string>
+    <!-- Title for the setting that enables high fidelity audio output. -->
+    <string name="settings.playback.hifi_mode.title">HiFi mode</string>
+    <!-- Summary explaining that HiFi mode outputs high-resolution audio at higher fidelity and requires an app restart. -->
+    <string name="settings.playback.hifi_mode.summary">Outputs high-resolution audio at higher fidelity. Restart the app for changes to take effect.</string>
     <!-- Title for the setting that controls skip-forward and rewind duration. -->
     <string name="settings.playback.seek_time.title">Skip amount</string>
     <!-- Title for the dialog asking for a zip password. -->

@@ -15,6 +15,7 @@ interface SettingsListener {
   fun onSeekAmountRowClick()
   fun autoRewindAmountChang(seconds: Int)
   fun onAutoRewindRowClick()
+  fun toggleHiFiMode()
   fun dismissDialog()
   fun getSupport()
   fun suggestIdea()
@@ -43,6 +44,7 @@ interface SettingsListener {
       override fun onSeekAmountRowClick() {}
       override fun autoRewindAmountChang(seconds: Int) {}
       override fun onAutoRewindRowClick() {}
+      override fun toggleHiFiMode() {}
       override fun dismissDialog() {}
       override fun getSupport() {}
       override fun suggestIdea() {}

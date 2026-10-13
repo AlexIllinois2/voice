@@ -160,6 +160,10 @@ private fun Settings(
       }
 
       item {
+        HiFiModeRow(hiFiModeEnabled = viewState.hiFiModeEnabled, toggle = listener::toggleHiFiMode)
+      }
+
+      item {
         AutoSleepTimerCard(viewState.autoSleepTimer, listener)
       }
 
@@ -299,6 +303,33 @@ private fun AnalyticsRow(
     },
   ) {
     Text(text = stringResource(StringsR.string.settings_analytics_consent_title))
+  }
+}
+
+@Composable
+private fun HiFiModeRow(
+  hiFiModeEnabled: Boolean,
+  toggle: () -> Unit,
+) {
+  ListItem(
+    modifier = Modifier.clickable { toggle() },
+    leadingContent = {
+      Icon(
+        imageVector = VoiceIcons.AudioFile,
+        contentDescription = null,
+      )
+    },
+    supportingContent = {
+      Text(text = stringResource(StringsR.string.settings_playback_hifi_mode_summary))
+    },
+    trailingContent = {
+      Switch(
+        checked = hiFiModeEnabled,
+        onCheckedChange = { toggle() },
+      )
+    },
+  ) {
+    Text(text = stringResource(StringsR.string.settings_playback_hifi_mode_title))
   }
 }
 

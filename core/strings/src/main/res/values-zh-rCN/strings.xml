@@ -79,6 +79,8 @@
     <string name="settings.action.open">偏好设置</string>
     <string name="settings.library.use_grid.title">使用网格布局</string>
     <string name="settings.playback.auto_rewind.title">自动回退</string>
+    <string name="settings.playback.hifi_mode.title">HiFi 模式</string>
+    <string name="settings.playback.hifi_mode.summary">以更高精度输出高解析音频，重启应用后生效</string>
     <string name="settings.playback.seek_time.title">跳过时间</string>
     <string name="zip.password.title">需要密码</string>
     <string name="zip.password.field">密码</string>
