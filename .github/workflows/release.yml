@@ -83,7 +83,7 @@ jobs:
             -Pandroid.injected.signing.key.alias="$GITHUB_SIGNING_KEY_ALIAS" \
             -Pandroid.injected.signing.key.password="$GITHUB_SIGNING_KEY_PASSWORD"
           mkdir -p artifacts
-          cp app/build/outputs/apk/free/release/app-free-release.apk artifacts/app-free-release.apk
+          cp app/build/outputs/apk/free/release/*.apk artifacts/
 
       - name: Create GitHub Release
         env:

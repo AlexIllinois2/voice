@@ -58,6 +58,7 @@ fun Project.baseSetup() {
     compileOptions.apply {
       sourceCompatibility = JavaVersion.toVersion(jvmBytecodeVersion)
       targetCompatibility = JavaVersion.toVersion(jvmBytecodeVersion)
+      isCoreLibraryDesugaringEnabled = true
     }
     defaultConfig.apply {
       if (this is ApplicationDefaultConfig) {
@@ -75,6 +76,7 @@ fun Project.baseSetup() {
     lint.lintConfig = project.layout.settingsDirectory.file("lint.xml").asFile
   }
   dependencies.run {
+    add("coreLibraryDesugaring", libs.findLibrary("desugar-jdk-libs").get())
     add("implementation", platform(libs.findLibrary("compose-bom").get()))
     add("implementation", platform(libs.findLibrary("firebase-bom").get()))
     add("implementation", libs.findLibrary("coroutines.core").get())
