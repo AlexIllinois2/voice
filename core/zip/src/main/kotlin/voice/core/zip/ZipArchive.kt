@@ -41,7 +41,20 @@ internal class ZipArchive(
   }
 
   fun openStream(entryPath: String): InputStream {
-    return zipFile.getInputStream(headerFor(entryPath))
+    // ZipFile keeps a list of the opened streams, so creating them is guarded. Reading itself
+    // happens on the stream returned here and can safely happen in parallel.
+    return synchronized(zipFile) {
+      zipFile.getInputStream(headerFor(entryPath))
+    }
+  }
+
+  /**
+   * The uncompressed size of the entry, or `-1` if the archive does not know it.
+   */
+  fun sizeOf(entryPath: String): Long {
+    val normalized = entryPath.normalizeEntryPath()
+    val entry = entries[normalized] ?: return -1L
+    return if (entry.isDirectory) -1L else entry.length
   }
 
   fun headerFor(entryPath: String): FileHeader {

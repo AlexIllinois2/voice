@@ -1,8 +1,8 @@
 package voice.core.scanner
 
 import dev.zacsweers.metro.Inject
+import voice.core.common.comparator.NaturalOrderComparator
 import voice.core.data.BookId
-import voice.core.data.audioFileCount
 import voice.core.data.folders.FolderType
 import voice.core.data.isAudioFile
 import voice.core.data.repo.BookContentRepo
@@ -54,7 +54,9 @@ internal class MediaScanner(
     }
 
     files
-      .sortedBy { it.audioFileCount() }
+      // sorting by name keeps the order stable. Counting the audio files instead would mean
+      // walking the whole tree of every book up front, which is expensive for big libraries.
+      .sortedWith(compareBy(NaturalOrderComparator.stringComparator) { it.name ?: it.uri.toString() })
       .forEach { file ->
         scan(file)
       }

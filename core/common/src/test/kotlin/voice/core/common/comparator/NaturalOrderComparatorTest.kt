@@ -24,7 +24,9 @@ class NaturalOrderComparatorTest {
     testFolder.create()
   }
 
-  private fun assertSorted(values: List<String>) {
+  private fun assertSorted(values: List<String>) = assertSortedWith(values, NaturalOrderComparator.stringComparator)
+
+  private fun <T> assertSortedWith(values: List<T>, comparator: Comparator<T>) {
     assertEquals(
       expected = values,
       actual = values.toMutableList()
@@ -33,7 +35,7 @@ class NaturalOrderComparatorTest {
             add(removeAt(0))
           }
         }
-        .sortedWith(NaturalOrderComparator.stringComparator),
+        .sortedWith(comparator),
     )
   }
 
@@ -70,6 +72,80 @@ class NaturalOrderComparatorTest {
         "10",
       ),
     )
+  }
+
+  @Test
+  fun chineseNumeralOrder() {
+    assertSorted(
+      listOf(
+        "第一卷",
+        "第二卷",
+        "第三卷",
+        "第四卷",
+        "第五卷",
+        "第六卷",
+        "第七卷",
+        "第八卷",
+        "第九卷",
+        "第十卷",
+        "第十一卷",
+        "第二十卷",
+      ),
+    )
+  }
+
+  @Test
+  fun chineseNumeralCombinedWithUnits() {
+    assertSorted(
+      listOf(
+        "第一章",
+        "第九十九章",
+        "第一百章",
+        "第一百零一章",
+      ),
+    )
+  }
+
+  @Test
+  fun chineseNumeralMixedWithDecimalNumbers() {
+    assertSorted(
+      listOf(
+        "第一卷",
+        "第2卷",
+        "第10卷",
+      ),
+    )
+  }
+
+  @Test
+  fun chineseNumeralFolderOrder() {
+    assertSorted(
+      listOf(
+        "第一卷/01.mp3",
+        "第一卷/02.mp3",
+        "第二卷/01.mp3",
+        "第十卷/01.mp3",
+      ),
+    )
+  }
+
+  @Test
+  fun uriComparatorZipEntries() {
+    fun zipUri(zipName: String, entry: String): Uri {
+      val encodedZip = Uri.encode("content://media/$zipName.zip")
+      val encodedEntry = entry.split("/").joinToString("/") { Uri.encode(it) }
+      return Uri.parse("zip:///$encodedZip/$encodedEntry")
+    }
+
+    val uris = listOf(
+      zipUri("第一卷", "01.mp3"),
+      zipUri("第一卷", "02.mp3"),
+      zipUri("第一卷", "10.mp3"),
+      zipUri("第二卷", "01.mp3"),
+      zipUri("第十卷", "01.mp3"),
+    )
+
+    assertSortedWith(uris, NaturalOrderComparator.uriComparator)
   }
 
   @Test

@@ -14,6 +14,7 @@ import voice.core.data.repo.ChapterRepoImpl
 import voice.core.documentfile.CachedDocumentFile
 import voice.core.documentfile.FileBasedDocumentFile
 import voice.core.documentfile.nameWithoutExtension
+import voice.core.zip.ZipArchiveProvider
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -69,6 +70,7 @@ class ChapterParserTest {
           )
         }
       },
+      zipArchiveProvider = mockk(),
     )
     assertEquals(
       expected = listOf(

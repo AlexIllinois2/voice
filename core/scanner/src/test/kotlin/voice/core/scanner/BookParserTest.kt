@@ -25,6 +25,7 @@ class BookParserTest {
     contentRepo = mockk(),
     mediaAnalyzer = mockk(),
     fileFactory = mockk(),
+    zipArchiveProvider = mockk(),
   )
 
   @Test

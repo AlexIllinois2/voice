@@ -2,6 +2,7 @@ package voice.core.scanner
 
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.BeforeClass
 import org.junit.Rule
@@ -21,6 +22,7 @@ import voice.core.scanner.mp4.visitor.MdhdVisitor
 import voice.core.scanner.mp4.visitor.StcoVisitor
 import voice.core.scanner.mp4.visitor.StscVisitor
 import voice.core.scanner.mp4.visitor.SttsVisitor
+import voice.core.zip.ZipArchiveProvider
 import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -52,6 +54,7 @@ internal class MediaAnalyzerTest {
     matroskaExtractorFactory = MatroskaMetaDataExtractor.Factory(
       context = ApplicationProvider.getApplicationContext(),
     ),
+    zipArchiveProvider = mockk(),
   )
   private val auphonicChapters = listOf(
     MarkData(startMs = 0L, name = "Intro"),

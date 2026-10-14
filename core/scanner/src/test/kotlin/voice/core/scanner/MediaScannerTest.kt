@@ -20,7 +20,9 @@ import voice.core.data.repo.internals.AppDb
 import voice.core.data.toUri
 import voice.core.documentfile.FileBasedDocumentFactory
 import voice.core.documentfile.FileBasedDocumentFile
+import voice.core.zip.ZipArchiveProvider
 import java.io.Closeable
+import java.util.concurrent.atomic.AtomicInteger
 import java.io.File
 import java.nio.file.Files
 import kotlin.test.Test
@@ -166,7 +168,7 @@ class MediaScannerTest {
 
     scan(FolderType.SingleFolder, folder)
 
-    assertEquals(expected = 2, actual = analyzeCalls)
+    assertEquals(expected = 2, actual = analyzeCalls.get())
   }
 
   @Test
@@ -222,7 +224,7 @@ class MediaScannerTest {
     val bookContentRepo = BookContentRepoImpl(db.bookContentDao())
     private val chapterRepo = ChapterRepoImpl(db.chapterDao())
     private val mediaAnalyzer = mockk<MediaAnalyzer>()
-    var analyzeCalls = 0
+    val analyzeCalls = AtomicInteger()
     private val scannedRepo = ScannedBooksRecordingRepo(bookContentRepo)
     val scannedBooks: List<BookId> get() = scannedRepo.scannedBooks
     private val scanner = MediaScanner(
@@ -230,11 +232,13 @@ class MediaScannerTest {
       chapterParser = ChapterParser(
         chapterRepo = chapterRepo,
         mediaAnalyzer = mediaAnalyzer,
+        zipArchiveProvider = mockk(),
       ),
       bookParser = BookParser(
         contentRepo = bookContentRepo,
         mediaAnalyzer = mediaAnalyzer,
         fileFactory = FileBasedDocumentFactory,
+        zipArchiveProvider = mockk(),
       ),
       deviceHasPermissionBug = mockk(),
     )
@@ -263,7 +267,7 @@ class MediaScannerTest {
         }
         .also {
           coEvery { mediaAnalyzer.analyze(any()) } coAnswers {
-            analyzeCalls++
+            analyzeCalls.incrementAndGet()
             Metadata(
               duration = 1000L,
               artist = "Author",

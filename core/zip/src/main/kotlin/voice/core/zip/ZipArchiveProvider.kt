@@ -3,6 +3,7 @@ package voice.core.zip
 import android.app.Application
 import android.net.Uri
 import android.os.ParcelFileDescriptor
+import androidx.media3.datasource.DataSource
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
@@ -37,7 +38,22 @@ class ZipArchiveProvider(
     val archive: ZipArchive,
     private val resolution: Resolution,
   ) {
+
+    /**
+     * How many callers currently read from this archive. Archives that are in use are never closed.
+     */
+    var useCount: Int = 0
+
+    /**
+     * Set once the archive got dropped from [openArchives]. It is closed as soon as [useCount] hits zero.
+     */
+    var evicted: Boolean = false
+
+    private var closed = false
+
     fun close() {
+      if (closed) return
+      closed = true
       try {
         archive.zipFile.close()
       } catch (_: Exception) {
@@ -59,7 +75,7 @@ class ZipArchiveProvider(
   suspend fun childrenIfZip(file: CachedDocumentFile): List<CachedDocumentFile>? {
     if (!isZipFile(file)) return null
     return try {
-      open(file.uri).root.children
+      withArchive(file.uri) { it.root.children }
     } catch (e: ZipCancelledException) {
       emptyList()
     } catch (e: Exception) {
@@ -76,7 +92,7 @@ class ZipArchiveProvider(
     val zipUri = ZipUriCodec.zipUri(uri) ?: return null
     val entryPath = ZipUriCodec.entryPath(uri) ?: return null
     return try {
-      open(zipUri).find(entryPath)
+      withArchive(zipUri) { it.find(entryPath) }
     } catch (e: Exception) {
       Logger.w(e, "Failed to resolve zip entry $uri")
       null
@@ -89,38 +105,86 @@ class ZipArchiveProvider(
   suspend fun readEntryBytes(uri: Uri): ByteArray = withContext(Dispatchers.IO) {
     val zipUri = requireNotNull(ZipUriCodec.zipUri(uri))
     val entryPath = requireNotNull(ZipUriCodec.entryPath(uri))
-    val archive = open(zipUri)
-    archive.openStream(entryPath).use { input ->
-      input.readBytes()
-    }
-  }
-
-  internal suspend fun open(zipUri: Uri): ZipArchive {
-    val key = zipUri.toString()
-    mutex.withLock {
-      openArchives[key]?.let { return it.archive }
-    }
-    val opened = openArchive(zipUri)
-    return mutex.withLock {
-      val existing = openArchives[key]
-      if (existing != null) {
-        opened.close()
-        existing.archive
-      } else {
-        openArchives[key] = opened
-        evict()
-        opened.archive
+    withArchive(zipUri) { archive ->
+      archive.openStream(entryPath).use { input ->
+        input.readBytes()
       }
     }
   }
 
-  private suspend fun evict() {
-    while (openArchives.size > MAX_OPEN_ARCHIVES) {
-      val eldest = openArchives.entries.iterator()
-      val opened = eldest.next().value
-      eldest.remove()
-      try {
+  /**
+   * Runs [block] with a [DataSource.Factory] that streams the entry at [uri] straight out of the
+   * archive. Compared to [readEntryBytes] only the bytes that are actually consumed get
+   * decompressed, which makes scanning a book that is split over many archives a lot faster.
+   */
+  suspend fun <T> withEntryDataSource(
+    uri: Uri,
+    block: suspend (DataSource.Factory) -> T,
+  ): T {
+    val zipUri = requireNotNull(ZipUriCodec.zipUri(uri)) { "Not a zip uri: $uri" }
+    val entryPath = requireNotNull(ZipUriCodec.entryPath(uri)) { "Not a zip entry uri: $uri" }
+    return withArchive(zipUri) { archive ->
+      block(DataSource.Factory { ZipEntryDataSource(uri, archive, entryPath) })
+    }
+  }
+
+  /**
+   * Runs [block] with the archive at [zipUri]. The archive is guaranteed to stay open (and is
+   * never closed by [evict]) for the whole duration of [block].
+   */
+  private suspend fun <T> withArchive(
+    zipUri: Uri,
+    block: suspend (ZipArchive) -> T,
+  ): T {
+    val key = zipUri.toString()
+    val opened = mutex.withLock {
+      openArchives[key]?.also { it.useCount++ }
+    } ?: openAndRegister(zipUri, key)
+    return try {
+      block(opened.archive)
+    } finally {
+      release(opened)
+    }
+  }
+
+  private suspend fun openAndRegister(
+    zipUri: Uri,
+    key: String,
+  ): OpenedArchive {
+    val opened = openArchive(zipUri)
+    return mutex.withLock {
+      val existing = openArchives[key]
+      if (existing != null) {
+        existing.useCount++
         opened.close()
+        existing
+      } else {
+        opened.useCount = 1
+        openArchives[key] = opened
+        evict()
+        opened
+      }
+    }
+  }
+
+  private suspend fun release(opened: OpenedArchive) {
+    mutex.withLock {
+      opened.useCount--
+      if (opened.useCount == 0 && opened.evicted) {
+        opened.close()
+      }
+    }
+  }
+
+  // must not suspend: it runs while the mutex is held
+  private fun evict() {
+    while (openArchives.size > MAX_OPEN_ARCHIVES) {
+      // the map is access ordered, so the first entry without readers is the least recently used one
+      val eldest = openArchives.entries.firstOrNull { it.value.useCount == 0 } ?: break
+      openArchives.remove(eldest.key)
+      eldest.value.evicted = true
+      try {
+        eldest.value.close()
       } catch (e: Exception) {
         Logger.w(e, "Failed to close evicted zip archive")
       }
@@ -269,6 +333,8 @@ class ZipArchiveProvider(
   }
 
   private companion object {
-    const val MAX_OPEN_ARCHIVES = 3
+    // books are often split over several archives, so keep a couple more around to avoid
+    // reopening (and re-reading the central directory of) the same archive over and over
+    const val MAX_OPEN_ARCHIVES = 8
   }
 }

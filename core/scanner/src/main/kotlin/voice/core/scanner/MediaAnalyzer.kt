@@ -29,6 +29,7 @@ import voice.core.scanner.matroska.MatroskaMetaDataExtractor
 import voice.core.scanner.matroska.MatroskaParseException
 import voice.core.scanner.mp4.Mp4ChapterExtractor
 import voice.core.zip.ZipArchiveProvider
+import voice.core.zip.ZipCancelledException
 import voice.core.zip.ZipUriCodec
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.microseconds
@@ -41,33 +42,51 @@ internal class MediaAnalyzer(
   private val zipArchiveProvider: ZipArchiveProvider,
 ) {
 
-  // we use a custom MediaSourceFactory because the default one for the
-  // retriever also extracts the covers
-  private val mediaSourceFactory = DefaultMediaSourceFactory(
-    context,
-    DefaultExtractorsFactory(),
-  )
-
   suspend fun analyze(file: CachedDocumentFile): Metadata? {
+    if (!ZipUriCodec.isZipUri(file.uri)) {
+      return analyzeWith(file, dataSourceFactory = null)
+    }
+
+    // Streaming the entry instead of inflating it into memory first keeps scanning fast: for the
+    // duration and the metadata of a file only a small part of it is needed.
+    val streamed = runCatching {
+      zipArchiveProvider.withEntryDataSource(file.uri) { dataSourceFactory ->
+        analyzeWith(file, dataSourceFactory)
+      }
+    }
+      .onFailure { error -> logOrRethrow(error, "Failed to stream zip entry ${file.uri}") }
+    streamed.getOrNull()?.let { return it }
+    // the password prompt got cancelled, so don't ask a second time
+    if (streamed.exceptionOrNull() is ZipCancelledException) return null
+
+    val bytes = runCatching { zipArchiveProvider.readEntryBytes(file.uri) }
+      .onFailure { error -> logOrRethrow(error, "Failed to read zip entry ${file.uri}") }
+      .getOrNull() ?: return null
+    return analyzeWith(file, DataSource.Factory { ByteArrayDataSource(bytes) }, zipBytes = bytes)
+  }
+
+  private fun logOrRethrow(
+    error: Throwable,
+    message: String,
+  ) {
+    if (error is CancellationException) throw error
+    Logger.w(error, message)
+  }
+
+  private suspend fun analyzeWith(
+    file: CachedDocumentFile,
+    dataSourceFactory: DataSource.Factory?,
+    zipBytes: ByteArray? = null,
+  ): Metadata? {
     val builder = Metadata.Builder(file.nameWithoutExtension())
-    val zipBytes = if (ZipUriCodec.isZipUri(file.uri)) {
-      runCatching { zipArchiveProvider.readEntryBytes(file.uri) }
-        .onFailure { Logger.w(it, "Failed to read zip entry ${file.uri}") }
-        .getOrNull()
-    } else {
-      null
-    }
-    val zipDataSourceFactory = zipBytes?.let { bytes ->
-      DataSource.Factory { ByteArrayDataSource(bytes) }
-    }
-    val duration = retrieveDuration(file.uri, zipDataSourceFactory)
+    val duration = retrieveDuration(file.uri, dataSourceFactory)
       ?: return null
     if (duration <= Duration.ZERO) {
       Logger.w("Duration is zero or negative for file: ${file.uri}")
       return null
     }
 
-    val trackGroups = retrieveMetadata(file.uri, zipDataSourceFactory)
+    val trackGroups = retrieveMetadata(file.uri, dataSourceFactory)
       ?: return null
 
     repeat(trackGroups.length) { trackGroupsIndex ->
@@ -93,10 +112,18 @@ internal class MediaAnalyzer(
     val fileType = FileTypes.inferFileTypeFromUri(file.uri)
     val extension = (file.name ?: "").substringAfterLast(delimiter = ".", missingDelimiterValue = "").lowercase()
     if (fileType == FileTypes.MP4 || extension == "mp4" || extension == "m4a" || extension == "m4b") {
-      parseMp4Chapters(file, builder, zipDataSourceFactory ?: DefaultDataSource.Factory(context))
+      parseMp4Chapters(file, builder, dataSourceFactory ?: DefaultDataSource.Factory(context))
     }
     if (fileType == FileTypes.MATROSKA || extension == "mka" || extension == "mkv") {
-      parseMatroskaMetaData(file, builder, zipBytes)
+      // matroska needs random access, so entries inside of a zip have to be buffered
+      val bytes = zipBytes ?: if (ZipUriCodec.isZipUri(file.uri)) {
+        runCatching { zipArchiveProvider.readEntryBytes(file.uri) }
+          .onFailure { Logger.w(it, "Failed to read zip entry ${file.uri}") }
+          .getOrNull()
+      } else {
+        null
+      }
+      parseMatroskaMetaData(file, builder, bytes)
     }
 
     return builder.build(duration)
@@ -254,11 +281,15 @@ internal class MediaAnalyzer(
     }
   }
 
+  // a factory is created per call because retrieving metadata happens in parallel and the
+  // default one would otherwise be shared. We use a custom MediaSourceFactory because the
+  // default one for the retriever also extracts the covers.
   private fun mediaSourceFor(dataSourceFactory: DataSource.Factory?): DefaultMediaSourceFactory {
-    if (dataSourceFactory == null) {
-      return mediaSourceFactory
+    val factory = DefaultMediaSourceFactory(context, DefaultExtractorsFactory())
+    return if (dataSourceFactory == null) {
+      factory
+    } else {
+      factory.setDataSourceFactory(dataSourceFactory)
     }
-    return DefaultMediaSourceFactory(context, DefaultExtractorsFactory())
-      .setDataSourceFactory(dataSourceFactory)
   }
 }
