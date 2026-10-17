@@ -7,42 +7,77 @@ import voice.core.data.BookId
 import voice.core.data.Chapter
 import voice.core.data.repo.BookContentRepo
 import voice.core.data.repo.getOrPut
-import voice.core.data.toUri
 import voice.core.documentfile.CachedDocumentFile
 import voice.core.documentfile.CachedDocumentFileFactory
-import voice.core.logging.api.Logger
-import voice.core.zip.ZipArchiveProvider
-import voice.core.zip.ZipUriCodec
+import voice.core.zip.isZipArchive
 import java.time.Instant
 
 @Inject
 internal class BookParser(
   private val contentRepo: BookContentRepo,
-  private val mediaAnalyzer: MediaAnalyzer,
   private val fileFactory: CachedDocumentFileFactory,
-  private val zipArchiveProvider: ZipArchiveProvider,
 ) {
 
+  /**
+   * Stores the book for [file] with the already listed [chapters]. The metadata of the book is
+   * filled in later by [fillMetadata] once the first chapter has been parsed.
+   */
   suspend fun parseAndStore(
     chapters: List<Chapter>,
     file: CachedDocumentFile,
-    firstChapterMetadata: Metadata?,
   ): BookContent {
     val id = BookId(file.uri)
+    val known = contentRepo.get(id)
+    if (known != null) {
+      return repairArchiveName(known, chapters, file)
+    }
     return contentRepo.getOrPut(id) {
-      val analyzed = firstChapterMetadata
-        ?: mediaAnalyzer.analyze(fileForFallback(chapters))
-      parse(chapters, id, analyzed, file)
+      parse(
+        chapters = chapters,
+        id = id,
+        analyzed = null,
+        file = file,
+      )
     }
   }
 
-  private suspend fun fileForFallback(chapters: List<Chapter>): CachedDocumentFile {
-    val uri = chapters.first().id.toUri()
-    if (ZipUriCodec.isZipUri(uri)) {
-      return zipArchiveProvider.entryFile(uri)
-        ?: throw IllegalStateException("Cannot resolve zip entry $uri")
+  /**
+   * Restores the name of a zip book that an earlier version named after the first chapter of
+   * the archive. Books that were renamed by the user are left alone.
+   */
+  private suspend fun repairArchiveName(
+    content: BookContent,
+    chapters: List<Chapter>,
+    file: CachedDocumentFile,
+  ): BookContent {
+    val name = file.bookDisplayName()
+    if (!file.isZipArchive() || content.name == name) return content
+    val firstChapterName = chapters.firstOrNull()?.name ?: return content
+    if (content.name != firstChapterName) return content
+    val repaired = content.copy(name = name)
+    contentRepo.put(repaired)
+    return repaired
+  }
+
+  /**
+   * Fills in the metadata parsed from the first chapter of a book. The name of the book is
+   * never touched: it always stays the name of the file or folder it was added with. Books that
+   * were renamed by the user are skipped entirely.
+   */
+  suspend fun fillMetadata(bookId: BookId, metadata: Metadata) {
+    val content = contentRepo.get(bookId) ?: return
+    val bookFile = fileFactory.create(bookId.toUri())
+    if (content.name != bookFile.bookDisplayName()) return
+    val updated = content.copy(
+      author = metadata.artist ?: content.author,
+      genre = metadata.genre ?: content.genre,
+      narrator = metadata.narrator ?: content.narrator,
+      series = metadata.series ?: content.series,
+      part = metadata.part ?: content.part,
+    )
+    if (updated != content) {
+      contentRepo.put(updated)
     }
-    return fileFactory.create(uri)
   }
 
   fun parse(
@@ -57,9 +92,7 @@ internal class BookParser(
       addedAt = Instant.now(),
       author = analyzed?.artist,
       lastPlayedAt = Instant.EPOCH,
-      name = analyzed?.album
-        ?: analyzed?.title?.takeIf { file.isFile }
-        ?: file.bookName(),
+      name = file.bookDisplayName(),
       playbackSpeed = 1F,
       skipSilence = false,
       chapters = chapters.map { it.id },
@@ -73,25 +106,6 @@ internal class BookParser(
       part = analyzed?.part,
     ).also {
       validateIntegrity(it, chapters)
-    }
-  }
-
-  private fun CachedDocumentFile.bookName(): String {
-    val fileName = name
-    return if (fileName == null) {
-      uri.toString()
-        .removePrefix("/storage/emulated/0/")
-        .removePrefix("/storage/emulated/")
-        .removePrefix("/storage/")
-        .also {
-          Logger.w("Could not parse fileName from $this. Fallback to $it")
-        }
-    } else {
-      if (isFile) {
-        fileName.substringBeforeLast(".")
-      } else {
-        fileName
-      }
     }
   }
 }

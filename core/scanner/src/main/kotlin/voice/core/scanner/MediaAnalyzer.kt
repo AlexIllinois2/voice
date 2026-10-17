@@ -47,6 +47,16 @@ internal class MediaAnalyzer(
       return analyzeWith(file, dataSourceFactory = null)
     }
 
+    // Formats that keep their metadata at the end of the file (mp4 and matroska) are read
+    // randomly. Streaming them would inflate the entry again for every single seek, so they are
+    // buffered as a whole instead.
+    if (extensionOf(file) in RANDOM_ACCESS_EXTENSIONS) {
+      val bytes = runCatching { zipArchiveProvider.readEntryBytes(file.uri) }
+        .onFailure { error -> logOrRethrow(error, "Failed to read zip entry ${file.uri}") }
+        .getOrNull() ?: return null
+      return analyzeWith(file, DataSource.Factory { ByteArrayDataSource(bytes) }, zipBytes = bytes)
+    }
+
     // Streaming the entry instead of inflating it into memory first keeps scanning fast: for the
     // duration and the metadata of a file only a small part of it is needed.
     val streamed = runCatching {
@@ -65,6 +75,12 @@ internal class MediaAnalyzer(
     return analyzeWith(file, DataSource.Factory { ByteArrayDataSource(bytes) }, zipBytes = bytes)
   }
 
+  private fun extensionOf(file: CachedDocumentFile): String {
+    return (file.name ?: "")
+      .substringAfterLast(delimiter = ".", missingDelimiterValue = "")
+      .lowercase()
+  }
+
   private fun logOrRethrow(
     error: Throwable,
     message: String,
@@ -79,15 +95,26 @@ internal class MediaAnalyzer(
     zipBytes: ByteArray? = null,
   ): Metadata? {
     val builder = Metadata.Builder(file.nameWithoutExtension())
-    val duration = retrieveDuration(file.uri, dataSourceFactory)
-      ?: return null
+    var duration = retrieveDuration(file.uri, dataSourceFactory)
+    if (duration == null || duration <= Duration.ZERO) {
+      // media3 only knows the duration of a constant bitrate AAC stream, so the frames of
+      // variable bitrate files (which audiobooks usually are) have to be counted ourselves
+      duration = adtsDurationUs(file.uri, dataSourceFactory)
+    }
+    if (duration == null) {
+      Logger.w("Could not read the duration of ${file.uri}")
+      return null
+    }
     if (duration <= Duration.ZERO) {
       Logger.w("Duration is zero or negative for file: ${file.uri}")
       return null
     }
 
     val trackGroups = retrieveMetadata(file.uri, dataSourceFactory)
-      ?: return null
+    if (trackGroups == null) {
+      Logger.w("Could not read the metadata of ${file.uri}")
+      return null
+    }
 
     repeat(trackGroups.length) { trackGroupsIndex ->
       val trackGroup = trackGroups[trackGroupsIndex]
@@ -110,7 +137,7 @@ internal class MediaAnalyzer(
     }
 
     val fileType = FileTypes.inferFileTypeFromUri(file.uri)
-    val extension = (file.name ?: "").substringAfterLast(delimiter = ".", missingDelimiterValue = "").lowercase()
+    val extension = extensionOf(file)
     if (fileType == FileTypes.MP4 || extension == "mp4" || extension == "m4a" || extension == "m4b") {
       parseMp4Chapters(file, builder, dataSourceFactory ?: DefaultDataSource.Factory(context))
     }
@@ -263,6 +290,14 @@ internal class MediaAnalyzer(
     }
   }
 
+  private suspend fun adtsDurationUs(
+    uri: Uri,
+    dataSourceFactory: DataSource.Factory?,
+  ): Duration? {
+    val factory = dataSourceFactory ?: DefaultDataSource.Factory(context)
+    return AdtsDurationReader.readDuration(uri, factory)
+  }
+
   private suspend fun retrieveDuration(
     uri: Uri,
     dataSourceFactory: DataSource.Factory? = null,
@@ -276,20 +311,22 @@ internal class MediaAnalyzer(
         }
     } catch (e: Exception) {
       if (e is CancellationException) currentCoroutineContext().ensureActive()
-      Logger.w(e, "Error retrieving metadata")
+      Logger.w(e, "Error retrieving duration")
       null
     }
   }
 
-  // a factory is created per call because retrieving metadata happens in parallel and the
-  // default one would otherwise be shared. We use a custom MediaSourceFactory because the
-  // default one for the retriever also extracts the covers.
   private fun mediaSourceFor(dataSourceFactory: DataSource.Factory?): DefaultMediaSourceFactory {
-    val factory = DefaultMediaSourceFactory(context, DefaultExtractorsFactory())
     return if (dataSourceFactory == null) {
-      factory
+      DefaultMediaSourceFactory(context, DefaultExtractorsFactory())
     } else {
-      factory.setDataSourceFactory(dataSourceFactory)
+      mediaSourceFactory(context = context, dataSourceFactory = dataSourceFactory)
     }
+  }
+
+  private companion object {
+    // the mp4 family and matroska keep their metadata at the end of the file, so they are read
+    // randomly and cannot be streamed out of a zip entry efficiently
+    val RANDOM_ACCESS_EXTENSIONS = setOf("mp4", "m4a", "m4b", "mka", "mkv")
   }
 }

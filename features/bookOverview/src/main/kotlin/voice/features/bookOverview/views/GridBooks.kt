@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
@@ -47,6 +48,8 @@ internal fun GridBooks(
   onBookLongClick: (BookId) -> Unit,
   showPermissionBugCard: Boolean,
   onPermissionBugCardClick: () -> Unit,
+  onRetryParseClick: (BookId) -> Unit,
+  showRetryParseButtons: Boolean,
 ) {
   val cellCount = gridColumnCount()
   LazyVerticalGrid(
@@ -83,6 +86,8 @@ internal fun GridBooks(
           book = bookState.value,
           onBookClick = onBookClick,
           onBookLongClick = onBookLongClick,
+          onRetryParseClick = onRetryParseClick,
+          showRetryParseButton = showRetryParseButtons && bookState.value.parseFailed,
         )
       }
       item(
@@ -99,6 +104,8 @@ internal fun GridBook(
   book: BookOverviewItemViewState,
   onBookClick: (BookId) -> Unit,
   onBookLongClick: (BookId) -> Unit,
+  onRetryParseClick: (BookId) -> Unit = {},
+  showRetryParseButton: Boolean = false,
 ) {
   BookCard(
     bookId = book.id,
@@ -137,10 +144,19 @@ internal fun GridBook(
         overflow = TextOverflow.Ellipsis,
       )
 
-      BookRemainingProgressRow(
-        remainingTime = book.remainingTime,
-        progress = book.progress,
-      )
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        BookRemainingProgressRow(
+          modifier = Modifier.weight(1F),
+          remainingTime = book.remainingTime,
+          progress = book.progress,
+        )
+        if (showRetryParseButton) {
+          RetryParseButton(onClick = { onRetryParseClick(book.id) })
+        }
+      }
 
       Spacer(Modifier.height(8.dp))
       BookProgressIndicator(progress = book.progress)

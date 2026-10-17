@@ -11,6 +11,7 @@ import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
 import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.SetSerializer
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import voice.core.data.BookId
@@ -209,6 +210,17 @@ public interface StoreModule {
       serializer = MapSerializer(String.serializer(), FeatureFlagOverride.serializer()),
       defaultValue = emptyMap(),
       fileName = "featureFlagOverrides",
+    )
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
+  @ZipParseAttemptStore
+  private fun zipParseAttempts(factory: VoiceDataStoreFactory): DataStore<Set<String>> {
+    return factory.create(
+      serializer = SetSerializer(String.serializer()),
+      defaultValue = emptySet(),
+      fileName = "zipParseAttempts",
     )
   }
 }

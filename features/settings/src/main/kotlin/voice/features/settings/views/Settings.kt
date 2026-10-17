@@ -230,6 +230,22 @@ private fun Settings(
       }
       item {
         ListItem(
+          modifier = Modifier.clickable { listener.openLogViewer() },
+          leadingContent = {
+            Icon(
+              imageVector = VoiceIcons.History,
+              contentDescription = stringResource(StringsR.string.settings_logs_title),
+            )
+          },
+          supportingContent = {
+            Text(stringResource(StringsR.string.settings_logs_summary))
+          },
+        ) {
+          Text(stringResource(StringsR.string.settings_logs_title))
+        }
+      }
+      item {
+        ListItem(
           modifier = Modifier.clickable { listener.openTranslations() },
           leadingContent = {
             Icon(

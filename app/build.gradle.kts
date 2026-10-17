@@ -183,6 +183,7 @@ dependencies {
   implementation(projects.features.sleepTimer)
   implementation(projects.features.settings)
   implementation(projects.features.folderPicker)
+  implementation(projects.features.logViewer)
   implementation(projects.features.bookOverview)
   implementation(projects.core.search)
   implementation(projects.features.cover)
@@ -216,6 +217,9 @@ dependencies {
   implementation(projects.core.analytics.api)
   add("playImplementation", projects.core.analytics.firebase)
   add("freeImplementation", projects.core.analytics.noop)
+
+  // the in-app log writer keeps the parse errors in memory so that the user can inspect them
+  implementation(projects.core.logging.inapp)
 
   debugImplementation(projects.core.logging.debug)
 

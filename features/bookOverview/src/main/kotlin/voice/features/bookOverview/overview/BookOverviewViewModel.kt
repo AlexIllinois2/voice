@@ -104,6 +104,10 @@ class BookOverviewViewModel(
       .collectAsState(initial = null).value
     val scannerActive = remember { mediaScanner.scannerActive }
       .collectAsState(initial = false).value
+    val enrichActive = remember { mediaScanner.enrichActive }
+      .collectAsState(initial = false).value
+    val scanProgress = remember { mediaScanner.scanProgress }
+      .collectAsState(initial = null).value
     val folderPickerMovedDialogShown = remember { folderPickerMovedDialogShownStore.data }
       .collectAsState(initial = false).value
     val gridMode = remember { gridModeStore.data }
@@ -160,7 +164,11 @@ class BookOverviewViewModel(
         noBooks
       },
       showSearchIcon = books.isNotEmpty(),
-      isLoading = scannerActive,
+      // the durations are parsed in the background, so the library stays usable while it runs.
+      // A scan only reports progress when it found something to do, so a rescan that merely
+      // confirms the library is unchanged must not show an indicator either
+      isLoading = (scannerActive && scanProgress != null) || enrichActive,
+      scanProgress = scanProgress,
       searchActive = searchActive,
       searchViewState = bookSearchViewState,
       showStoragePermissionBugCard = hasStoragePermissionBug,
@@ -227,6 +235,7 @@ class BookOverviewViewModel(
               progress = book.progress / 100F,
               id = book.id,
               remainingTime = book.remaining,
+              parseFailed = false,
             ),
           )
         },
@@ -235,6 +244,7 @@ class BookOverviewViewModel(
       showAddBookHint = false,
       showSearchIcon = true,
       isLoading = false,
+      scanProgress = null,
       searchActive = false,
       searchViewState = BookSearchViewState.EmptySearch(
         recentQueries = emptyList(),
@@ -253,6 +263,12 @@ class BookOverviewViewModel(
 
   fun onBookClick(id: BookId) {
     navigator.goTo(Destination.Playback(id))
+  }
+
+  fun onRetryParseClick(id: BookId) {
+    // chapters of a book that are still missing their duration could not be parsed, so the
+    // user asks for another try here
+    mediaScanner.retryBookParse(id)
   }
 
   fun onBookFolderClick() {

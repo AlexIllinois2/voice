@@ -14,6 +14,7 @@ data class BookOverviewItemViewState(
   val progress: Float,
   val id: BookId,
   val remainingTime: String,
+  val parseFailed: Boolean,
 )
 
 internal fun Book.toItemViewState() = BookOverviewItemViewState(
@@ -23,6 +24,9 @@ internal fun Book.toItemViewState() = BookOverviewItemViewState(
   id = id,
   progress = progress(),
   remainingTime = formatTime(duration - position),
+  // the durations are parsed in the background, so chapters that are still missing one are
+  // waiting for their parse, or the parse has failed
+  parseFailed = chapters.any { it.duration <= 0 },
 )
 
 private fun Book.progress(): Float {

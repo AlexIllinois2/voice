@@ -22,6 +22,10 @@
     <string name="book.edit.name.label">Name</string>
     <!-- Title for the dialog that edits a book title. -->
     <string name="book.edit.title">Edit book</string>
+    <!-- Content description for the button that retries parsing the chapters of a book. -->
+    <string name="book.parse.retry">Retry parsing</string>
+    <!-- Bottom-sheet action that parses all chapters of a book again. -->
+    <string name="book.reparse">Re-parse</string>
     <!-- Snackbar message shown after creating a bookmark. -->
     <string name="bookmark.added.snackbar">Bookmark added</string>
     <!-- Relative timestamp for a bookmark created moments ago. -->
@@ -125,6 +129,36 @@
     <string name="library.storage_permission_bug.message">For certain devices, a system app is missing the necessary permission to access the external storage. This access is essential for Voice to read your audiobooks.</string>
     <!-- Title for the card explaining a required storage permission workaround. -->
     <string name="library.storage_permission_bug.title">Permission required</string>
+    <!-- Empty state for the log screen when no errors have been logged yet. -->
+    <string name="logs.empty">No errors have been logged</string>
+    <!-- Action label for saving the log to a file. -->
+    <string name="logs.save">Save</string>
+    <!-- Snackbar message shown when the log could not be saved. -->
+    <string name="logs.save_failed">Could not save the log</string>
+    <!-- Snackbar message shown after the log was saved. -->
+    <string name="logs.saved">Log saved</string>
+    <!-- Label for an error entry in the log screen. -->
+    <string name="logs.severity.error">Error</string>
+    <!-- Label for a warning entry in the log screen. -->
+    <string name="logs.severity.warning">Warning</string>
+    <!-- Title of the log screen. -->
+    <string name="logs.title">Parse log</string>
+    <!-- Name of the notification channel used for the background scan. -->
+    <string name="scan.notification.channel_name">Scan progress</string>
+    <!-- Title of the notification shown while chapter durations are parsed in the background. -->
+    <string name="scan.notification.title">Parsing durations</string>
+    <!-- Body of the notification shown while chapter durations are parsed in the background. -->
+    <string name="scan.notification.text">%1$d of %2$d files</string>
+    <!-- Detail line shown while a book is scanned; the book name and its position in the scan. -->
+    <string name="scan.progress.book">Scanning %1$s (%2$d/%3$d)</string>
+    <!-- Detail line shown while a zip archive is copied into the cache; the archive name and the copied share. -->
+    <string name="scan.progress.copying">Reading %1$s %2$s</string>
+    <!-- Detail line showing how many files of the current book have been parsed. -->
+    <string name="scan.progress.entries">Files %1$d/%2$d</string>
+    <!-- Detail line shown while chapter durations are parsed in the background; the number of parsed and total chapters. -->
+    <string name="scan.progress.durations">Parsing durations %1$d/%2$d</string>
+    <!-- Detail line shown while the files of the current book are still being collected. -->
+    <string name="scan.progress.preparing">Preparing…</string>
     <!-- Media browser title for recently played audiobooks. -->
     <string name="media_session.library.recent">Recent</string>
     <!-- Media browser root title for all audiobooks. -->
@@ -235,6 +269,10 @@
     <string name="settings.library.folders.summary">Manage folders scanned for audiobooks</string>
     <!-- Settings row for toggling grid layout in the library. -->
     <string name="settings.library.use_grid.title">Use grid layout</string>
+    <!-- Settings row description for opening the parse log screen. -->
+    <string name="settings.logs.summary">Errors from the latest scan and parsing</string>
+    <!-- Settings row title for opening the parse log screen. -->
+    <string name="settings.logs.title">Parse log</string>
     <!-- Title for the setting that rewinds automatically when playback resumes. -->
     <string name="settings.playback.auto_rewind.title">Auto rewind</string>
     <!-- Title for the setting that enables high fidelity audio output. -->

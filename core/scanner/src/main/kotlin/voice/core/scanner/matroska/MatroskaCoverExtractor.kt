@@ -3,14 +3,22 @@ package voice.core.scanner.matroska
 import android.content.Context
 import android.net.Uri
 import dev.zacsweers.metro.Inject
+import kotlinx.coroutines.CancellationException
 import org.ebml.EBMLReader
 import org.ebml.Element
+import org.ebml.io.DataSource
 import org.ebml.matroska.MatroskaDocTypes
 import voice.core.logging.api.Logger
+import voice.core.zip.ZipArchiveProvider
+import voice.core.zip.ZipCancelledException
+import voice.core.zip.ZipUriCodec
 import java.io.File
 
 @Inject
-internal class MatroskaCoverExtractor(private val context: Context) {
+internal class MatroskaCoverExtractor(
+  private val context: Context,
+  private val zipArchiveProvider: ZipArchiveProvider,
+) {
 
   init {
     // force static initialization of MatroskaDocTypes
@@ -25,56 +33,77 @@ internal class MatroskaCoverExtractor(private val context: Context) {
     val priority: Int,
   )
 
-  fun extract(
+  suspend fun extract(
     input: Uri,
     outputFile: File,
   ): Boolean {
     return try {
-      SafSeekableDataSource(context.contentResolver, input).use { dataSource ->
-        val reader = EBMLReader(dataSource)
-
-        validateHeader(dataSource, reader)
-
-        val segment = reader.readNextElement()
-        if (!(segment isType MatroskaDocTypes.Segment)) {
-          throw MatroskaParseException("Expected Segment element")
+      if (ZipUriCodec.isZipUri(input)) {
+        // the content resolver cannot serve a zip entry, and the EBML reader needs a seekable
+        // source, so the entry is buffered as a whole
+        val bytes = zipArchiveProvider.readEntryBytes(input)
+        BytesSeekableDataSource(bytes).use { dataSource ->
+          extractCover(dataSource, outputFile)
         }
-
-        val attachments = mutableListOf<AttachmentInfo>()
-
-        segment.forEachChild(dataSource, reader) { child ->
-          if (child.isType(MatroskaDocTypes.Attachments)) {
-            Logger.d("Found Attachments segment")
-            child.forEachChild(dataSource, reader) { attachmentChild ->
-              if (attachmentChild.isType(MatroskaDocTypes.AttachedFile)) {
-                val attachment = processAttachment(dataSource, reader, attachmentChild)
-                if (attachment != null) {
-                  attachments.add(attachment)
-                }
-              }
-            }
-          }
+      } else {
+        SafSeekableDataSource(context.contentResolver, input).use { dataSource ->
+          extractCover(dataSource, outputFile)
         }
-
-        val bestCover = findBestCover(attachments)
-        if (bestCover != null) {
-          outputFile.writeBytes(bestCover.data)
-          Logger.d("Extracted cover: ${bestCover.filename} (priority: ${bestCover.priority})")
-          return true
-        }
-
-        Logger.d("No cover art found in Matroska attachments")
-        false
       }
-    } catch (e: RuntimeException) {
+    } catch (e: ZipCancelledException) {
+      // the password prompt got cancelled, so don't ask a second time
+      false
+    } catch (e: CancellationException) {
+      throw e
+    } catch (e: Exception) {
       // jebml throws undeclared exceptions, so we need to wrap them
       Logger.w(e, "Error extracting cover from Matroska file: $input")
-      return false
+      false
     }
   }
 
+  private fun extractCover(
+    dataSource: DataSource,
+    outputFile: File,
+  ): Boolean {
+    val reader = EBMLReader(dataSource)
+
+    validateHeader(dataSource, reader)
+
+    val segment = reader.readNextElement()
+    if (!(segment isType MatroskaDocTypes.Segment)) {
+      throw MatroskaParseException("Expected Segment element")
+    }
+
+    val attachments = mutableListOf<AttachmentInfo>()
+
+    segment.forEachChild(dataSource, reader) { child ->
+      if (child.isType(MatroskaDocTypes.Attachments)) {
+        Logger.d("Found Attachments segment")
+        child.forEachChild(dataSource, reader) { attachmentChild ->
+          if (attachmentChild.isType(MatroskaDocTypes.AttachedFile)) {
+            val attachment = processAttachment(dataSource, reader, attachmentChild)
+            if (attachment != null) {
+              attachments.add(attachment)
+            }
+          }
+        }
+      }
+    }
+
+    val bestCover = findBestCover(attachments)
+    if (bestCover != null) {
+      outputFile.writeBytes(bestCover.data)
+      Logger.d("Extracted cover: ${bestCover.filename} (priority: ${bestCover.priority})")
+      return true
+    }
+
+    Logger.d("No cover art found in Matroska attachments")
+    return false
+  }
+
   private fun processAttachment(
-    dataSource: SafSeekableDataSource,
+    dataSource: DataSource,
     reader: EBMLReader,
     attachedFile: Element,
   ): AttachmentInfo? {

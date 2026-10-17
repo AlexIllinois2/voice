@@ -5,7 +5,6 @@ import androidx.core.net.toUri
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.runner.RunWith
@@ -20,9 +19,7 @@ import voice.core.data.repo.internals.AppDb
 import voice.core.data.toUri
 import voice.core.documentfile.FileBasedDocumentFactory
 import voice.core.documentfile.FileBasedDocumentFile
-import voice.core.zip.ZipArchiveProvider
 import java.io.Closeable
-import java.util.concurrent.atomic.AtomicInteger
 import java.io.File
 import java.nio.file.Files
 import kotlin.test.Test
@@ -161,14 +158,21 @@ class MediaScannerTest {
   }
 
   @Test
-  fun newBookReusesFirstChapterMetadata() = test {
+  fun newBookIsListedWithoutAnalyzingChapters() = test {
     val folder = folder("book")
     audioFile(parent = folder, "1.mp3")
     audioFile(parent = folder, "2.mp3")
 
     scan(FolderType.SingleFolder, folder)
 
-    assertEquals(expected = 2, actual = analyzeCalls.get())
+    // the initial scan only lists the files; the durations are backfilled in the background
+    val book = bookRepo.all().single()
+    assertEquals(expected = listOf(0L, 0L), actual = book.chapters.map { it.duration })
+    assertEquals(expected = "book", actual = book.content.name)
+    assertEquals(
+      expected = listOf(ScanProgress.Phase.Scanning),
+      actual = scanProgress.map { it.phase }.distinct(),
+    )
   }
 
   @Test
@@ -210,6 +214,52 @@ class MediaScannerTest {
     assertEquals(expected = 4, actual = scannedBooks.size)
   }
 
+  @Test
+  fun scanReportsProgress() = test {
+    val audiobookFolder = folder("audiobooks")
+
+    val book1 = File(audiobookFolder, "book1")
+    val book1Chapters = listOf(
+      audioFile(book1, "1.mp3"),
+      audioFile(book1, "2.mp3"),
+      audioFile(book1, "10.mp3"),
+    )
+
+    val book2 = File(audiobookFolder, "book2")
+    audioFile(book2, "1.mp3")
+
+    scan(FolderType.Root, audiobookFolder)
+
+    val book1Progress = scanProgress.filter { it.bookName == "book1" }
+    assertEquals(expected = 1, actual = book1Progress.first().bookIndex)
+    assertEquals(expected = 2, actual = book1Progress.first().bookCount)
+    // the files are only listed during the scan, so the last progress just knows the total count
+    assertEquals(expected = book1Chapters.size, actual = book1Progress.last().entryCount)
+    assertEquals(expected = 0, actual = book1Progress.last().entryIndex)
+
+    val book2Progress = scanProgress.filter { it.bookName == "book2" }
+    assertEquals(expected = 2, actual = book2Progress.first().bookIndex)
+    assertEquals(expected = 2, actual = book2Progress.first().bookCount)
+    assertEquals(expected = 1, actual = book2Progress.last().entryCount)
+    assertEquals(expected = 0, actual = book2Progress.last().entryIndex)
+  }
+
+  @Test
+  fun rescanOfKnownLibraryReportsNoProgress() = test {
+    val folder = folder("book")
+    audioFile(parent = folder, "1.mp3")
+    audioFile(parent = folder, "2.mp3")
+    scan(FolderType.SingleFolder, folder)
+    scanProgress.clear()
+
+    // returning to the library scans again to pick up added or removed files, but when there is
+    // nothing to report the scan stays quiet instead of flashing a progress indicator
+    scan(FolderType.SingleFolder, folder)
+
+    assertEquals(expected = emptyList(), actual = scanProgress)
+    assertEquals(expected = 2, actual = bookRepo.all().single().chapters.size)
+  }
+
   private fun test(test: suspend TestEnvironment.() -> Unit) {
     runTest {
       TestEnvironment().use { test(it) }
@@ -223,27 +273,25 @@ class MediaScannerTest {
       .build()
     val bookContentRepo = BookContentRepoImpl(db.bookContentDao())
     private val chapterRepo = ChapterRepoImpl(db.chapterDao())
-    private val mediaAnalyzer = mockk<MediaAnalyzer>()
-    val analyzeCalls = AtomicInteger()
     private val scannedRepo = ScannedBooksRecordingRepo(bookContentRepo)
     val scannedBooks: List<BookId> get() = scannedRepo.scannedBooks
     private val scanner = MediaScanner(
       contentRepo = scannedRepo,
       chapterParser = ChapterParser(
         chapterRepo = chapterRepo,
-        mediaAnalyzer = mediaAnalyzer,
         zipArchiveProvider = mockk(),
       ),
       bookParser = BookParser(
         contentRepo = bookContentRepo,
-        mediaAnalyzer = mediaAnalyzer,
         fileFactory = FileBasedDocumentFactory,
-        zipArchiveProvider = mockk(),
       ),
       deviceHasPermissionBug = mockk(),
     )
 
     val bookRepo = BookRepositoryImpl(chapterRepo, bookContentRepo)
+
+    // the enricher parses files in parallel, so progress may be emitted from several threads
+    val scanProgress: MutableList<ScanProgress> = java.util.Collections.synchronizedList(mutableListOf<ScanProgress>())
 
     private val root: File = Files.createTempDirectory(this::class.java.canonicalName!!).toFile()
 
@@ -251,7 +299,9 @@ class MediaScannerTest {
       type: FolderType = FolderType.Root,
       vararg roots: File,
     ) {
-      scanner.scan(mapOf(type to roots.map(::FileBasedDocumentFile)))
+      scanner.scan(mapOf(type to roots.map(::FileBasedDocumentFile))) { progress ->
+        scanProgress += progress
+      }
     }
 
     @IgnorableReturnValue
@@ -264,23 +314,6 @@ class MediaScannerTest {
         .also {
           it.parentFile?.mkdirs()
           check(it.createNewFile())
-        }
-        .also {
-          coEvery { mediaAnalyzer.analyze(any()) } coAnswers {
-            analyzeCalls.incrementAndGet()
-            Metadata(
-              duration = 1000L,
-              artist = "Author",
-              album = "Book Name",
-              fileName = "Chapter",
-              chapters = emptyList(),
-              title = "Title",
-              genre = "Genre",
-              narrator = "Narrator",
-              series = "Series",
-              part = "Part",
-            )
-          }
         }
     }
 

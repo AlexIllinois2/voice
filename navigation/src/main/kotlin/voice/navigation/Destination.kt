@@ -71,6 +71,11 @@ sealed interface Destination {
   }
 
   @Serializable
+  data object LogViewer : Compose {
+    override val trackingName: String get() = "LogViewer"
+  }
+
+  @Serializable
   data class SelectFolderType(
     val uri:
     @Serializable(with = UriSerializer::class)

@@ -31,6 +31,7 @@ import voice.core.playback.overlay
 import voice.core.playback.playstate.PlayStateManager
 import voice.core.scanner.DeviceHasStoragePermissionBug
 import voice.core.scanner.MediaScanTrigger
+import voice.core.scanner.ScanProgress
 import voice.core.search.BookSearch
 import voice.core.ui.GridCount
 import voice.features.bookOverview.book
@@ -56,6 +57,8 @@ class BookOverviewViewModelTest {
       },
       mediaScanner = mockk<MediaScanTrigger> {
         every { scannerActive } returns MutableStateFlow(false)
+        every { enrichActive } returns MutableStateFlow(false)
+        every { scanProgress } returns MutableStateFlow<ScanProgress?>(null)
         every { scan(any()) } just Runs
       },
       playStateManager = PlayStateManager(),
@@ -123,6 +126,8 @@ class BookOverviewViewModelTest {
       },
       mediaScanner = mockk<MediaScanTrigger> {
         every { scannerActive } returns MutableStateFlow(false)
+        every { enrichActive } returns MutableStateFlow(false)
+        every { scanProgress } returns MutableStateFlow<ScanProgress?>(null)
         every { scan(any()) } just Runs
       },
       playStateManager = PlayStateManager(),
@@ -295,6 +300,8 @@ class BookOverviewViewModelTest {
       },
       mediaScanner = mockk<MediaScanTrigger> {
         every { scannerActive } returns MutableStateFlow(false)
+        every { enrichActive } returns MutableStateFlow(false)
+        every { scanProgress } returns MutableStateFlow<ScanProgress?>(null)
         every { scan(any()) } just Runs
       },
       playStateManager = PlayStateManager(),

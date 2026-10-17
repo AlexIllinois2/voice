@@ -113,6 +113,7 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
     onBookFolderClick = bookOverviewViewModel::onBookFolderClick,
     onFolderPickerMovedDialogDismiss = bookOverviewViewModel::onFolderPickerMovedDialogDismiss,
     onPlayButtonClick = bookOverviewViewModel::playPause,
+    onRetryParseClick = bookOverviewViewModel::onRetryParseClick,
     onSearchActiveChange = bookOverviewViewModel::onSearchActiveChange,
     onSearchQueryChange = bookOverviewViewModel::onSearchQueryChange,
     onSearchBookClick = bookOverviewViewModel::onSearchBookClick,
@@ -176,6 +177,7 @@ internal fun BookOverview(
   onBookFolderClick: () -> Unit,
   onFolderPickerMovedDialogDismiss: () -> Unit,
   onPlayButtonClick: () -> Unit,
+  onRetryParseClick: (BookId) -> Unit,
   onSearchActiveChange: (Boolean) -> Unit,
   onSearchQueryChange: (String) -> Unit,
   onSearchBookClick: (BookId) -> Unit,
@@ -222,6 +224,8 @@ internal fun BookOverview(
             onBookLongClick = onBookLongClick,
             showPermissionBugCard = viewState.showStoragePermissionBugCard,
             onPermissionBugCardClick = onPermissionBugCardClick,
+            onRetryParseClick = onRetryParseClick,
+            showRetryParseButtons = !viewState.isLoading,
           )
         }
         BookOverviewLayoutMode.Grid -> {
@@ -231,6 +235,8 @@ internal fun BookOverview(
             onBookLongClick = onBookLongClick,
             showPermissionBugCard = viewState.showStoragePermissionBugCard,
             onPermissionBugCardClick = onPermissionBugCardClick,
+            onRetryParseClick = onRetryParseClick,
+            showRetryParseButtons = !viewState.isLoading,
           )
         }
       }
@@ -291,6 +297,7 @@ fun BookOverviewPreview(
       onBookFolderClick = {},
       onFolderPickerMovedDialogDismiss = {},
       onPlayButtonClick = {},
+      onRetryParseClick = {},
       onSearchActiveChange = {},
       onSearchQueryChange = {},
       onSearchBookClick = {},
@@ -309,6 +316,7 @@ internal class BookOverviewPreviewParameterProvider : PreviewParameterProvider<B
       progress = 0.8F,
       id = BookId(Uuid.random().toString()),
       remainingTime = "01:04",
+      parseFailed = false,
     )
   }
 
@@ -337,6 +345,7 @@ internal class BookOverviewPreviewParameterProvider : PreviewParameterProvider<B
       showAddBookHint = false,
       showSearchIcon = true,
       isLoading = true,
+      scanProgress = null,
       searchActive = true,
       searchViewState = BookSearchViewState.EmptySearch(
         suggestedAuthors = emptyList(),

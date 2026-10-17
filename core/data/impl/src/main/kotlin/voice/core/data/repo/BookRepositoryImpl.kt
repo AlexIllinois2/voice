@@ -4,6 +4,8 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -35,7 +37,10 @@ public class BookRepositoryImpl(
   }
 
   override fun flow(): Flow<List<Book>> {
+    // chapters are backfilled in the background, so books are re-mapped when chapters change.
+    // The updates are sampled inside the chapter repo to keep this at a sane rate.
     return contentRepo.flow()
+      .combine(chapterRepo.updates) { contents, _ -> contents }
       .map { contents ->
         contents.filter { it.isActive }
           .mapNotNull { content ->
@@ -52,7 +57,9 @@ public class BookRepositoryImpl(
 
   override fun flow(id: BookId): Flow<Book?> {
     return contentRepo.flow(id)
+      .combine(chapterRepo.updates) { content, _ -> content }
       .map { it?.book() }
+      .distinctUntilChanged()
   }
 
   override suspend fun get(id: BookId): Book? {

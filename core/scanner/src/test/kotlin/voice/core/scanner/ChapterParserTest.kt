@@ -11,9 +11,7 @@ import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import voice.core.data.repo.ChapterRepoImpl
-import voice.core.documentfile.CachedDocumentFile
 import voice.core.documentfile.FileBasedDocumentFile
-import voice.core.documentfile.nameWithoutExtension
 import voice.core.zip.ZipArchiveProvider
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -40,7 +38,45 @@ class ChapterParserTest {
     testFolder.newFile("audiobook/Chapter 3.mp3")
     testFolder.newFile("audiobook/Chapter 30.mp3")
 
-    val chapterParser = ChapterParser(
+    val chapterParser = chapterParser()
+
+    assertEquals(
+      expected = listOf(
+        "Chapter 1",
+        "Chapter 2",
+        "Chapter 3",
+        "Chapter 20",
+        "Chapter 30",
+      ),
+      actual = chapterParser.listChapters(FileBasedDocumentFile(audiobook)) { }
+        .map { it.name },
+    )
+  }
+
+  @Test
+  fun parserReportsEntryCountWithoutAnalyzing() = runTest {
+    val audiobook = testFolder.newFolder("audiobook")
+    testFolder.newFile("audiobook/Chapter 1.mp3")
+    testFolder.newFile("audiobook/Chapter 2.mp3")
+    testFolder.newFile("audiobook/Chapter 3.mp3")
+
+    val chapterParser = chapterParser()
+
+    // the parser lists files in parallel, so progress may be emitted from several threads
+    val progress: MutableList<ScanProgress> = java.util.Collections.synchronizedList(mutableListOf())
+    val chapters = chapterParser.listChapters(FileBasedDocumentFile(audiobook)) { progress += it }
+
+    assertEquals(expected = 3, actual = chapters.size)
+    assertEquals(expected = listOf(0L, 0L, 0L), actual = chapters.map { it.duration })
+    // listing only reports the total count; the durations are backfilled later
+    assertEquals(expected = 1, actual = progress.size)
+    assertEquals(expected = 3, actual = progress.single().entryCount)
+    assertEquals(expected = 0, actual = progress.single().entryIndex)
+    assertEquals(expected = ScanProgress.Phase.Scanning, actual = progress.single().phase)
+  }
+
+  private fun chapterParser(): ChapterParser {
+    return ChapterParser(
       chapterRepo = ChapterRepoImpl(
         mockk {
           coEvery {
@@ -51,38 +87,7 @@ class ChapterParserTest {
           } just Runs
         },
       ),
-      mediaAnalyzer = mockk {
-        coEvery {
-          analyze(any())
-        } answers {
-          val file = firstArg<CachedDocumentFile>()
-          Metadata(
-            duration = 1000,
-            fileName = file.nameWithoutExtension(),
-            artist = null,
-            album = null,
-            chapters = emptyList(),
-            title = null,
-            genre = null,
-            narrator = null,
-            series = null,
-            part = null,
-          )
-        }
-      },
       zipArchiveProvider = mockk(),
-    )
-    assertEquals(
-      expected = listOf(
-        "Chapter 1",
-        "Chapter 2",
-        "Chapter 3",
-        "Chapter 20",
-        "Chapter 30",
-      ),
-      actual = chapterParser.parse(FileBasedDocumentFile(audiobook))
-        .chapters
-        .map { it.name },
     )
   }
 }

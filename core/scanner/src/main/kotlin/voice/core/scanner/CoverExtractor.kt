@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.media3.common.FileTypes
 import androidx.media3.common.MediaItem
+import androidx.media3.datasource.DataSource
 import androidx.media3.exoplayer.source.TrackGroupArray
 import androidx.media3.extractor.metadata.flac.PictureFrame
 import androidx.media3.extractor.metadata.id3.ApicFrame
@@ -15,12 +16,16 @@ import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.guava.await
 import voice.core.logging.api.Logger
 import voice.core.scanner.matroska.MatroskaCoverExtractor
+import voice.core.zip.ZipArchiveProvider
+import voice.core.zip.ZipCancelledException
+import voice.core.zip.ZipUriCodec
 import java.io.File
 
 @Inject
 internal class CoverExtractor(
   private val context: Context,
   private val matroskaCoverExtractor: MatroskaCoverExtractor,
+  private val zipArchiveProvider: ZipArchiveProvider,
 ) {
 
   suspend fun extractCover(
@@ -71,14 +76,36 @@ internal class CoverExtractor(
 
   private suspend fun retrieveMetadata(uri: Uri): TrackGroupArray? {
     return try {
-      MetadataRetriever.Builder(context, MediaItem.fromUri(uri))
-        .build()
-        .retrieveTrackGroups()
-        .await()
+      if (ZipUriCodec.isZipUri(uri)) {
+        // the default media source factory does not know the zip scheme, so the entry is
+        // streamed out of the archive instead
+        zipArchiveProvider.withEntryDataSource(uri) { dataSourceFactory ->
+          retrieveTrackGroups(uri, dataSourceFactory)
+        }
+      } else {
+        retrieveTrackGroups(uri, dataSourceFactory = null)
+      }
+    } catch (e: ZipCancelledException) {
+      // the password prompt got cancelled, so don't ask a second time
+      null
     } catch (e: Exception) {
       if (e is CancellationException) currentCoroutineContext().ensureActive()
       Logger.w(e, "Error retrieving metadata")
       null
     }
+  }
+
+  private suspend fun retrieveTrackGroups(
+    uri: Uri,
+    dataSourceFactory: DataSource.Factory?,
+  ): TrackGroupArray {
+    val builder = MetadataRetriever.Builder(context, MediaItem.fromUri(uri))
+    if (dataSourceFactory != null) {
+      builder.setMediaSourceFactory(mediaSourceFactory(context = context, dataSourceFactory = dataSourceFactory))
+    }
+    return builder
+      .build()
+      .retrieveTrackGroups()
+      .await()
   }
 }

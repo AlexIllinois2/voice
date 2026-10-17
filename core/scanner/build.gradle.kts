@@ -17,6 +17,7 @@ dependencies {
   implementation(libs.androidxCore)
   implementation(libs.documentFile)
   implementation(libs.media3.inspector)
+  implementation(libs.media3.datasource)
   implementation(libs.coroutines.guava)
 
   testImplementation(projects.core.data.impl)

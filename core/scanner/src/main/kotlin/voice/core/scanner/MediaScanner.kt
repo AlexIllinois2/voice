@@ -18,7 +18,10 @@ internal class MediaScanner(
   private val deviceHasPermissionBug: DeviceHasStoragePermissionBug,
 ) {
 
-  suspend fun scan(folders: Map<FolderType, List<CachedDocumentFile>>) {
+  suspend fun scan(
+    folders: Map<FolderType, List<CachedDocumentFile>>,
+    onProgress: (ScanProgress) -> Unit,
+  ) {
     val files = folders.flatMap { (folderType, files) ->
       when (folderType) {
         FolderType.SingleFile, FolderType.SingleFolder -> {
@@ -57,24 +60,34 @@ internal class MediaScanner(
       // sorting by name keeps the order stable. Counting the audio files instead would mean
       // walking the whole tree of every book up front, which is expensive for big libraries.
       .sortedWith(compareBy(NaturalOrderComparator.stringComparator) { it.name ?: it.uri.toString() })
-      .forEach { file ->
-        scan(file)
+      .forEachIndexed { index, file ->
+        scan(file, bookIndex = index + 1, bookCount = files.size, onProgress = onProgress)
       }
   }
 
-  private fun List<CachedDocumentFile>.findProbeFile(): CachedDocumentFile? {
-    return asSequence().flatMap { it.walk() }
-      .firstOrNull { child ->
-        child.isAudioFile() && child.uri.authority == "com.android.externalstorage.documents"
+  private suspend fun scan(
+    file: CachedDocumentFile,
+    bookIndex: Int,
+    bookCount: Int,
+    onProgress: (ScanProgress) -> Unit,
+  ) {
+    val bookName = file.bookDisplayName()
+    // A book that is already known is only listed again to pick up files that were added or
+    // removed, which usually finds nothing at all. Reporting that as progress would flash a
+    // progress indicator on every rescan, so only a new book is announced.
+    val isNew = contentRepo.get(BookId(file.uri)) == null
+    if (isNew) {
+      onProgress(ScanProgress(bookName = bookName, bookIndex = bookIndex, bookCount = bookCount))
+    }
+    // listing the files is cheap; the durations are parsed in the background afterwards
+    val chapters = chapterParser.listChapters(file) { progress ->
+      if (isNew) {
+        onProgress(progress.copy(bookName = bookName, bookIndex = bookIndex, bookCount = bookCount))
       }
-  }
-
-  private suspend fun scan(file: CachedDocumentFile) {
-    val parseResult = chapterParser.parse(file)
-    val chapters = parseResult.chapters
+    }
     if (chapters.isEmpty()) return
 
-    val content = bookParser.parseAndStore(chapters, file, parseResult.firstChapterMetadata)
+    val content = bookParser.parseAndStore(chapters, file)
 
     val chapterIds = chapters.map { it.id }
     val currentChapterGone = content.currentChapter !in chapterIds
@@ -90,5 +103,12 @@ internal class MediaScanner(
       validateIntegrity(updated, chapters)
       contentRepo.put(updated)
     }
+  }
+
+  private fun List<CachedDocumentFile>.findProbeFile(): CachedDocumentFile? {
+    return asSequence().flatMap { it.walk() }
+      .firstOrNull { child ->
+        child.isAudioFile() && child.uri.authority == "com.android.externalstorage.documents"
+      }
   }
 }

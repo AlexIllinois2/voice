@@ -226,6 +226,10 @@ class SettingsViewModel(
     navigator.goTo(Destination.FolderPicker)
   }
 
+  override fun openLogViewer() {
+    navigator.goTo(Destination.LogViewer)
+  }
+
   override fun setAutoSleepTimer(checked: Boolean) {
     mainScope.launch {
       sleepTimerPreferenceStore.updateData { currentPrefs ->

@@ -2370,6 +2370,49 @@ object VoiceIcons {
       .build()
 
   /*
+   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/refresh.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
+   * Generated: 2026-06-20T11:13:08Z
+   */
+  val Refresh: ImageVector =
+    ImageVector.Builder(
+      name = "Refresh",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(17.65f, 6.35f)
+          curveTo(16.2f, 4.9f, 14.21f, 4f, 12f, 4f)
+          curveToRelative(-4.42f, 0f, -7.99f, 3.58f, -7.99f, 8f)
+          reflectiveCurveToRelative(3.57f, 8f, 7.99f, 8f)
+          curveToRelative(3.73f, 0f, 6.84f, -2.55f, 7.73f, -6f)
+          horizontalLineToRelative(-2.08f)
+          curveToRelative(-0.82f, 2.33f, -3.04f, 4f, -5.65f, 4f)
+          curveToRelative(-3.31f, 0f, -6f, -2.69f, -6f, -6f)
+          reflectiveCurveToRelative(2.69f, -6f, 6f, -6f)
+          curveToRelative(1.66f, 0f, 3.14f, 0.69f, 4.22f, 1.78f)
+          lineTo(13f, 11f)
+          horizontalLineTo(7f)
+          verticalLineTo(4f)
+          lineToRelative(-2.35f, 2.35f)
+          close()
+        }
+      }
+      .build()
+
+  /*
    * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/remove.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
    * Generated: 2026-06-20T11:13:08Z
    */

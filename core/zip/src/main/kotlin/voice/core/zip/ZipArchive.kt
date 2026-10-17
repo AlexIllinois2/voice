@@ -2,6 +2,8 @@ package voice.core.zip
 
 import android.net.Uri
 import androidx.core.net.toUri
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import net.lingala.zip4j.ZipFile
 import net.lingala.zip4j.model.FileHeader
 import voice.core.common.comparator.NaturalOrderComparator
@@ -27,6 +29,21 @@ internal class ZipArchive(
 
   private val entries = HashMap<String, Entry>()
   private val rootChildPaths = mutableListOf<String>()
+
+  /**
+   * All entry streams of an archive read through the same random access file of the underlying
+   * zip, so their reads have to be serialized. Creating the streams is guarded as well, see
+   * [openStream].
+   */
+  private val readLock = Mutex()
+
+  /**
+   * Runs [block] while holding the read lock of this archive, so that no other entry of this
+   * archive is read at the same time. Entries of other archives are unaffected.
+   */
+  suspend fun <T> withEntryRead(block: suspend () -> T): T {
+    return readLock.withLock { block() }
+  }
 
   val root: CachedDocumentFile
 

@@ -19,7 +19,6 @@ import java.io.File
 import java.io.InputStream
 import java.nio.charset.Charset
 import java.security.MessageDigest
-import java.util.Locale
 
 class ZipCancelledException : Exception("Zip password request was cancelled")
 
@@ -66,16 +65,22 @@ class ZipArchiveProvider(
   private val openArchives = LinkedHashMap<String, OpenedArchive>(8, 0.75f, true)
 
   fun isZipFile(file: CachedDocumentFile): Boolean {
-    return file.isFile && file.name?.lowercase(Locale.US)?.endsWith(".zip") == true
+    return file.isZipArchive()
   }
 
   /**
    * Returns the children of [file] if it is a zip archive, or `null` if it is not.
+   *
+   * [onArchiveCopy] is invoked with the archive name, the number of bytes copied so far and the
+   * total size while an archive that cannot be read in place is copied into the cache.
    */
-  suspend fun childrenIfZip(file: CachedDocumentFile): List<CachedDocumentFile>? {
+  suspend fun childrenIfZip(
+    file: CachedDocumentFile,
+    onArchiveCopy: ((name: String, copiedBytes: Long, totalBytes: Long) -> Unit)? = null,
+  ): List<CachedDocumentFile>? {
     if (!isZipFile(file)) return null
     return try {
-      withArchive(file.uri) { it.root.children }
+      withArchive(file.uri, onArchiveCopy) { it.root.children }
     } catch (e: ZipCancelledException) {
       emptyList()
     } catch (e: Exception) {
@@ -92,7 +97,7 @@ class ZipArchiveProvider(
     val zipUri = ZipUriCodec.zipUri(uri) ?: return null
     val entryPath = ZipUriCodec.entryPath(uri) ?: return null
     return try {
-      withArchive(zipUri) { it.find(entryPath) }
+      withArchive(zipUri, onArchiveCopy = null) { it.find(entryPath) }
     } catch (e: Exception) {
       Logger.w(e, "Failed to resolve zip entry $uri")
       null
@@ -105,9 +110,11 @@ class ZipArchiveProvider(
   suspend fun readEntryBytes(uri: Uri): ByteArray = withContext(Dispatchers.IO) {
     val zipUri = requireNotNull(ZipUriCodec.zipUri(uri))
     val entryPath = requireNotNull(ZipUriCodec.entryPath(uri))
-    withArchive(zipUri) { archive ->
-      archive.openStream(entryPath).use { input ->
-        input.readBytes()
+    withArchive(zipUri, onArchiveCopy = null) { archive ->
+      archive.withEntryRead {
+        archive.openStream(entryPath).use { input ->
+          input.readBytes()
+        }
       }
     }
   }
@@ -123,23 +130,29 @@ class ZipArchiveProvider(
   ): T {
     val zipUri = requireNotNull(ZipUriCodec.zipUri(uri)) { "Not a zip uri: $uri" }
     val entryPath = requireNotNull(ZipUriCodec.entryPath(uri)) { "Not a zip entry uri: $uri" }
-    return withArchive(zipUri) { archive ->
-      block(DataSource.Factory { ZipEntryDataSource(uri, archive, entryPath) })
+    return withArchive(zipUri, onArchiveCopy = null) { archive ->
+      archive.withEntryRead {
+        block(DataSource.Factory { ZipEntryDataSource(uri, archive, entryPath) })
+      }
     }
   }
 
   /**
    * Runs [block] with the archive at [zipUri]. The archive is guaranteed to stay open (and is
    * never closed by [evict]) for the whole duration of [block].
+   *
+   * [onArchiveCopy] is only used when the archive is opened for the first time and has to be
+   * copied into the cache. See [childrenIfZip].
    */
   private suspend fun <T> withArchive(
     zipUri: Uri,
+    onArchiveCopy: ((name: String, copiedBytes: Long, totalBytes: Long) -> Unit)?,
     block: suspend (ZipArchive) -> T,
   ): T {
     val key = zipUri.toString()
     val opened = mutex.withLock {
       openArchives[key]?.also { it.useCount++ }
-    } ?: openAndRegister(zipUri, key)
+    } ?: openAndRegister(zipUri, key, onArchiveCopy)
     return try {
       block(opened.archive)
     } finally {
@@ -150,8 +163,9 @@ class ZipArchiveProvider(
   private suspend fun openAndRegister(
     zipUri: Uri,
     key: String,
+    onArchiveCopy: ((name: String, copiedBytes: Long, totalBytes: Long) -> Unit)?,
   ): OpenedArchive {
-    val opened = openArchive(zipUri)
+    val opened = openArchive(zipUri, onArchiveCopy)
     return mutex.withLock {
       val existing = openArchives[key]
       if (existing != null) {
@@ -205,8 +219,11 @@ class ZipArchiveProvider(
     }
   }
 
-  private suspend fun openArchive(zipUri: Uri): OpenedArchive = withContext(Dispatchers.IO) {
-    val resolution = resolve(zipUri)
+  private suspend fun openArchive(
+    zipUri: Uri,
+    onArchiveCopy: ((name: String, copiedBytes: Long, totalBytes: Long) -> Unit)?,
+  ): OpenedArchive = withContext(Dispatchers.IO) {
+    val resolution = resolve(zipUri, onArchiveCopy)
     try {
       val zipFile = openZipFile(resolution.file, zipUri)
       val archive = ZipArchive(
@@ -284,15 +301,21 @@ class ZipArchiveProvider(
     }
   }
 
-  private fun resolve(zipUri: Uri): Resolution {
+  private fun resolve(
+    zipUri: Uri,
+    onArchiveCopy: ((name: String, copiedBytes: Long, totalBytes: Long) -> Unit)?,
+  ): Resolution {
     return when (zipUri.scheme) {
       "file" -> Resolution(File(zipUri.path ?: throw IllegalArgumentException("Invalid file uri $zipUri")), null, null)
-      "content" -> resolveContent(zipUri)
+      "content" -> resolveContent(zipUri, onArchiveCopy)
       else -> throw IllegalArgumentException("Unsupported zip uri scheme: $zipUri")
     }
   }
 
-  private fun resolveContent(zipUri: Uri): Resolution {
+  private fun resolveContent(
+    zipUri: Uri,
+    onArchiveCopy: ((name: String, copiedBytes: Long, totalBytes: Long) -> Unit)?,
+  ): Resolution {
     val pfd = context.contentResolver.openFileDescriptor(zipUri, "r")
       ?: throw IllegalArgumentException("Cannot open $zipUri")
     // Trick used by pdfium: many content providers are backed by real files,
@@ -314,9 +337,19 @@ class ZipArchiveProvider(
       val copy = File(File(context.cacheDir, "zip_access"), hash)
       copy.parentFile?.mkdirs()
       if (!copy.exists() || copy.length() == 0L) {
+        val displayName = zipUri.lastPathSegment ?: copy.name
+        val total = pfd.statSize
+        var copied = 0L
+        val buffer = ByteArray(COPY_BUFFER_SIZE)
         ParcelFileDescriptor.AutoCloseInputStream(pfd).use { input ->
           copy.outputStream().use { output ->
-            input.copyTo(output)
+            while (true) {
+              val read = input.read(buffer)
+              if (read < 0) break
+              output.write(buffer, 0, read)
+              copied += read
+              onArchiveCopy?.invoke(displayName, copied, total)
+            }
           }
         }
       } else {
@@ -336,5 +369,6 @@ class ZipArchiveProvider(
     // books are often split over several archives, so keep a couple more around to avoid
     // reopening (and re-reading the central directory of) the same archive over and over
     const val MAX_OPEN_ARCHIVES = 8
+    const val COPY_BUFFER_SIZE = 64 * 1024
   }
 }
