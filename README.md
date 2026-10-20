@@ -14,6 +14,17 @@ Voice turns your own audiobook files into a calm, focused listening library. It 
   <img alt="Voice sleep timer" width="30%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" />
 </p>
 
+## 本地修改（Fork Changes）
+
+这是 [PaulWoitaschek/Voice](https://github.com/PaulWoitaschek/Voice) 的个人分支，在原版基础上增加了以下功能：
+
+- **ZIP 直接播放：** 把整个 ZIP 压缩包（含加密 ZIP，支持密码记忆）当作一本有声书添加并直接播放，无需解压。压缩包内容流式读取并预加载缓存，损坏的压缩包解析尝试会被记录，避免反复重试。
+- **HiFi 模式：** 设置中可开启 32-bit 浮点音频输出，保留高分辨率音源的原始位深。
+- **章节后台补齐：** 初始扫描先尽快把书列入书架，时长与章节信息随后台解析逐步补齐；扫描过程以前台服务通知显示进度。
+- **解析日志：** 应用内可查看最近扫描与解析产生的错误日志，并支持导出保存。
+- **更多格式与排序：** 支持 ADTS/AAC（.aac）文件的时长读取；文件名与章节采用更精确的自然排序。
+- **向下兼容到 Android 6.0：** minSdk 由 28 降至 23（借助 core library desugaring），并补充了中文文案。
+
 ## Why Voice?
 
 - **Made for your files:** Add a folder once and Voice organizes your local M4B, MP3, M4A, OGG, OGA, and OPUS audiobooks.
