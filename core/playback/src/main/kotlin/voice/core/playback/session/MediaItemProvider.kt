@@ -158,23 +158,30 @@ class MediaItemProvider(
   private fun mediaItem(
     playbackItem: PlaybackItem,
     content: BookContent,
-  ) = MediaItem(
-    title = playbackItem.mark.name
-      ?: playbackItem.chapter.name
-      ?: playbackItem.chapter.id.value,
-    mediaId = playbackItem.mediaId,
-    browsable = false,
-    isPlayable = true,
-    sourceUri = playbackItem.chapter.id.toUri(),
-    imageUri = content.cover?.toProvidedUri(),
-    artist = content.author,
-    durationMs = playbackItem.mark.durationMs,
-    clippingConfiguration = ClippingConfiguration.Builder()
-      .setStartPositionMs(playbackItem.mark.startMs)
-      .setEndPositionMs(playbackItem.mark.endMs)
-      .build(),
-    mediaType = MediaType.AudioBookChapter,
-  )
+  ): MediaItem {
+    // While the scan backfills durations in the background, the chapter duration is 0 and its
+    // marks collapse to a tiny range. Clipping to that range would end playback of every item
+    // immediately, so the whole file is played until the real duration is known.
+    val durationKnown = playbackItem.chapter.duration > 0
+    val endPositionMs = playbackItem.mark.endMs.takeIf { durationKnown } ?: C.TIME_END_OF_SOURCE
+    return MediaItem(
+      title = playbackItem.mark.name
+        ?: playbackItem.chapter.name
+        ?: playbackItem.chapter.id.value,
+      mediaId = playbackItem.mediaId,
+      browsable = false,
+      isPlayable = true,
+      sourceUri = playbackItem.chapter.id.toUri(),
+      imageUri = content.cover?.toProvidedUri(),
+      artist = content.author,
+      durationMs = playbackItem.mark.durationMs.takeIf { durationKnown },
+      clippingConfiguration = ClippingConfiguration.Builder()
+        .setStartPositionMs(playbackItem.mark.startMs)
+        .setEndPositionMs(endPositionMs)
+        .build(),
+      mediaType = MediaType.AudioBookChapter,
+    )
+  }
 
   private fun File.toProvidedUri(): Uri = imageFileProvider.uri(this)
 }
