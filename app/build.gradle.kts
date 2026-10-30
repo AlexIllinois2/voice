@@ -116,12 +116,13 @@ android {
     warningsAsErrors = providers.gradleProperty("voice.warningsAsErrors").get().toBooleanStrict()
   }
 
+  // Splits are opt-in via -Pvoice.abiSplits=true; by default only the universal APK is built.
   // The only native code is androidx.graphics:path plus datastore's counter, so each split APK ends up
   // the same size as the universal one; the splits exist to hand out an explicit 32 bit artifact.
   // Keep x86_64 listed, otherwise x86 emulators reject the split with INSTALL_FAILED_NO_MATCHING_ABIS.
   splits {
     abi {
-      isEnable = true
+      isEnable = providers.gradleProperty("voice.abiSplits").orNull?.toBooleanStrictOrNull() == true
       reset()
       include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
       isUniversalApk = true
@@ -163,6 +164,18 @@ tasks.matching {
     )
 }.configureEach {
   enabled = false
+}
+
+// `assembleRelease` defaults to the free flavor; pass `assemblePlayRelease` explicitly for Play.
+afterEvaluate {
+  val assembleRelease = tasks.findByName("assembleRelease")
+  if (assembleRelease != null) {
+    assembleRelease.setDependsOn(listOf("assembleFreeRelease"))
+  } else {
+    tasks.register("assembleRelease") {
+      dependsOn("assembleFreeRelease")
+    }
+  }
 }
 
 dependencies {

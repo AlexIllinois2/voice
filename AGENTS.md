@@ -18,6 +18,7 @@
 ## Commands
 
 - Assemble the free debug app: `./gradlew :app:assembleFreeDebug`.
+- Assemble release: `./gradlew assembleRelease` (defaults to the free flavor, universal APK only; pass `-Pvoice.abiSplits=true` for per-ABI splits).
 - Run all unit tests: `./gradlew voiceUnitTest`.
 - Run unit tests for a library module: `./gradlew :<moduleName>:testDebugUnitTest`.
 - Run app unit tests: `./gradlew :app:testFreeDebugUnitTest`.
