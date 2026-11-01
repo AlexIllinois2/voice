@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import voice.core.data.BookContent
@@ -58,13 +57,25 @@ public class BookContentRepoImpl(private val dao: BookContentDao) : BookContentR
   override suspend fun setAllInactiveExcept(ids: List<BookId>) {
     fillCache()
 
-    cache
-      .updateAndGet { contents ->
-        contents!!.map { content ->
-          content.copy(isActive = content.id in ids)
-        }
-      }!!
-      .forEach { dao.insert(it) }
+    val activeIds = ids.toSet()
+    val current = cache.value!!
+    val updated = current.map { content ->
+      if (content.isActive == (content.id in activeIds)) {
+        content
+      } else {
+        content.copy(isActive = content.id in activeIds)
+      }
+    }
+    if (updated == current) return
+
+    // Only write the rows that actually changed. Re-inserting every book made the scan of an
+    // unchanged library hit the database once per book.
+    updated.zip(current).forEach { (newContent, oldContent) ->
+      if (newContent != oldContent) {
+        dao.insert(newContent)
+      }
+    }
+    cache.value = updated
   }
 
   override suspend fun put(content: BookContent) {

@@ -35,9 +35,9 @@ internal fun BookPlayAppBar(
   val appBarActions: @Composable RowScope.() -> Unit = {
     IconButton(onClick = onSleepTimerClick) {
       val sleepTimerIcon = if (viewState.sleepTimerState is BookPlayViewState.SleepTimerViewState.Disabled) {
-        VoiceIcons.Bedtime
+        VoiceIcons.Timer
       } else {
-        VoiceIcons.BedtimeOff
+        VoiceIcons.TimerOff
       }
       Icon(
         imageVector = sleepTimerIcon,

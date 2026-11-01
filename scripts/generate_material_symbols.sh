@@ -93,6 +93,7 @@ generate_icon speed Speed
 generate_icon tag Tag
 generate_icon timelapse Timelapse
 generate_icon timer Timer
+generate_icon timer_off TimerOff
 generate_icon title Title
 generate_icon undo Undo
 generate_icon view_list ViewList

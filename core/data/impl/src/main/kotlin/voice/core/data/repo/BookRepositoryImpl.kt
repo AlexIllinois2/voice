@@ -6,9 +6,11 @@ import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import voice.core.common.DispatcherProvider
 import voice.core.data.Book
 import voice.core.data.BookContent
 import voice.core.data.BookId
@@ -19,7 +21,10 @@ import voice.core.logging.api.Logger
 public class BookRepositoryImpl(
   private val chapterRepo: ChapterRepoImpl,
   private val contentRepo: BookContentRepo,
+  dispatcherProvider: DispatcherProvider = DispatcherProvider(),
 ) : BookRepository {
+
+  private val ioContext = dispatcherProvider.io
 
   private var warmedUp = false
   private val mutex = Mutex()
@@ -47,6 +52,9 @@ public class BookRepositoryImpl(
             content.book()
           }
       }
+      // building every book means querying the chapter cache and allocating the whole library.
+      // That used to run on the main thread because the UI collects this flow while composing.
+      .flowOn(ioContext)
   }
 
   override suspend fun all(): List<Book> {
@@ -60,6 +68,7 @@ public class BookRepositoryImpl(
       .combine(chapterRepo.updates) { content, _ -> content }
       .map { it?.book() }
       .distinctUntilChanged()
+      .flowOn(ioContext)
   }
 
   override suspend fun get(id: BookId): Book? {

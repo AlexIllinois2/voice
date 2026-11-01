@@ -86,10 +86,8 @@ class MainActivity : AppCompatActivity() {
       LaunchedEffect(backStack.last()) {
         analytics.screenView(backStack.last().trackingName)
       }
-      val themeMode = themeModeStore.data.collectAsState(initial = null).value
-        ?: return@setContent
-      val themeColorScheme = themeColorSchemeStore.data.collectAsState(initial = null).value
-        ?: return@setContent
+      val themeMode = themeModeStore.data.collectAsState(initial = ThemeMode.FollowSystem).value
+      val themeColorScheme = themeColorSchemeStore.data.collectAsState(initial = ThemeColorScheme.VoiceBlue).value
       VoiceTheme(
         themeMode = themeMode,
         themeColorScheme = themeColorScheme,

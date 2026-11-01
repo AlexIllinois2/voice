@@ -2976,6 +2976,96 @@ object VoiceIcons {
       }
       .build()
 
+
+  /*
+   * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/timer_off.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
+   * Generated: 2026-11-01T09:30:00Z
+   */
+  val TimerOff: ImageVector =
+    ImageVector.Builder(
+      name = "TimerOff",
+      defaultWidth = 24.dp,
+      defaultHeight = 24.dp,
+      viewportWidth = 24f,
+      viewportHeight = 24f,
+    )
+      .apply {
+        path(
+          fill = SolidColor(Color.Black),
+          fillAlpha = 1f,
+          stroke = null,
+          strokeAlpha = 1f,
+          strokeLineWidth = 1f,
+          strokeLineCap = StrokeCap.Butt,
+          strokeLineJoin = StrokeJoin.Bevel,
+          strokeLineMiter = 1f,
+          pathFillType = PathFillType.NonZero,
+        ) {
+          moveTo(19.95f, 17.15f)
+          lineToRelative(-1.5f, -1.5f)
+          quadToRelative(0.28f, -0.68f, 0.41f, -1.34f)
+          reflectiveQuadTo(19f, 13f)
+          quadTo(19f, 10.1f, 16.95f, 8.05f)
+          reflectiveQuadTo(12f, 6f)
+          quadTo(11.4f, 6f, 10.73f, 6.13f)
+          reflectiveQuadToRelative(-1.4f, 0.4f)
+          lineTo(7.83f, 5.02f)
+          quadTo(8.78f, 4.52f, 9.84f, 4.26f)
+          reflectiveQuadTo(12f, 4f)
+          quadToRelative(1.5f, 0f, 2.94f, 0.5f)
+          reflectiveQuadToRelative(2.71f, 1.45f)
+          lineToRelative(1.4f, -1.4f)
+          lineToRelative(1.4f, 1.4f)
+          lineToRelative(-1.4f, 1.4f)
+          quadTo(20f, 8.63f, 20.5f, 10.06f)
+          reflectiveQuadTo(21f, 13f)
+          quadToRelative(0f, 1.05f, -0.26f, 2.09f)
+          reflectiveQuadToRelative(-0.79f, 2.06f)
+          close()
+          moveTo(13f, 10.2f)
+          verticalLineTo(8f)
+          horizontalLineTo(11f)
+          verticalLineTo(8.2f)
+          lineToRelative(2f, 2f)
+          close()
+          moveToRelative(6.8f, 12.4f)
+          lineTo(17.4f, 20.2f)
+          quadToRelative(-1.2f, 0.88f, -2.59f, 1.34f)
+          reflectiveQuadTo(12f, 22f)
+          quadTo(10.15f, 22f, 8.51f, 21.29f)
+          reflectiveQuadTo(5.65f, 19.35f)
+          reflectiveQuadTo(3.71f, 16.49f)
+          reflectiveQuadTo(3f, 13f)
+          quadTo(3f, 11.5f, 3.46f, 10.11f)
+          quadTo(3.93f, 8.73f, 4.8f, 7.6f)
+          lineTo(1.4f, 4.2f)
+          lineTo(2.8f, 2.8f)
+          lineTo(21.2f, 21.2f)
+          lineToRelative(-1.4f, 1.4f)
+          close()
+          moveTo(12f, 20f)
+          quadToRelative(1.05f, 0f, 2.05f, -0.32f)
+          reflectiveQuadToRelative(1.88f, -0.93f)
+          lineTo(6.2f, 9.02f)
+          quadTo(5.6f, 9.9f, 5.3f, 10.9f)
+          reflectiveQuadTo(5f, 13f)
+          quadToRelative(0f, 2.9f, 2.05f, 4.95f)
+          reflectiveQuadTo(12f, 20f)
+          close()
+          moveTo(9f, 3f)
+          verticalLineTo(1f)
+          horizontalLineToRelative(6f)
+          verticalLineTo(3f)
+          horizontalLineTo(9f)
+          close()
+          moveToRelative(2.08f, 10.88f)
+          close()
+          moveToRelative(2.82f, -2.8f)
+          close()
+        }
+      }
+      .build()
+
   /*
    * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/title.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
    * Generated: 2026-06-20T11:13:08Z

@@ -46,8 +46,6 @@ internal class MediaScanner(
       }
     }
 
-    contentRepo.setAllInactiveExcept(files.map { BookId(it.uri) })
-
     val probeFile = folders.values.flatten().findProbeFile()
     if (probeFile != null) {
       if (deviceHasPermissionBug.checkForBugAndSet(probeFile)) {
@@ -63,6 +61,10 @@ internal class MediaScanner(
       .forEachIndexed { index, file ->
         scan(file, bookIndex = index + 1, bookCount = files.size, onProgress = onProgress)
       }
+
+    // Only deactivate missing books once the library is listed. Doing it up front emptied the
+    // library in the UI and then made every book pop back in one by one while the scan ran.
+    contentRepo.setAllInactiveExcept(files.map { BookId(it.uri) })
   }
 
   private suspend fun scan(

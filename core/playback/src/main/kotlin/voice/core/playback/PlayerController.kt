@@ -49,23 +49,29 @@ class PlayerController(
   private val mediaItemProvider: MediaItemProvider,
 ) {
 
-  private var _controller: Deferred<MediaController> = newControllerAsync()
+  private var _controller: Deferred<MediaController>? = null
 
   private fun newControllerAsync() = MediaController
     .Builder(context, SessionToken(context, ComponentName(context, PlaybackService::class.java)))
     .buildAsync()
     .asDeferred()
 
+  // The connection starts the playback service and builds the player, so it is only created
+  // once something actually talks to the player. Creating it eagerly slowed down app start.
   private val controller: Deferred<MediaController>
     get() {
-      if (_controller.isCompleted) {
-        val completedController = _controller.getCompleted()
+      val existing = _controller
+      if (existing == null) {
+        return newControllerAsync().also { _controller = it }
+      }
+      if (existing.isCompleted) {
+        val completedController = existing.getCompleted()
         if (!completedController.isConnected) {
           completedController.release()
-          _controller = newControllerAsync()
+          return newControllerAsync().also { _controller = it }
         }
       }
-      return _controller
+      return existing
     }
   private val scope = CoroutineScope(Dispatchers.Main.immediate)
 
