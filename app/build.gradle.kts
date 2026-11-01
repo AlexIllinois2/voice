@@ -1,6 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.android.build.api.dsl.ManagedVirtualDevice
+import com.android.build.api.variant.VariantOutputConfiguration.OutputType
 import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import java.util.Properties
 
@@ -138,6 +139,18 @@ android {
 
   buildFeatures {
     buildConfig = true
+  }
+}
+
+// Debug-signed release APKs get a fixed file name so CI and local builds produce the same artifact name.
+// Per-ABI splits keep their default names to avoid clashing with each other.
+androidComponents {
+  onVariants(selector().withBuildType("release")) { variant ->
+    variant.outputs.forEach { output ->
+      if (output.outputType != OutputType.ONE_OF_MANY) {
+        output.outputFileName.set("voice-release-debug-signed.apk")
+      }
+    }
   }
 }
 
