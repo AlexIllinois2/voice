@@ -20,7 +20,9 @@ captures
 google-services.json
 local.properties
 play_service_account.json
-/signing
+/signing/*
+!/signing/.gitignore
+!/signing/debug.keystore
 releases
 reports
 testResults

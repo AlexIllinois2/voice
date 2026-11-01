@@ -38,13 +38,29 @@ jobs:
           echo "version_name=$major.$minor.$patch" >> "$GITHUB_OUTPUT"
           echo "version_code=$version_code" >> "$GITHUB_OUTPUT"
 
-      - name: Build unsigned release APKs
+      - name: Setup debug signing
+        run: |
+          cp signing/debug.keystore signing/signing.keystore
+          cat > signing/signing.properties <<'EOF'
+          STORE_PASSWORD=android
+          KEY_ALIAS=androiddebugkey
+          KEY_PASSWORD=android
+          EOF
+
+      - name: Build debug-signed release APKs
         run: |
           ./gradlew :app:assembleFreeRelease \
             -Pvoice.versionName="${{ steps.version.outputs.version_name }}" \
             -Pvoice.versionCode="${{ steps.version.outputs.version_code }}"
           mkdir -p artifacts
           cp app/build/outputs/apk/free/release/*.apk artifacts/
+
+      - name: Verify debug signature
+        run: |
+          apksigner="$(find "$ANDROID_HOME/build-tools" -maxdepth 2 -name apksigner | sort -V | tail -1)"
+          for apk in artifacts/*.apk; do
+            "$apksigner" verify --print-certs "$apk"
+          done
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
