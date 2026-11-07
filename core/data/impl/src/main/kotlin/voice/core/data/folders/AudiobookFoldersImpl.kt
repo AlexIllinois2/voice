@@ -74,7 +74,7 @@ internal constructor(
     return cachedDocumentFileFactory.create(uri)
   }
 
-  public override fun add(
+  public override suspend fun add(
     uri: Uri,
     type: FolderType,
   ) {
@@ -87,10 +87,10 @@ internal constructor(
     } catch (_: SecurityException) {
       Logger.w("Could not release uri permission for $uri")
     }
-    scope.launch {
-      dataStore(type).updateData {
-        it + uri
-      }
+    // suspend until the folder is persisted, otherwise a scan started right after adding the
+    // folder can miss it and the new book only shows up after the next scan
+    dataStore(type).updateData {
+      it + uri
     }
   }
 

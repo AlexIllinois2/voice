@@ -67,8 +67,9 @@ internal constructor(
     }
     val oldJob = scanningJob
     scanningJob = scope.launch {
-      scannerActive.value = true
+      // the cancelled job resets the flag in its finally block, so it has to be set afterwards
       oldJob?.cancelAndJoin()
+      scannerActive.value = true
 
       val books = try {
         measureTime {

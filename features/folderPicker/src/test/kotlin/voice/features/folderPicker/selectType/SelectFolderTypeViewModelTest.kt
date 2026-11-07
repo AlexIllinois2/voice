@@ -36,6 +36,7 @@ class SelectFolderTypeViewModelTest {
       dispatcherProvider = DispatcherProvider(coroutineContext, coroutineContext, coroutineContext),
       audiobookFolders = mockk(),
       navigator = mockk(),
+      mediaScanTrigger = mockk(),
       documentFileFactory = FileBasedDocumentFactory,
       uri = audiobookFolder.toUri(),
       documentFile = DocumentFile.fromFile(audiobookFolder),

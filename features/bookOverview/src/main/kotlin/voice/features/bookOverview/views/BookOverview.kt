@@ -1,5 +1,6 @@
 package voice.features.bookOverview.views
 
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
@@ -246,6 +247,12 @@ internal fun BookOverview(
     dialog = viewState.dialog,
     onFolderPickerMovedDialogDismiss = onFolderPickerMovedDialogDismiss,
   )
+
+  // Registered after the search bar so it wins over the search bar's own back handling: leaving
+  // the search must always work, even if the search bar ended up in a stuck expanded state.
+  BackHandler(enabled = viewState.searchActive) {
+    onSearchActiveChange(false)
+  }
 }
 
 @Composable

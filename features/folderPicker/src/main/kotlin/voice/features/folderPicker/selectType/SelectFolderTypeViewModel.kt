@@ -12,8 +12,10 @@ import androidx.documentfile.provider.DocumentFile
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import voice.core.common.DispatcherProvider
+import voice.core.common.MainScope
 import voice.core.data.audioFileCount
 import voice.core.data.folders.AudiobookFolders
 import voice.core.data.folders.FolderType
@@ -21,6 +23,7 @@ import voice.core.data.isAudioFile
 import voice.core.documentfile.CachedDocumentFile
 import voice.core.documentfile.CachedDocumentFileFactory
 import voice.core.documentfile.nameWithoutExtension
+import voice.core.scanner.MediaScanTrigger
 import voice.navigation.Destination
 import voice.navigation.Navigator
 import voice.navigation.Origin
@@ -30,6 +33,7 @@ class SelectFolderTypeViewModel(
   private val dispatcherProvider: DispatcherProvider,
   private val audiobookFolders: AudiobookFolders,
   private val navigator: Navigator,
+  private val mediaScanTrigger: MediaScanTrigger,
   private val documentFileFactory: CachedDocumentFileFactory,
   @Assisted
   private val uri: Uri,
@@ -39,6 +43,7 @@ class SelectFolderTypeViewModel(
   private val origin: Origin,
 ) {
 
+  private val scope = MainScope(dispatcherProvider)
   private var selectedFolderMode: MutableState<FolderMode?> = mutableStateOf(null)
 
   private fun CachedDocumentFile.defaultFolderMode(): FolderMode {
@@ -66,21 +71,24 @@ class SelectFolderTypeViewModel(
   }
 
   internal fun add() {
-    audiobookFolders.add(
-      uri = uri,
-      type = when (selectedFolderMode.value) {
-        FolderMode.Audiobooks -> FolderType.Root
-        FolderMode.SingleBook -> FolderType.SingleFolder
-        FolderMode.Authors -> FolderType.Author
-        null -> error("Add should not be clickable at this point")
-      },
-    )
-    when (origin) {
-      Origin.Default -> {
-        navigator.setRoot(Destination.BookOverview)
-      }
-      Origin.Onboarding -> {
-        navigator.goTo(Destination.OnboardingCompletion)
+    scope.launch {
+      audiobookFolders.add(
+        uri = uri,
+        type = when (selectedFolderMode.value) {
+          FolderMode.Audiobooks -> FolderType.Root
+          FolderMode.SingleBook -> FolderType.SingleFolder
+          FolderMode.Authors -> FolderType.Author
+          null -> error("Add should not be clickable at this point")
+        },
+      )
+      mediaScanTrigger.scan(restartIfScanning = true)
+      when (origin) {
+        Origin.Default -> {
+          navigator.setRoot(Destination.BookOverview)
+        }
+        Origin.Onboarding -> {
+          navigator.goTo(Destination.OnboardingCompletion)
+        }
       }
     }
   }

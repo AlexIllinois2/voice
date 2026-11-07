@@ -2,6 +2,7 @@ package voice.core.data.repo
 
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.SingleIn
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onStart
@@ -14,6 +15,7 @@ import voice.core.data.runForMaxSqlVariableNumber
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.Duration.Companion.seconds
 
+@SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
 public class ChapterRepoImpl(private val dao: ChapterDao) : ChapterRepo {
 
