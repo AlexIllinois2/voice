@@ -1,12 +1,13 @@
 # Voice
 
-[![CI](https://github.com/PaulWoitaschek/Voice/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/PaulWoitaschek/Voice/actions/workflows/ci.yml)
-[![Translation status](https://hosted.weblate.org/widgets/voice/-/svg-badge.svg)](https://hosted.weblate.org/engage/voice/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://voice.woitaschek.de/license/)
+[![Latest release](https://img.shields.io/github/v/release/AlexIllinois2/voice?display_name=tag&sort=semver)](https://github.com/AlexIllinois2/voice/releases/latest)
+
+**English** | [简体中文](README.zh-CN.md)
 
 **A minimalistic, user-focused audiobook player for Android, built for reliability and simplicity.**
 
-Voice turns your own audiobook files into a calm, focused listening library. It remembers where you stopped, keeps playback controls close, and includes the audiobook-specific details that generic music players miss: chapter navigation, sleep timer, bookmarks, playback speed, silence skipping, and auto-rewind after pauses.
+This repository is a personal fork of [PaulWoitaschek/Voice](https://github.com/PaulWoitaschek/Voice). It keeps the original design and philosophy, and adds the features I use every day — most importantly playing audiobooks straight from ZIP archives.
 
 <p align="center">
   <img alt="Voice library view" width="30%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_en-US.png" />
@@ -14,56 +15,43 @@ Voice turns your own audiobook files into a calm, focused listening library. It 
   <img alt="Voice sleep timer" width="30%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/3_en-US.png" />
 </p>
 
-## 本地修改（Fork Changes）
+## What this fork adds
 
-这是 [PaulWoitaschek/Voice](https://github.com/PaulWoitaschek/Voice) 的个人分支，在原版基础上增加了以下功能：
+- **ZIP playback:** Add a whole ZIP archive — including encrypted ZIPs, with remembered passwords — as a single audiobook and play it without extracting. Entries are read as a stream and preloaded into a cache; archives that fail to parse are recorded so they are not retried on every scan.
+- **HiFi mode:** Optional 32-bit float audio output that preserves the original bit depth of high-resolution sources. Restart the app after changing it.
+- **Progressive chapter enrichment:** Books show up in the library as soon as scanning finds them, and durations and chapter details are filled in the background. Scan progress is shown in a foreground service notification.
+- **Parse log:** Inspect the errors produced by the latest scan and parsing runs inside the app, and export them.
+- **More formats, better ordering:** Duration detection for ADTS/AAC (`.aac`) files, and more precise natural sorting for file and chapter names.
+- **Android 6.0 and up:** `minSdk` lowered from 28 to 23 (with core library desugaring), plus Chinese translations.
 
-- **ZIP 直接播放：** 把整个 ZIP 压缩包（含加密 ZIP，支持密码记忆）当作一本有声书添加并直接播放，无需解压。压缩包内容流式读取并预加载缓存，损坏的压缩包解析尝试会被记录，避免反复重试。
-- **HiFi 模式：** 设置中可开启 32-bit 浮点音频输出，保留高分辨率音源的原始位深。
-- **章节后台补齐：** 初始扫描先尽快把书列入书架，时长与章节信息随后台解析逐步补齐；扫描过程以前台服务通知显示进度。
-- **解析日志：** 应用内可查看最近扫描与解析产生的错误日志，并支持导出保存。
-- **更多格式与排序：** 支持 ADTS/AAC（.aac）文件的时长读取；文件名与章节采用更精确的自然排序。
-- **向下兼容到 Android 6.0：** minSdk 由 28 降至 23（借助 core library desugaring），并补充了中文文案。
+## Core features
 
-## Why Voice?
-
-- **Made for your files:** Add a folder once and Voice organizes your local M4B, MP3, M4A, OGG, OGA, and OPUS audiobooks.
-- **Built for listening:** Resume positions, bookmarks, sleep timer fade-out, volume boost, speed control, and Android Auto support are part of the core experience.
+- **Made for your files:** Point Voice at a folder once and it organizes your local M4B, MP3, M4A, OGG, OGA, OPUS, AAC, and ZIP audiobooks.
+- **Built for listening:** Resume positions, bookmarks, sleep timer with fade-out, volume boost, speed control, silence skipping, auto-rewind after pauses, and Android Auto support.
 - **Private and uncluttered:** No account, no ads, no forced cloud sync. Your library stays on your device.
 
 ## Download
 
-<a href="https://play.google.com/store/apps/details?id=de.ph1b.audiobook">
-  <img alt="Get it on Google Play"
-       height="70"
-       src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" />
-</a>
-<a href="https://f-droid.org/packages/de.ph1b.audiobook/">
-  <img alt="Get it on F-Droid"
-       height="70"
-       src="https://f-droid.org/badge/get-it-on.png" />
-</a>
+Prebuilt APKs are attached to the [Releases](https://github.com/AlexIllinois2/voice/releases) page. They are signed with Android's debug key, which is fine for sideloading and testing but not for publishing to a store.
 
-## Learn more
+The upstream app is available on [Google Play](https://play.google.com/store/apps/details?id=de.ph1b.audiobook) and [F-Droid](https://f-droid.org/packages/de.ph1b.audiobook/); its [documentation website](https://voice.woitaschek.de) covers features, library organization, and the FAQ.
 
-The [documentation website](https://voice.woitaschek.de) covers features, the philosophy behind the app, how to organize your library, and the FAQ.
+## Build from source
+
+Requirements: JDK 25 and an Android SDK.
+
+```bash
+./gradlew :app:assembleFreeDebug      # free flavor, debug APK
+./gradlew :app:assembleFreeRelease    # free flavor, release APK
+./gradlew voiceUnitTest               # all unit tests
+```
+
+Release builds are configured for the `free` flavor; `assembleRelease` defaults to it as well. Pass `-Pvoice.abiSplits=true` for per-ABI APKs.
 
 ## Contributing
 
-Contributions are very welcome: code, translations, bug reports, or ideas. Start with [Development](https://voice.woitaschek.de/development/) and [Architecture](https://voice.woitaschek.de/architecture/), or help translate Voice on [Weblate](https://hosted.weblate.org/engage/voice/).
+This is a personal fork, so upstream-facing fixes and features are best sent to [PaulWoitaschek/Voice](https://github.com/PaulWoitaschek/Voice). Issues and pull requests about the fork-specific features above are welcome here.
 
-## Support Voice
+## Credits and license
 
-Voice is free and built in spare time. If it has been useful to you, consider chipping in. One-time or monthly, no sign-up required:
-
-<a href="https://ko-fi.com/paul_voice">
-  <img alt="Support on Ko-fi"
-       height="50"
-       src="https://storage.ko-fi.com/cdn/brandasset/v2/support_me_on_kofi_dark.png" />
-</a>
-
-You can also [sponsor on GitHub](https://github.com/sponsors/PaulWoitaschek) if you prefer.
-
-## License
-
-Voice is licensed under [GNU GPLv3](https://voice.woitaschek.de/license/). By contributing, you agree to license your code under the same terms.
+Voice was created by [Paul Woitaschek](https://github.com/PaulWoitaschek) and is licensed under [GNU GPLv3](https://voice.woitaschek.de/license/). This fork keeps the same license; by contributing you agree to license your code under the same terms.
