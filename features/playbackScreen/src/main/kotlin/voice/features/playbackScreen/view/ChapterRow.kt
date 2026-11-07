@@ -3,7 +3,6 @@ package voice.features.playbackScreen.view
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -51,22 +50,12 @@ internal fun ChapterRow(
       horizontalArrangement = Arrangement.Center,
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      if (nextPreviousVisible) {
-        Spacer(modifier = Modifier.size(28.dp))
-      }
       Text(
         modifier = Modifier.padding(horizontal = 4.dp),
         text = chapterName,
         style = MaterialTheme.typography.bodyLarge,
         textAlign = TextAlign.Center,
       )
-      if (nextPreviousVisible) {
-        Icon(
-          modifier = Modifier.size(28.dp),
-          imageVector = VoiceIcons.ExpandMore,
-          contentDescription = stringResource(id = R.string.playback_chapter_next),
-        )
-      }
     }
     if (nextPreviousVisible) {
       IconButton(onClick = onSkipToNext) {

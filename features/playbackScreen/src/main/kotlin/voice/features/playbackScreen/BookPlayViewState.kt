@@ -48,16 +48,20 @@ internal sealed interface BookPlayDialogViewState {
     val maxGain: Decibel,
   ) : BookPlayDialogViewState
 
-  data class SelectChapterDialog(val items: List<ItemViewState>) : BookPlayDialogViewState {
-
-    data class ItemViewState(
-      val number: Int,
-      val name: String,
-      val active: Boolean,
-      val time: String,
-    )
-  }
-
   @JvmInline
   value class SleepTimer(val viewState: SleepTimerViewState) : BookPlayDialogViewState
+}
+
+@Immutable
+data class ChapterListViewState(
+  val title: String,
+  val items: List<Item>,
+) {
+  @Immutable
+  data class Item(
+    val number: Int,
+    val name: String,
+    val active: Boolean,
+    val time: String,
+  )
 }

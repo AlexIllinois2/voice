@@ -37,6 +37,8 @@ import voice.core.sleeptimer.SleepTimerMode
 import voice.core.sleeptimer.SleepTimerMode.TimedWithDuration
 import voice.core.sleeptimer.SleepTimerState
 import voice.features.sleepTimer.SleepTimerViewState
+import voice.navigation.Destination
+import voice.navigation.Navigator
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -79,6 +81,7 @@ class BookPlayViewModelTest {
   private val currentBookResolver = mockk<CurrentBookResolver> {
     coEvery { book(book.id) } returns book
   }
+  private val navigator = mockk<Navigator>(relaxed = true)
   private val viewModel = BookPlayViewModel(
     bookRepository = mockk {
       coEvery { get(book.id) } returns book
@@ -91,7 +94,7 @@ class BookPlayViewModelTest {
     sleepTimer = sleepTimer,
     playStateManager = playStateManager,
     currentBookStoreId = currentBookStoreId,
-    navigator = mockk(),
+    navigator = navigator,
     bookmarkRepository = mockk {
       coEvery { addBookmarkAtBookPosition(book, any(), any()) } returns Bookmark(
         bookId = book.id,
@@ -170,74 +173,29 @@ class BookPlayViewModelTest {
   }
 
   @Test
-  fun onCurrentChapterClickShowsDialogWithCorrectState() = scope.runTest {
+  fun onCurrentChapterClickNavigatesToChapterSelection() = scope.runTest {
     viewModel.onCurrentChapterClick()
     yield()
 
-    val dialogState = assertIs<BookPlayDialogViewState.SelectChapterDialog>(viewModel.dialogState.value)
-
-    assertEquals(
-      expected = listOf(
-        BookPlayDialogViewState.SelectChapterDialog.ItemViewState(
-          number = 1,
-          name = "Chapter Start",
-          active = false,
-          time = "0:00",
-        ),
-        BookPlayDialogViewState.SelectChapterDialog.ItemViewState(
-          number = 2,
-          name = "Middle Section",
-          active = false,
-          time = "2:00",
-        ),
-        BookPlayDialogViewState.SelectChapterDialog.ItemViewState(
-          number = 3,
-          name = "Final Section",
-          active = false,
-          time = "4:00",
-        ),
-        BookPlayDialogViewState.SelectChapterDialog.ItemViewState(
-          number = 4,
-          name = "Chapter Start",
-          active = false,
-          time = "5:00",
-        ),
-        BookPlayDialogViewState.SelectChapterDialog.ItemViewState(
-          number = 5,
-          name = "Middle Section",
-          active = true,
-          time = "7:00",
-        ),
-        BookPlayDialogViewState.SelectChapterDialog.ItemViewState(
-          number = 6,
-          name = "Final Section",
-          active = false,
-          time = "9:00",
-        ),
-      ),
-      actual = dialogState.items,
-    )
+    verify(exactly = 1) {
+      navigator.goTo(Destination.ChapterSelection(book.id))
+    }
   }
 
   @Test
-  fun onChapterClickSetsPositionAndDismissesDialog() = scope.runTest {
+  fun onChapterClickSetsPositionAndGoesBack() = scope.runTest {
     every { player.setPosition(any(), any()) } just Runs
-
-    viewModel.onCurrentChapterClick()
-    yield()
-
-    assertIs<BookPlayDialogViewState.SelectChapterDialog>(viewModel.dialogState.value)
 
     viewModel.onChapterClick(number = 2)
     yield()
 
-    // Verify player.setPosition was called with correct parameters
     // The second mark starts at 2 minutes position in the first chapter
     verify(exactly = 1) {
       player.setPosition(time = 2.minutes.inWholeMilliseconds, id = book.chapters.first().id)
     }
-
-    assertEquals(expected = null, actual = viewModel.dialogState.value)
+    verify(exactly = 1) {
+      navigator.goBack()
+    }
   }
 
   @Test

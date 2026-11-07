@@ -11,20 +11,15 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SheetValue.Expanded
-import androidx.compose.material3.SheetValue.Hidden
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.retain.retain
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -39,7 +34,6 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.IntoSet
 import dev.zacsweers.metro.Provides
-import kotlinx.coroutines.launch
 import voice.core.common.rootGraphAs
 import voice.core.data.BookId
 import voice.core.ui.PlayButton
@@ -91,8 +85,6 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
   }
   val viewState = bookOverviewViewModel.state()
 
-  val scope = rememberCoroutineScope()
-
   val getContentLauncher = rememberLauncherForActivityResult(
     contract = ActivityResultContracts.GetContent(),
     onResult = { uri ->
@@ -102,14 +94,14 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
     },
   )
 
-  var showBottomSheet by remember { mutableStateOf(false) }
+  var showContextMenu by remember { mutableStateOf(false) }
   BookOverview(
     viewState = viewState,
     onSettingsClick = bookOverviewViewModel::onSettingsClick,
     onBookClick = bookOverviewViewModel::onBookClick,
     onBookLongClick = { bookId ->
       bottomSheetViewModel.bookSelected(bookId)
-      showBottomSheet = true
+      showContextMenu = true
     },
     onBookFolderClick = bookOverviewViewModel::onBookFolderClick,
     onFolderPickerMovedDialogDismiss = bookOverviewViewModel::onFolderPickerMovedDialogDismiss,
@@ -139,32 +131,24 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
     )
   }
 
-  if (showBottomSheet) {
-    val sheetState = rememberBottomSheetState(
-      initialValue = Hidden,
-      enabledValues = setOf(Hidden, Expanded),
-    )
-    ModalBottomSheet(
-      modifier = modifier,
-      sheetState = sheetState,
-      content = {
+  if (showContextMenu) {
+    AlertDialog(
+      onDismissRequest = {
+        showContextMenu = false
+      },
+      text = {
         BottomSheetContent(
           state = bottomSheetViewModel.state.value,
           onItemClick = { item ->
+            showContextMenu = false
             if (item == BottomSheetItem.FileCover) {
               getContentLauncher.launch("image/*")
             }
-            scope.launch {
-              sheetState.hide()
-              bottomSheetViewModel.onItemClick(item)
-              showBottomSheet = false
-            }
+            bottomSheetViewModel.onItemClick(item)
           },
         )
       },
-      onDismissRequest = {
-        showBottomSheet = false
-      },
+      confirmButton = {},
     )
   }
 }

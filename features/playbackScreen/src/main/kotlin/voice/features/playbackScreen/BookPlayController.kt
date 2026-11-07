@@ -76,27 +76,23 @@ fun BookPlayScreen(bookId: BookId) {
     useLandscapeLayout = LocalConfiguration.current.orientation == ORIENTATION_LANDSCAPE,
     snackbarHostState = snackbarHostState,
   )
-  if (dialogState != null) {
-    when (dialogState) {
-      is BookPlayDialogViewState.SpeedDialog -> {
-        SpeedDialog(dialogState, viewModel)
-      }
-      is BookPlayDialogViewState.VolumeGainDialog -> {
-        VolumeGainDialog(dialogState, viewModel)
-      }
-      is BookPlayDialogViewState.SelectChapterDialog -> {
-        SelectChapterDialog(dialogState, viewModel)
-      }
-      is BookPlayDialogViewState.SleepTimer -> {
-        SleepTimerDialog(
-          viewState = dialogState.viewState,
-          onDismiss = viewModel::dismissDialog,
-          onIncrementSleepTime = viewModel::incrementSleepTime,
-          onDecrementSleepTime = viewModel::decrementSleepTime,
-          onAcceptSleepTime = viewModel::onAcceptSleepTime,
-          onAcceptSleepAtEndOfChapter = viewModel::onAcceptSleepAtEndOfChapter,
-        )
-      }
+  when (val dialog = dialogState) {
+    null -> Unit
+    is BookPlayDialogViewState.SpeedDialog -> {
+      SpeedDialog(dialog, viewModel)
+    }
+    is BookPlayDialogViewState.VolumeGainDialog -> {
+      VolumeGainDialog(dialog, viewModel)
+    }
+    is BookPlayDialogViewState.SleepTimer -> {
+      SleepTimerDialog(
+        viewState = dialog.viewState,
+        onDismiss = viewModel::dismissDialog,
+        onIncrementSleepTime = viewModel::incrementSleepTime,
+        onDecrementSleepTime = viewModel::decrementSleepTime,
+        onAcceptSleepTime = viewModel::onAcceptSleepTime,
+        onAcceptSleepAtEndOfChapter = viewModel::onAcceptSleepAtEndOfChapter,
+      )
     }
   }
 }

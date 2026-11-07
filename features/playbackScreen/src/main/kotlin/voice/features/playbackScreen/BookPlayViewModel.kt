@@ -116,7 +116,6 @@ class BookPlayViewModel(
       persistedBook
     }
     val isPlaying = livePlaybackState?.isPlaying ?: (managerPlayState == PlayStateManager.PlayState.Playing)
-
     val currentMark = book.currentChapter.markForPosition(book.content.positionInChapter)
     val positionInCurrentMark = if (isPlaying && currentMark.durationMs > 0) {
       val relativePosition = book.content.positionInChapter - currentMark.startMs
@@ -257,27 +256,33 @@ class BookPlayViewModel(
     navigator.goBack()
   }
 
-  fun onCurrentChapterClick() {
-    scope.launch {
-      val book = currentBook() ?: return@launch
-      dialogState.value = selectChapterDialogState(book)
-    }
+  @Composable
+  fun chapterListViewState(): ChapterListViewState? {
+    val book = remember(bookId) {
+      bookRepository.flow(bookId).filterNotNull()
+    }.collectAsState(initial = null).value ?: return null
+    return ChapterListViewState(
+      title = book.content.name,
+      items = chapterItems(book),
+    )
   }
 
-  private fun selectChapterDialogState(book: Book): BookPlayDialogViewState.SelectChapterDialog {
-    return BookPlayDialogViewState.SelectChapterDialog(
-      items = book.chapters.flatMapIndexed { chapterIndex, chapter ->
-        chapter.chapterMarks.mapIndexed { markIndex, chapterMark ->
-          val previousChapters = book.chapters.take(chapterIndex)
-          BookPlayDialogViewState.SelectChapterDialog.ItemViewState(
-            number = previousChapters.sumOf { it.chapterMarks.count() } + markIndex + 1,
-            name = chapterMark.name ?: "",
-            active = chapterMark == book.currentMark && chapter == book.currentChapter,
-            time = formatTime(previousChapters.sumOf { it.duration } + chapterMark.startMs),
-          )
-        }
-      },
-    )
+  fun onCurrentChapterClick() {
+    navigator.goTo(Destination.ChapterSelection(bookId))
+  }
+
+  private fun chapterItems(book: Book): List<ChapterListViewState.Item> {
+    return book.chapters.flatMapIndexed { chapterIndex, chapter ->
+      chapter.chapterMarks.mapIndexed { markIndex, chapterMark ->
+        val previousChapters = book.chapters.take(chapterIndex)
+        ChapterListViewState.Item(
+          number = previousChapters.sumOf { it.chapterMarks.count() } + markIndex + 1,
+          name = chapterMark.name ?: "",
+          active = chapterMark == book.currentMark && chapter == book.currentChapter,
+          time = formatTime(previousChapters.sumOf { it.duration } + chapterMark.startMs),
+        )
+      }
+    }
   }
 
   fun onChapterClick(number: Int) {
@@ -289,7 +294,7 @@ class BookPlayViewModel(
           currentIndex++
           if (currentIndex == number - 1) {
             player.setPosition(mark.startMs, chapter.id)
-            dialogState.value = null
+            navigator.goBack()
             return@launch
           }
         }
