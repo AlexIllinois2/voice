@@ -20,6 +20,12 @@ sealed interface TranscodeState {
      * progress.
      */
     val progressPercent: Int?,
+    /**
+     * True when the conversion was triggered by the automatic chapter transition buffering, so
+     * the previous chapter keeps playing and the UI may only show a non intrusive hint. False
+     * when the user actively waits for this file, so the UI may show a blocking overlay.
+     */
+    val auto: Boolean,
   ) : TranscodeState
 
   data class Failed(

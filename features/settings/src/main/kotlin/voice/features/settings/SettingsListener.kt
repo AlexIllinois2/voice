@@ -27,7 +27,6 @@ interface SettingsListener {
   fun setAutoSleepTimerStart(time: LocalTime)
   fun setAutoSleepTimerEnd(time: LocalTime)
   fun toggleAnalytics()
-  fun openFolderPicker()
   fun openLogViewer()
   fun onAppVersionClick()
 
@@ -57,7 +56,6 @@ interface SettingsListener {
       override fun setAutoSleepTimerStart(time: LocalTime) {}
       override fun setAutoSleepTimerEnd(time: LocalTime) {}
       override fun toggleAnalytics() {}
-      override fun openFolderPicker() {}
       override fun openLogViewer() {}
       override fun onAppVersionClick() {}
       override fun openDeveloperMenu() {}

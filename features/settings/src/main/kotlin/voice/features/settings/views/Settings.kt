@@ -100,22 +100,6 @@ private fun Settings(
         }
       }
       item {
-        ListItem(
-          modifier = Modifier.clickable { listener.openFolderPicker() },
-          leadingContent = {
-            Icon(
-              imageVector = VoiceIcons.Book,
-              contentDescription = stringResource(StringsR.string.library_folders_title),
-            )
-          },
-          supportingContent = {
-            Text(stringResource(StringsR.string.settings_library_folders_summary))
-          },
-        ) {
-          Text(stringResource(StringsR.string.library_folders_title))
-        }
-      }
-      item {
         ThemeModeRow(viewState.themeMode, listener::onThemeModeRowClick)
       }
       if (viewState.showThemeColorSchemePref) {

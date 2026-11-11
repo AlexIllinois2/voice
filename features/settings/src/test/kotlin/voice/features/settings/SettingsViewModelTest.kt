@@ -187,15 +187,6 @@ class SettingsViewModelTest {
   }
 
   @Test
-  fun `openFolderPicker navigates to folder picker`() {
-    viewModel.openFolderPicker()
-
-    verify(exactly = 1) {
-      navigator.goTo(Destination.FolderPicker)
-    }
-  }
-
-  @Test
   fun `view state shows support development when included`() = scope.runTest {
     every { appInfoProvider.supportDevelopmentIncluded } returns true
 

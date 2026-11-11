@@ -36,7 +36,7 @@
     <string name="library.category.current.title">Τρέχον</string>
     <string name="library.category.not_started.title">Μη διαβασμένα</string>
     <string name="library.empty.add_first_book">Ας προσθέσουμε το φάκελο των ηχητικών βιβλίων για να αρχίσετε την ακρόαση!</string>
-    <string name="library.folders.title">Φάκελοι Audiobook</string>
+<string name="library.folders.title">Φάκελοι Audiobook</string>
     <string name="library.search.hint">Τι ψάχνετε;</string>
     <string name="media_session.library.recent">Πρόσφατα</string>
     <string name="media_session.library.root">Όλα τα ηχητικά βιβλία</string>

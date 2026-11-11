@@ -54,9 +54,7 @@
     <string name="library.category.current.title">Aktuální</string>
     <string name="library.category.not_started.title">Doposud nespuštěno</string>
     <string name="library.empty.add_first_book">Pojďme přidat vaši složku s audioknihami ať můžete začít poslouchat!</string>
-    <string name="library.folders.title">Složky s audioknihami</string>
-    <string name="library.folders.moved.dialog.title">Složky audioknih přesunuty</string>
-    <string name="library.folders.moved.dialog.message">Složky audioknih teď můžete spravovat v Nastavení.</string>
+<string name="library.folders.title">Složky s audioknihami</string>
     <string name="library.search.hint">Co hledáte?</string>
     <string name="library.storage_permission_bug.action">Udělit oprávnění</string>
     <string name="library.storage_permission_bug.message">U některých zařízení chybí systémové aplikaci potřebná oprávnění pro přístup k externímu úložišti. Tento přístup je nezbytný, aby Voice mohl číst vaše audioknihy.</string>
@@ -112,7 +110,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Nastavit čas startu</string>
     <string name="settings.auto_sleep_timer.summary">Automatické spuštění časovače spánku při zahájení přehrávání mezi %1$s a %2$s</string>
     <string name="settings.auto_sleep_timer.title">Automatický časovač spánku</string>
-    <string name="settings.library.folders.summary">Spravovat složky pro prohledávání audioknih</string>
     <string name="settings.library.use_grid.title">Použít rozložení mřížky</string>
     <string name="settings.playback.auto_rewind.title">Automaticky přetočit</string>
     <string name="settings.playback.seek_time.title">Přeskočit o</string>

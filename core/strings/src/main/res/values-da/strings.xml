@@ -49,7 +49,7 @@
     <string name="library.category.current.title">Nuværende</string>
     <string name="library.category.not_started.title">Endnu ikke startet</string>
     <string name="library.empty.add_first_book">Lad os tilføje din lydbogsmappe, så du kan begynde at lytte!</string>
-    <string name="library.folders.title">Lydbogsmapper</string>
+<string name="library.folders.title">Lydbogsmapper</string>
     <string name="library.search.hint">Hvad leder du efter?</string>
     <string name="library.storage_permission_bug.action">Giv tilladelse</string>
     <string name="library.storage_permission_bug.message">På visse enheder mangler en system-app den nødvendige tilladelse til at få adgang til det eksterne lager. Denne adgang er afgørende for, at Voice kan læse dine lydbøger.</string>

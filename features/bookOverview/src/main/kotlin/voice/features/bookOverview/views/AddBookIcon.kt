@@ -10,7 +10,7 @@ import voice.core.ui.icons.VoiceIcons
 import voice.core.strings.R as StringsR
 
 @Composable
-internal fun BookFolderIcon(
+internal fun AddBookIcon(
   withHint: Boolean,
   onClick: () -> Unit,
   modifier: Modifier = Modifier,
@@ -18,8 +18,8 @@ internal fun BookFolderIcon(
   Box(modifier) {
     IconButton(onClick = onClick) {
       Icon(
-        imageVector = VoiceIcons.Book,
-        contentDescription = stringResource(StringsR.string.library_folders_title),
+        imageVector = VoiceIcons.Add,
+        contentDescription = stringResource(StringsR.string.common_action_add),
       )
     }
     if (withHint) {

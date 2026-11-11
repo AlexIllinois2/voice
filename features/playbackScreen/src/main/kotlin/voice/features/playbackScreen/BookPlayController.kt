@@ -47,6 +47,20 @@ fun BookPlayScreen(
   val bookmarkAddedMessage = stringResource(StringsR.string.bookmark_added_snackbar)
   val batteryOptimizationMessage = stringResource(StringsR.string.playback_battery_optimization_rationale)
   val batteryOptimizationAction = stringResource(StringsR.string.playback_battery_optimization_action)
+  val transcodeRunningTemplate = stringResource(StringsR.string.transcode_running_title)
+  val autoTranscodeRunning = (transcodeState as? TranscodeState.Running)?.takeIf { it.auto }
+  LaunchedEffect(autoTranscodeRunning?.fileName) {
+    if (autoTranscodeRunning != null) {
+      // The previous chapter keeps playing during an automatic chapter transition, so the
+      // conversion is only announced non intrusively and disappears once it is done.
+      snackbarHostState.showSnackbar(
+        message = transcodeRunningTemplate.format(autoTranscodeRunning.fileName),
+        duration = SnackbarDuration.Indefinite,
+      )
+    } else {
+      snackbarHostState.currentSnackbarData?.dismiss()
+    }
+  }
   LaunchedEffect(viewModel) {
     viewModel.viewEffects.collect { viewEffect ->
       when (viewEffect) {
@@ -89,7 +103,9 @@ fun BookPlayScreen(
       )
     }
     (transcodeState as? TranscodeState.Running)?.let { running ->
-      TranscodeOverlay(state = running)
+      if (!running.auto) {
+        TranscodeOverlay(state = running)
+      }
     }
   }
   (transcodeState as? TranscodeState.Failed)?.let { failed ->

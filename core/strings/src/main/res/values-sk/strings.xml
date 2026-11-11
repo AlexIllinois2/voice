@@ -54,9 +54,7 @@
     <string name="library.category.current.title">Rozpočúvané</string>
     <string name="library.category.not_started.title">Ešte nepočúvané</string>
     <string name="library.empty.add_first_book">Pridajte si priečinok so zvukovými knihami, aby ste mohli začať počúvať!</string>
-    <string name="library.folders.title">Priečinok so zvukovými knihami</string>
-    <string name="library.folders.moved.dialog.title">Priečinky audiokníh presunuté</string>
-    <string name="library.folders.moved.dialog.message">Priečinky audiokníh teraz môžete spravovať v nastaveniach.</string>
+<string name="library.folders.title">Priečinok so zvukovými knihami</string>
     <string name="library.search.hint">Čo hľadáte?</string>
     <string name="library.storage_permission_bug.action">Udeliť oprávnenie</string>
     <string name="library.storage_permission_bug.message">Systémová aplikácia na niektorých zariadeniach nemá udelené potrebné povolenie pristupovať k externému úložisku. Tento prístup je nevyhnutný, aby mohla aplikácia Voice čítať vaše zvukové knihy.</string>
@@ -112,7 +110,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Nastaviť počiatočný čas</string>
     <string name="settings.auto_sleep_timer.summary">Automaticky aktivovať časovač zastavenia, ak sa prehrávanie spustí medzi %1$s a %2$s</string>
     <string name="settings.auto_sleep_timer.title">Automatický časovač zastavenia</string>
-    <string name="settings.library.folders.summary">Spravovať priečinky určené na vyhľadávanie zvukových kníh</string>
     <string name="settings.library.use_grid.title">Používať rozloženie mriežky</string>
     <string name="settings.playback.auto_rewind.title">Automaticky pretočiť dozadu</string>
     <string name="settings.playback.seek_time.title">Preskočiť o</string>

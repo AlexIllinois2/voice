@@ -41,6 +41,15 @@ fun AddContent(origin: Origin) {
       viewModel.back()
     },
     origin = origin,
+    addState = viewModel.addState,
+    savedPath = viewModel.savedPath,
+    saveError = viewModel.saveError,
+    onDismissError = {
+      viewModel.dismissError()
+    },
+    onSaveError = { detail ->
+      viewModel.saveErrorReport(detail)
+    },
     onAdd = { folderType, uri ->
       viewModel.add(uri, folderType)
     },

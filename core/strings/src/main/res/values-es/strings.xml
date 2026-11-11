@@ -52,9 +52,7 @@
     <string name="library.category.current.title">Actual</string>
     <string name="library.category.not_started.title">Aún no comenzado</string>
     <string name="library.empty.add_first_book">¡Agreguemos tu carpeta de audiolibros para que puedas empezar a escuchar!</string>
-    <string name="library.folders.title">Directorios de audiolibros</string>
-    <string name="library.folders.moved.dialog.title">Carpetas de audiolibros trasladadas</string>
-    <string name="library.folders.moved.dialog.message">Ahora puedes gestionar las carpetas de audiolibros en Preferencias.</string>
+<string name="library.folders.title">Directorios de audiolibros</string>
     <string name="library.search.hint">¿Qué estás buscando?</string>
     <string name="library.storage_permission_bug.action">Conceder permiso</string>
     <string name="library.storage_permission_bug.message">En algunos dispositivos, una aplicación del sistema carece del permiso necesario para acceder al almacenamiento externo. Este acceso es esencial para que Voice pueda leer tus audiolibros.</string>
@@ -110,7 +108,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Hora inicio</string>
     <string name="settings.auto_sleep_timer.summary">Activa automáticamente el temporizador al iniciar la reproducción entre las %1$s y %2$s</string>
     <string name="settings.auto_sleep_timer.title">Temporizador automático</string>
-    <string name="settings.library.folders.summary">Administrar directorios escaneados en busca de audiolibros</string>
     <string name="settings.library.use_grid.title">Utilizar el diseño en cuadrícula</string>
     <string name="settings.playback.auto_rewind.title">Retroceso automático</string>
     <string name="settings.playback.seek_time.title">Segundos de avance/retroceso</string>

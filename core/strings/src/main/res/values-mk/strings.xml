@@ -50,9 +50,7 @@
     <string name="library.category.current.title">Тековни</string>
     <string name="library.category.not_started.title">Непочнати</string>
     <string name="library.empty.add_first_book">Ајде да ги додадеме вашите аудио книги за да почнете со слушање!</string>
-    <string name="library.folders.title">Фолдери со аудио книги</string>
-    <string name="library.folders.moved.dialog.title">Папките со аудиокниги се преместени</string>
-    <string name="library.folders.moved.dialog.message">Сега можете да управувате со папките со аудиокниги во Поставки.</string>
+<string name="library.folders.title">Фолдери со аудио книги</string>
     <string name="library.search.hint">Што пребарувате?</string>
     <string name="library.storage_permission_bug.action">Дај пермисија</string>
     <string name="library.storage_permission_bug.message">Кај некои уреди, системска апликација нема доволно пермисии да го пристапи надворешното складиште за податоци. Овој пристап е клучен за Voice да може да ги вчита вашите аудио книги.</string>
@@ -108,7 +106,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Внеси време за старт</string>
     <string name="settings.auto_sleep_timer.summary">Стартувај го тајмерот за спиење автоматски штом аудиото почнува меѓу %1$s и %2$s</string>
     <string name="settings.auto_sleep_timer.title">Автоматски тајмер за спиење</string>
-    <string name="settings.library.folders.summary">Управувајте со папките што се скенираат за аудиокниги</string>
     <string name="settings.library.use_grid.title">Прикажи како коцки</string>
     <string name="settings.playback.auto_rewind.title">Автоматско враќање назад</string>
     <string name="settings.playback.seek_time.title">Прескокни секунди</string>

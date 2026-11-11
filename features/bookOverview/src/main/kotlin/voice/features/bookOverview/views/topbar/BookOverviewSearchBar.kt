@@ -24,12 +24,11 @@ internal fun ColumnScope.BookOverviewSearchBar(
   horizontalPadding: Dp,
   onQueryChange: (String) -> Unit,
   onActiveChange: (Boolean) -> Unit,
-  onBookFolderClick: () -> Unit,
+  onAddBookClick: () -> Unit,
   onSettingsClick: () -> Unit,
   onSearchBookClick: (BookId) -> Unit,
   searchActive: Boolean,
   showAddBookHint: Boolean,
-  showFolderPickerIcon: Boolean,
   searchViewState: BookSearchViewState,
 ) {
   // The search field is only focusable while the search is active. Otherwise a focus change
@@ -67,8 +66,7 @@ internal fun ColumnScope.BookOverviewSearchBar(
           TopBarTrailingIcon(
             searchActive = searchActive,
             showAddBookHint = showAddBookHint,
-            showFolderPickerIcon = showFolderPickerIcon,
-            onBookFolderClick = onBookFolderClick,
+            onAddBookClick = onAddBookClick,
             onSettingsClick = onSettingsClick,
           )
         },

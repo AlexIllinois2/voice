@@ -50,9 +50,7 @@
     <string name="library.category.current.title">Nåværende</string>
     <string name="library.category.not_started.title">Ikke startet enda</string>
     <string name="library.empty.add_first_book">Legg til lydbokmappen din så du kan begynne å lytte!</string>
-    <string name="library.folders.title">Lydbokmapper</string>
-    <string name="library.folders.moved.dialog.title">Lydbokmapper flyttet</string>
-    <string name="library.folders.moved.dialog.message">Du kan nå administrere lydbokmapper i Innstillinger.</string>
+<string name="library.folders.title">Lydbokmapper</string>
     <string name="library.search.hint">Hva leter du etter?</string>
     <string name="library.storage_permission_bug.action">Innvilg tillatelse</string>
     <string name="library.storage_permission_bug.message">På enkelte enheter mangler en systemapp den nødvendige tillatelsen for å få tilgang til det eksterne lagringsmediet. Denne tilgangen er avgjørende for at Voice skal kunne lese lydbøkene dine.</string>
@@ -108,7 +106,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Sett starttid</string>
     <string name="settings.auto_sleep_timer.summary">Start en søvn-timer automatisk når avspillingen begynner mellom %1$s og %2$s</string>
     <string name="settings.auto_sleep_timer.title">Automatisk søvn-timer</string>
-    <string name="settings.library.folders.summary">Håndter mapper som er skannet for lydbøker</string>
     <string name="settings.library.use_grid.title">Bruk rutenett</string>
     <string name="settings.playback.auto_rewind.title">Auto-tilbakespoling</string>
     <string name="settings.playback.seek_time.title">Hoppintervall</string>

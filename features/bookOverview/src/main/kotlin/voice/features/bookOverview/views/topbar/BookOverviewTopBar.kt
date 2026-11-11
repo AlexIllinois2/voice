@@ -31,7 +31,7 @@ import voice.core.strings.R as StringsR
 @Composable
 internal fun BookOverviewTopBar(
   viewState: BookOverviewViewState,
-  onBookFolderClick: () -> Unit,
+  onAddBookClick: () -> Unit,
   onSettingsClick: () -> Unit,
   onActiveChange: (Boolean) -> Unit,
   onQueryChange: (String) -> Unit,
@@ -46,12 +46,11 @@ internal fun BookOverviewTopBar(
       horizontalPadding = horizontalPadding,
       onQueryChange = onQueryChange,
       onActiveChange = onActiveChange,
-      onBookFolderClick = onBookFolderClick,
+      onAddBookClick = onAddBookClick,
       onSettingsClick = onSettingsClick,
       onSearchBookClick = onSearchBookClick,
       searchActive = viewState.searchActive,
       showAddBookHint = viewState.showAddBookHint,
-      showFolderPickerIcon = viewState.showFolderPickerIcon,
       searchViewState = viewState.searchViewState,
     )
     var showLoading by remember { mutableStateOf(false) }
@@ -158,10 +157,8 @@ private fun BookOverviewTopBarPreview() {
           query = "",
         ),
         showStoragePermissionBugCard = false,
-        showFolderPickerIcon = true,
-        dialog = null,
       ),
-      onBookFolderClick = {},
+      onAddBookClick = {},
       onSettingsClick = {},
       onActiveChange = {},
       onQueryChange = {},

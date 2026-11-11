@@ -48,9 +48,7 @@
     <string name="library.category.current.title">現在</string>
     <string name="library.category.not_started.title">未再生</string>
     <string name="library.empty.add_first_book">オーディオブックのフォルダーを追加して、聴き始めましょう！</string>
-    <string name="library.folders.title">オーディオブック フォルダー</string>
-    <string name="library.folders.moved.dialog.title">オーディオブックフォルダーを移動しました</string>
-    <string name="library.folders.moved.dialog.message">オーディオブックフォルダーは設定で管理できるようになりました。</string>
+<string name="library.folders.title">オーディオブック フォルダー</string>
     <string name="library.search.hint">何をお探しですか？</string>
     <string name="library.storage_permission_bug.action">権限を付与</string>
     <string name="library.storage_permission_bug.message">一部のデバイスでは、システムアプリに外部ストレージへアクセスするために必要な権限がありません。このアクセスは、Voice がオーディオブックを読み取るために必要です。</string>
@@ -106,7 +104,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">開始時刻を設定</string>
     <string name="settings.auto_sleep_timer.summary">%1$s から %2$s の間に再生が始まった場合、自動的にスリープタイマーを開始します</string>
     <string name="settings.auto_sleep_timer.title">自動スリープタイマー</string>
-    <string name="settings.library.folders.summary">オーディオブックをスキャンするフォルダーを管理</string>
     <string name="settings.library.use_grid.title">グリッド表示の使用</string>
     <string name="settings.playback.auto_rewind.title">自動巻き戻し</string>
     <string name="settings.playback.seek_time.title">スキップ量</string>

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="add_book.adding">正在添加书籍…</string>
+    <string name="add_book.error.title">添加书籍失败</string>
+    <string name="add_book.error.save">保存错误信息</string>
+    <string name="add_book.error.saved">已保存到 %s</string>
+    <string name="add_book.error.save_failed">保存失败：%s</string>
     <string name="book.category.action.mark_completed">标记为已结束播放</string>
     <string name="book.category.action.mark_current">标记为正在播放</string>
     <string name="book.category.action.mark_not_started">标记为尚未开始播放</string>
@@ -42,11 +47,11 @@
     <plurals name="duration.seconds">
         <item quantity="other">%d 秒</item>
     </plurals>
-    <string name="folder.add.title.default">添加有声书</string>
+    <string name="folder.add.title.default">添加一本有声书</string>
     <string name="folder.add.title.onboarding">添加你的第一本有声书</string>
     <string name="folder.add.type.file">Zip 文件</string>
     <string name="folder.add.type.folder">文件夹</string>
-    <string name="folder.add.type.subtitle">添加 zip 文件或文件夹，每项都会作为一本有声书。</string>
+    <string name="folder.add.type.subtitle">将zip或文件夹添加为一本有声书。</string>
     <string name="folder.type.author_books">按作者分组的书籍</string>
     <string name="folder.type.multiple_books">多本书</string>
     <string name="folder.type.single_book">单本书</string>
@@ -54,9 +59,7 @@
     <string name="library.category.current.title">正在播放中</string>
     <string name="library.category.not_started.title">尚未开始播放</string>
     <string name="library.empty.add_first_book">添加你的第一本有声书，开始听书吧！</string>
-    <string name="library.folders.moved.dialog.message">现在可以在偏好设置中管理有声书文件夹了。</string>
-    <string name="library.folders.moved.dialog.title">有声书文件夹已迁移</string>
-    <string name="library.folders.title">有声书文件夹</string>
+<string name="library.folders.title">有声书文件夹</string>
     <string name="library.search.hint">您在找什么？</string>
     <string name="library.storage_permission_bug.action">给予权限</string>
     <string name="library.storage_permission_bug.message">对于某些设备，系统应用程序缺少访问外部存储的必要权限。此访问对于Voice阅读您的有声读物至关重要。</string>
@@ -127,7 +130,6 @@
     <string name="settings.auto_sleep_timer.start.label">设置开始时间</string>
     <string name="settings.auto_sleep_timer.summary">在 %1$s 到 %2$s 之间开始播放时，自动启动睡眠定时器</string>
     <string name="settings.auto_sleep_timer.title">自动睡眠定时器</string>
-    <string name="settings.library.folders.summary">管理扫描有声书的文件夹</string>
     <string name="settings.library.use_grid.title">使用网格布局</string>
     <string name="settings.logs.summary">查看最近扫描与解析中的错误</string>
     <string name="settings.logs.title">解析日志</string>

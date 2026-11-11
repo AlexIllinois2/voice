@@ -26,7 +26,10 @@ private val ZIP_MIME_TYPES =
   )
 
 @Composable
-internal fun SelectFolderButtonRow(onAdd: (FileTypeSelection, Uri) -> Unit) {
+internal fun SelectFolderButtonRow(
+  onAdd: (FileTypeSelection, Uri) -> Unit,
+  enabled: Boolean = true,
+) {
   Row(
     Modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.Center,
@@ -55,6 +58,7 @@ internal fun SelectFolderButtonRow(onAdd: (FileTypeSelection, Uri) -> Unit) {
           Logger.w(e, "Could not add folder")
         }
       },
+      enabled = enabled,
     )
     Spacer(modifier = Modifier.size(8.dp))
     SelectFolderButton(
@@ -67,6 +71,7 @@ internal fun SelectFolderButtonRow(onAdd: (FileTypeSelection, Uri) -> Unit) {
           Logger.w(e, "Could not add file")
         }
       },
+      enabled = enabled,
     )
   }
 }

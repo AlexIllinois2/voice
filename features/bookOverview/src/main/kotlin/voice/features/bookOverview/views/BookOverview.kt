@@ -4,16 +4,12 @@ import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,7 +20,6 @@ import androidx.compose.runtime.retain.retain
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -38,7 +33,6 @@ import voice.core.common.rootGraphAs
 import voice.core.data.BookId
 import voice.core.ui.PlayButton
 import voice.core.ui.VoiceTheme
-import voice.core.ui.icons.VoiceIcons
 import voice.core.ui.playButtonSharedBoundsModifier
 import voice.features.bookOverview.bottomSheet.BottomSheetContent
 import voice.features.bookOverview.bottomSheet.BottomSheetItem
@@ -54,7 +48,6 @@ import voice.features.bookOverview.views.topbar.BookOverviewTopBar
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
 import kotlin.uuid.Uuid
-import voice.core.strings.R as StringsR
 
 @ContributesTo(AppScope::class)
 interface BookOverviewProvider {
@@ -103,8 +96,7 @@ fun BookOverviewScreen(modifier: Modifier = Modifier) {
       bottomSheetViewModel.bookSelected(bookId)
       showContextMenu = true
     },
-    onBookFolderClick = bookOverviewViewModel::onBookFolderClick,
-    onFolderPickerMovedDialogDismiss = bookOverviewViewModel::onFolderPickerMovedDialogDismiss,
+    onAddBookClick = bookOverviewViewModel::onAddBookClick,
     onPlayButtonClick = bookOverviewViewModel::playPause,
     onRetryParseClick = bookOverviewViewModel::onRetryParseClick,
     onSearchActiveChange = bookOverviewViewModel::onSearchActiveChange,
@@ -159,8 +151,7 @@ internal fun BookOverview(
   onSettingsClick: () -> Unit,
   onBookClick: (BookId) -> Unit,
   onBookLongClick: (BookId) -> Unit,
-  onBookFolderClick: () -> Unit,
-  onFolderPickerMovedDialogDismiss: () -> Unit,
+  onAddBookClick: () -> Unit,
   onPlayButtonClick: () -> Unit,
   onRetryParseClick: (BookId) -> Unit,
   onSearchActiveChange: (Boolean) -> Unit,
@@ -175,7 +166,7 @@ internal fun BookOverview(
     topBar = {
       BookOverviewTopBar(
         viewState = viewState,
-        onBookFolderClick = onBookFolderClick,
+        onAddBookClick = onAddBookClick,
         onSettingsClick = onSettingsClick,
         onActiveChange = onSearchActiveChange,
         onQueryChange = onSearchQueryChange,
@@ -227,48 +218,11 @@ internal fun BookOverview(
       }
     }
   }
-  Dialog(
-    dialog = viewState.dialog,
-    onFolderPickerMovedDialogDismiss = onFolderPickerMovedDialogDismiss,
-  )
 
   // Registered after the search bar so it wins over the search bar's own back handling: leaving
   // the search must always work, even if the search bar ended up in a stuck expanded state.
   BackHandler(enabled = viewState.searchActive) {
     onSearchActiveChange(false)
-  }
-}
-
-@Composable
-private fun Dialog(
-  dialog: BookOverviewViewState.Dialog?,
-  onFolderPickerMovedDialogDismiss: () -> Unit,
-) {
-  when (dialog) {
-    BookOverviewViewState.Dialog.FolderPickerMovedToSettings -> {
-      AlertDialog(
-        onDismissRequest = onFolderPickerMovedDialogDismiss,
-        icon = {
-          Row {
-            Icon(imageVector = VoiceIcons.ArrowForward, contentDescription = null)
-            Icon(imageVector = VoiceIcons.Settings, contentDescription = null)
-            Icon(imageVector = VoiceIcons.ArrowBack, contentDescription = null)
-          }
-        },
-        title = {
-          Text(stringResource(StringsR.string.library_folders_moved_dialog_title))
-        },
-        text = {
-          Text(stringResource(StringsR.string.library_folders_moved_dialog_message))
-        },
-        confirmButton = {
-          TextButton(onClick = onFolderPickerMovedDialogDismiss) {
-            Text(stringResource(StringsR.string.common_dialog_ok))
-          }
-        },
-      )
-    }
-    null -> Unit
   }
 }
 
@@ -285,8 +239,7 @@ fun BookOverviewPreview(
       onSettingsClick = {},
       onBookClick = {},
       onBookLongClick = {},
-      onBookFolderClick = {},
-      onFolderPickerMovedDialogDismiss = {},
+      onAddBookClick = {},
       onPlayButtonClick = {},
       onRetryParseClick = {},
       onSearchActiveChange = {},
@@ -344,8 +297,6 @@ internal class BookOverviewPreviewParameterProvider : PreviewParameterProvider<B
         query = "",
       ),
       showStoragePermissionBugCard = false,
-      showFolderPickerIcon = true,
-      dialog = null,
     ),
   )
 }

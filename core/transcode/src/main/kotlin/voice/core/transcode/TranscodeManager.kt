@@ -83,9 +83,15 @@ class TranscodeManager(
   /**
    * Returns a playable m4a [File] for [uri], converting it first when it has not been
    * converted yet. Concurrent calls for the same uri share a single conversion.
+   *
+   * When [auto] is true, the conversion was triggered by the automatic chapter transition
+   * buffering, so the previous chapter keeps playing and the state is published as auto.
    */
-  suspend fun ensureConverted(uri: Uri): File {
-    return convert(uri, announce = true)
+  suspend fun ensureConverted(
+    uri: Uri,
+    auto: Boolean = false,
+  ): File {
+    return convert(uri, announce = true, auto = auto)
   }
 
   /**
@@ -96,7 +102,7 @@ class TranscodeManager(
   suspend fun preload(uri: Uri) {
     if (!isTranscodeNeeded(uri)) return
     runCatching {
-      convert(uri, announce = false)
+      convert(uri, announce = false, auto = true)
     }.onFailure {
       Logger.w(it, "Preloading $uri failed")
     }
@@ -105,6 +111,7 @@ class TranscodeManager(
   private suspend fun convert(
     uri: Uri,
     announce: Boolean,
+    auto: Boolean,
   ): File {
     val output = outputFileFor(uri)
     if (output.exists()) {
@@ -125,6 +132,7 @@ class TranscodeManager(
             fileName = fileName,
             step = TranscodeState.Step.ReadingSource,
             progressPercent = null,
+            auto = auto,
           )
         }
         val input = checkNotNull(materializeSource(uri)) { "Could not read $uri" }
@@ -134,6 +142,7 @@ class TranscodeManager(
               fileName = fileName,
               step = TranscodeState.Step.Transcoding,
               progressPercent = null,
+              auto = auto,
             )
           }
           val part = File(output.parentFile, "${output.name}.part")
@@ -143,6 +152,7 @@ class TranscodeManager(
                 fileName = fileName,
                 step = TranscodeState.Step.Transcoding,
                 progressPercent = percent,
+                auto = auto,
               )
             }
           }
@@ -151,6 +161,7 @@ class TranscodeManager(
               fileName = fileName,
               step = TranscodeState.Step.Saving,
               progressPercent = null,
+              auto = auto,
             )
           }
           if (part.renameTo(output)) {

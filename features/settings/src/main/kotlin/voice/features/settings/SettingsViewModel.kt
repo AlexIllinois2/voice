@@ -222,10 +222,6 @@ class SettingsViewModel(
     navigator.goTo(Destination.SupportVoice)
   }
 
-  override fun openFolderPicker() {
-    navigator.goTo(Destination.FolderPicker)
-  }
-
   override fun openLogViewer() {
     navigator.goTo(Destination.LogViewer)
   }

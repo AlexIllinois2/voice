@@ -50,9 +50,7 @@
     <string name="library.category.current.title">Huidig</string>
     <string name="library.category.not_started.title">Nog nie begin nie</string>
     <string name="library.empty.add_first_book">Kom ons voeg jou audioboek gids sodat jy kan begin luister!</string>
-    <string name="library.folders.title">Klankboekgids</string>
-    <string name="library.folders.moved.dialog.title">Oudioboekvouers geskuif</string>
-    <string name="library.folders.moved.dialog.message">Jy kan nou oudioboekvouers in Voorkeure bestuur.</string>
+<string name="library.folders.title">Klankboekgids</string>
     <string name="library.search.hint">Waarna is jy opsoek?</string>
     <string name="library.storage_permission_bug.action">Gee toestemming</string>
     <string name="library.storage_permission_bug.message">Vir sekere toestelle ontbreek die nodige toestemming vir ’n stelseltoep om toegang tot die eksterne berging te kry. Hierdie toegang is noodsaaklik sodat Voice jou luisterboeke kan lees.</string>
@@ -108,7 +106,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Stel begintyd</string>
     <string name="settings.auto_sleep_timer.summary">Begin outomaties ’n slaaptimer wanneer afspeel tussen %1$s en %2$s begin</string>
     <string name="settings.auto_sleep_timer.title">Outomatiese slaaptimer</string>
-    <string name="settings.library.folders.summary">Bestuur vouers wat vir oudioboeke geskandeer word</string>
     <string name="settings.library.use_grid.title">Gebruik rooster uitleg</string>
     <string name="settings.playback.auto_rewind.title">Outomatiese terugdraai</string>
     <string name="settings.playback.seek_time.title">Skip hoeveelheid</string>

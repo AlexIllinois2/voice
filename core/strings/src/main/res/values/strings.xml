@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation" tools:locale="en">
+    <!-- Progress text shown while an added book is not in the library yet. -->
+    <string name="add_book.adding">Adding book…</string>
+    <!-- Title of the dialog shown when adding a book failed. -->
+    <string name="add_book.error.title">Adding the book failed</string>
+    <!-- Button that saves the detailed error report to the local storage. -->
+    <string name="add_book.error.save">Save error report</string>
+    <!-- Text confirming where the error report was saved. -->
+    <string name="add_book.error.saved">Saved to %s</string>
+    <!-- Text shown when the error report could not be saved. -->
+    <string name="add_book.error.save_failed">Saving failed: %s</string>
     <!-- Bottom-sheet action for moving a book to the completed category. -->
     <string name="book.category.action.mark_completed">Mark as Completed</string>
     <!-- Bottom-sheet action for moving a book to the current category. -->
@@ -104,13 +114,9 @@
     <string name="library.category.current.title">Current</string>
     <!-- Library category header for books not started yet. -->
     <string name="library.category.not_started.title">Not started Yet</string>
-    <!-- Title for screens and rows that manage audiobook folders. -->
-    <string name="library.folders.title">Audiobook folders</string>
-    <!-- Title for the one-time dialog shown from the old audiobook folders shortcut. -->
-    <string name="library.folders.moved.dialog.title">Audiobook folders moved</string>
-    <!-- Body for the one-time dialog shown from the old audiobook folders shortcut. -->
-    <string name="library.folders.moved.dialog.message">You can now manage audiobook folders in Preferences.</string>
     <!-- Hint text for searching books in the library. -->
+<!-- Title for screens and rows that manage audiobook folders. -->
+    <string name="library.folders.title">Audiobook folders</string>
     <string name="library.search.hint">What are you looking for?</string>
     <!-- Button label for granting the storage permission workaround. -->
     <string name="library.storage_permission_bug.action">Grant permission</string>
@@ -252,8 +258,6 @@
     <string name="settings.auto_sleep_timer.summary">Start a sleep timer automatically when playback begins between %1$s and %2$s</string>
     <!-- Settings title for automatically starting a sleep timer. -->
     <string name="settings.auto_sleep_timer.title">Automatic Sleep Timer</string>
-    <!-- Summary text for the audiobook folders settings row. -->
-    <string name="settings.library.folders.summary">Manage folders scanned for audiobooks</string>
     <!-- Settings row for toggling grid layout in the library. -->
     <string name="settings.library.use_grid.title">Use grid layout</string>
     <!-- Settings row description for opening the parse log screen. -->

@@ -39,9 +39,6 @@ public annotation class AmountOfBatteryOptimizationRequestedStore
 public annotation class ReviewDialogShownStore
 
 @Qualifier
-public annotation class FolderPickerMovedDialogShownStore
-
-@Qualifier
 public annotation class AnalyticsConsentStore
 
 @Qualifier

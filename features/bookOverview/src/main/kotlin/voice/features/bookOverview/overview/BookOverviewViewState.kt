@@ -18,8 +18,6 @@ data class BookOverviewViewState(
   val searchActive: Boolean,
   val searchViewState: BookSearchViewState,
   val showStoragePermissionBugCard: Boolean,
-  val showFolderPickerIcon: Boolean,
-  val dialog: Dialog?,
 ) {
 
   companion object {
@@ -38,17 +36,11 @@ data class BookOverviewViewState(
         query = "",
       ),
       showStoragePermissionBugCard = false,
-      showFolderPickerIcon = true,
-      dialog = null,
     )
   }
 
   enum class PlayButtonState {
     Playing,
     Paused,
-  }
-
-  enum class Dialog {
-    FolderPickerMovedToSettings,
   }
 }

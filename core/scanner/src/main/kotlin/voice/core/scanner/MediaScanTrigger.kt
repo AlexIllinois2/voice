@@ -57,6 +57,10 @@ internal constructor(
   private var scanningJob: Job? = null
   private var enrichJob: Job? = null
 
+  /**
+   * Starts a scan. No-op if a scan is already running and [restartIfScanning] is not set.
+   * The job of the current scan can be awaited via [currentScanJob].
+   */
   public fun scan(restartIfScanning: Boolean = false) {
     Logger.i("scanForFiles with restartIfScanning=$restartIfScanning")
     if (scanningJob?.isActive == true && !restartIfScanning) {
@@ -103,6 +107,12 @@ internal constructor(
       }
     }
   }
+
+  /**
+   * The job of the most recently started scan. It completes once the scan (including the
+   * following enrichment) has finished, which callers can use to await the outcome.
+   */
+  public fun currentScanJob(): Job? = scanningJob
 
   /**
    * Starts parsing the durations that are still missing in a separate job. Returns whether a job

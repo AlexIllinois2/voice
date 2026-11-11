@@ -51,7 +51,7 @@
     <string name="library.category.current.title">Actual</string>
     <string name="library.category.not_started.title">Encara no s\'ha iniciat</string>
     <string name="library.empty.add_first_book">Afegiu la carpeta de l\'audiollibre perquè pugueu començar a escoltar-lo.</string>
-    <string name="library.folders.title">Carpetes de l\'audiollibre</string>
+<string name="library.folders.title">Carpetes de l\'audiollibre</string>
     <string name="library.search.hint">Què busqueu?</string>
     <string name="library.storage_permission_bug.action">Autoritzeu el permís</string>
     <string name="library.storage_permission_bug.message">Per a determinats dispositius, a una aplicació del sistema li falta el permís necessari per accedir a l\'emmagatzematge extern. Aquest accés és essencial perquè el Voice llegeixi els audiollibres.</string>

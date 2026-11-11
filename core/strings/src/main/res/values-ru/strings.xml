@@ -54,9 +54,7 @@
     <string name="library.category.current.title">Слушаю</string>
     <string name="library.category.not_started.title">Непрослушанные</string>
     <string name="library.empty.add_first_book">Давайте выберем папку с аудиокнигами!</string>
-    <string name="library.folders.title">Папки с аудиокнигами</string>
-    <string name="library.folders.moved.dialog.title">Папки аудиокниг перенесены</string>
-    <string name="library.folders.moved.dialog.message">Теперь папками аудиокниг можно управлять в настройках.</string>
+<string name="library.folders.title">Папки с аудиокнигами</string>
     <string name="library.search.hint">Что вы ищете?</string>
     <string name="library.storage_permission_bug.action">Предоставить разрешение</string>
     <string name="library.storage_permission_bug.message">На некоторых устройствах системное приложение не имеет необходимого разрешения для доступа к внешнему хранилищу. Этот доступ необходим для того, чтобы Voice мог читать ваши аудиокниги.</string>
@@ -112,7 +110,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Время начала</string>
     <string name="settings.auto_sleep_timer.summary">Запускать таймер сна автоматически когда воспроизведение начинается между %1$s и %2$s</string>
     <string name="settings.auto_sleep_timer.title">Автоматический таймер сна</string>
-    <string name="settings.library.folders.summary">Управление папками, отсканированными на наличие аудиокниг</string>
     <string name="settings.library.use_grid.title">Использовать сетку</string>
     <string name="settings.playback.auto_rewind.title">Автоперемотка назад</string>
     <string name="settings.playback.seek_time.title">Интервал перемотки</string>

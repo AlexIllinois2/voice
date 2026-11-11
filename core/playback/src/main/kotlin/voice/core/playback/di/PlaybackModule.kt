@@ -3,6 +3,7 @@ package voice.core.playback.di
 import android.content.Context
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
+import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.common.TrackSelectionParameters
 import androidx.media3.datasource.DataSource
@@ -21,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import voice.core.featureflag.FeatureFlag
 import voice.core.featureflag.Media3AudioOffloadFeatureFlagQualifier
+import voice.core.playback.CurrentMediaUriHolder
 import voice.core.playback.misc.VolumeGain
 import voice.core.playback.notification.MainActivityIntentProvider
 import voice.core.playback.player.DurationInconsistenciesUpdater
@@ -49,6 +51,7 @@ interface PlaybackModule {
     context: Context,
     zipPlaybackCache: ZipPlaybackCache,
     transcodeManager: TranscodeManager,
+    currentMediaUriHolder: CurrentMediaUriHolder,
   ): MediaSource.Factory {
     val dataSourceFactory = DefaultDataSource.Factory(context)
     val zipDataSourceFactory = DataSource.Factory {
@@ -61,6 +64,7 @@ interface PlaybackModule {
         zipFactory = zipDataSourceFactory,
       ),
       transcodeManager = transcodeManager,
+      currentMediaUriHolder = currentMediaUriHolder,
     )
     val extractorsFactory = DefaultExtractorsFactory()
       .setConstantBitrateSeekingEnabled(true)
@@ -79,6 +83,7 @@ interface PlaybackModule {
     durationInconsistenciesUpdater: DurationInconsistenciesUpdater,
     zipPreloader: ZipPreloader,
     transcodePreloader: TranscodePreloader,
+    currentMediaUriHolder: CurrentMediaUriHolder,
     @Media3AudioOffloadFeatureFlagQualifier media3AudioOffloadFeatureFlag: FeatureFlag<Boolean>,
   ): Player {
     val audioAttributes = AudioAttributes.Builder()
@@ -109,6 +114,17 @@ interface PlaybackModule {
         durationInconsistenciesUpdater.attachTo(player)
         zipPreloader.attachTo(player)
         transcodePreloader.attachTo(player)
+        player.addListener(
+          object : Player.Listener {
+            override fun onMediaItemTransition(
+              mediaItem: MediaItem?,
+              reason: Int,
+            ) {
+              currentMediaUriHolder.uri = mediaItem?.localConfiguration?.uri
+            }
+          },
+        )
+        currentMediaUriHolder.uri = player.currentMediaItem?.localConfiguration?.uri
         player.onAudioSessionIdChanged {
           volumeGain.audioSessionId = it
         }

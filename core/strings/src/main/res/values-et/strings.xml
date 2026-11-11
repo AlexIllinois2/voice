@@ -50,9 +50,7 @@
     <string name="library.category.current.title">Praegune</string>
     <string name="library.category.not_started.title">Kuulamise ootel</string>
     <string name="library.empty.add_first_book">Lisame nüüd üheskoos heliraamatute kausta ja sa saad alustada kuulamisega!</string>
-    <string name="library.folders.title">Heliraamatute kaustad</string>
-    <string name="library.folders.moved.dialog.title">Audioraamatute kaustad teisaldati</string>
-    <string name="library.folders.moved.dialog.message">Nüüd saad audioraamatute kaustu hallata eelistustes.</string>
+<string name="library.folders.title">Heliraamatute kaustad</string>
     <string name="library.search.hint">Mida sa otsid?</string>
     <string name="library.storage_permission_bug.action">Anna õigused</string>
     <string name="library.storage_permission_bug.message">Mõnedes seadmetes puudub ühel süsteemirakendusel vajalik õigus lugeda andmeid väliselt andmekandjalt. See ligipääs on vajalik, et Voice saaks lugeda sinu heliraamatute faile.</string>
@@ -108,7 +106,6 @@
     <string name="settings.auto_sleep_timer.start.label">Määra algusaeg</string>
     <string name="settings.auto_sleep_timer.summary">Käivita unetaimer automaatselt, kui taasesitus on %1$s ja %2$s vahel</string>
     <string name="settings.auto_sleep_timer.title">Automaatne unetaimer</string>
-    <string name="settings.library.folders.summary">Halda kaustu, kust otsitakse heliraamatuid</string>
     <string name="settings.library.use_grid.title">Kasuta paigutust ruudustikuna</string>
     <string name="settings.playback.auto_rewind.title">Keri automaatselt tagasi</string>
     <string name="settings.playback.seek_time.title">Kerimise samm</string>

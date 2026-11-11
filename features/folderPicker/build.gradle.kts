@@ -20,6 +20,7 @@ dependencies {
   implementation(projects.core.scanner)
   implementation(projects.navigation)
   implementation(projects.core.featureflag)
+  implementation(projects.core.logging.inapp)
   implementation(projects.core.zip)
 
   implementation(libs.coil)

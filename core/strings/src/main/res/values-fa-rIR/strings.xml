@@ -50,9 +50,7 @@
     <string name="library.category.current.title">جاری</string>
     <string name="library.category.not_started.title">هنوز شروع نشده</string>
     <string name="library.empty.add_first_book">پوشه کتاب صوتی خود را اضافه کنید تا بتوانید شروع به گوش دادن کنید!</string>
-    <string name="library.folders.title">پوشه‌های کتاب صوتی</string>
-    <string name="library.folders.moved.dialog.title">پوشه‌های کتاب صوتی منتقل شدند</string>
-    <string name="library.folders.moved.dialog.message">اکنون می‌توانید پوشه‌های کتاب صوتی را در تنظیمات مدیریت کنید.</string>
+<string name="library.folders.title">پوشه‌های کتاب صوتی</string>
     <string name="library.search.hint">دنبال چه چیزی میگردید؟</string>
     <string name="library.storage_permission_bug.action">اعطا مجوز</string>
     <string name="library.storage_permission_bug.message">در برخی از دستگاه‌ها، یک برنامه سیستم مجوز لازم برای دسترسی به کارت حافظه خارجی را ندارد. این دسترسی برای Voice برای خواندن کتاب‌های صوتی شما ضروری است.</string>
@@ -108,7 +106,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">زمان شروع</string>
     <string name="settings.auto_sleep_timer.summary">آغاز خودکار زمان خواب هنگامی که زمان پخش از %1$s تا %2$s شروع شده باشد</string>
     <string name="settings.auto_sleep_timer.title">زمان خواب خودکار</string>
-    <string name="settings.library.folders.summary">مدیریت پوشه‌هایی که برای کتاب‌های صوتی اسکن می‌شوند</string>
     <string name="settings.library.use_grid.title">چینش بصورت شبکه ای</string>
     <string name="settings.playback.auto_rewind.title">عقب بردن خودکار</string>
     <string name="settings.playback.seek_time.title">میزان پرش</string>

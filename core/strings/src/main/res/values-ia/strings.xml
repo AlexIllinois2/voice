@@ -50,9 +50,7 @@
     <string name="library.category.current.title">Actual</string>
     <string name="library.category.not_started.title">Ancora non ha comenciate</string>
     <string name="library.empty.add_first_book">Nos adde tu dossier de audiolibro dunque tu pote comenciar a ascoltar lo!</string>
-    <string name="library.folders.title">Dossieres de audiolibros</string>
-    <string name="library.folders.moved.dialog.title">Dossieres de audiolibros movite</string>
-    <string name="library.folders.moved.dialog.message">Tu pote ora gerer le dossieres de audiolibros in Preferentias.</string>
+<string name="library.folders.title">Dossieres de audiolibros</string>
     <string name="library.search.hint">Que cerca tu?</string>
     <string name="library.storage_permission_bug.action">Conceder le permission</string>
     <string name="library.storage_permission_bug.message">In certe apparatos, un application de systema manca le permissiones necessari pro acceder al immagazinage externe. Iste accesso es essential pro que Voice pote leger tu audiolibros.</string>
@@ -108,7 +106,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Definir tempore initial</string>
     <string name="settings.auto_sleep_timer.summary">Initiar automaticamente un temporisator de somno quando le reproduction comencia inter %1$s e %2$s</string>
     <string name="settings.auto_sleep_timer.title">Temporisator de somno automatic</string>
-    <string name="settings.library.folders.summary">Gerer dossiers scandite pro audiolibros</string>
     <string name="settings.library.use_grid.title">Usar le disposition in grillia</string>
     <string name="settings.playback.auto_rewind.title">Auto rebobinar</string>
     <string name="settings.playback.seek_time.title">Saltar quantitate</string>

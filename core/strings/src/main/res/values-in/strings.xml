@@ -48,9 +48,7 @@
     <string name="library.category.current.title">Saat ini</string>
     <string name="library.category.not_started.title">Belum dimulai</string>
     <string name="library.empty.add_first_book">Mari tambahkan folder buku audio Anda sehingga Anda dapat mulai mendengarkan!</string>
-    <string name="library.folders.title">Folder buku audio</string>
-    <string name="library.folders.moved.dialog.title">Folder buku audio dipindahkan</string>
-    <string name="library.folders.moved.dialog.message">Sekarang Anda dapat mengelola folder buku audio di Preferensi.</string>
+<string name="library.folders.title">Folder buku audio</string>
     <string name="library.search.hint">Apa yang Anda cari?</string>
     <string name="library.storage_permission_bug.action">Berikan izin</string>
     <string name="library.storage_permission_bug.message">Untuk perangkat tertentu, aplikasi sistem tidak memiliki izin yang diperlukan untuk mengakses penyimpanan eksternal. Akses ini penting agar Voice dapat membaca buku audio Anda.</string>
@@ -106,7 +104,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Atur waktu mulai</string>
     <string name="settings.auto_sleep_timer.summary">Mulai pengatur waktu tidur secara otomatis saat pemutaran dimulai antara %1$s dan %2$s</string>
     <string name="settings.auto_sleep_timer.title">Pengatur Waktu Tidur Otomatis</string>
-    <string name="settings.library.folders.summary">Kelola folder yang dipindai untuk buku audio</string>
     <string name="settings.library.use_grid.title">Gunakan tata letak kisi</string>
     <string name="settings.playback.auto_rewind.title">Mundur otomatis</string>
     <string name="settings.playback.seek_time.title">Lewati jumlah</string>

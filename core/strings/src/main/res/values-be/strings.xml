@@ -54,9 +54,7 @@
     <string name="library.category.current.title">Чытанае зараз</string>
     <string name="library.category.not_started.title">Яшчэ не пачатыя</string>
     <string name="library.empty.add_first_book">Давайце вызначым папку з аўдыякнігамі!</string>
-    <string name="library.folders.title">Папкі з аўдыякнігамі</string>
-    <string name="library.folders.moved.dialog.title">Папкі аўдыякніг перамешчаны</string>
-    <string name="library.folders.moved.dialog.message">Цяпер вы можаце кіраваць папкамі аўдыякніг у наладах.</string>
+<string name="library.folders.title">Папкі з аўдыякнігамі</string>
     <string name="library.search.hint">Што вы шукаеце?</string>
     <string name="library.storage_permission_bug.action">Даць дазвол</string>
     <string name="library.storage_permission_bug.message">На асобных прыладах сістэма не мае дазволу на доступ да знешняга сховішча. Гэты доступ патрэбны Voice, каб чытаць вашы кнігі.</string>
@@ -112,7 +110,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Час пачатку</string>
     <string name="settings.auto_sleep_timer.summary">Запускаць таймер сну аўтаматычна калі прайграванне пачынаецца паміж %1$s і %2$s</string>
     <string name="settings.auto_sleep_timer.title">Аўтаматычны таймер сну</string>
-    <string name="settings.library.folders.summary">Кіраванне папкамі, адсканаванымі для пошуку аўдыякніг</string>
     <string name="settings.library.use_grid.title">Выкарыстоўваць сетку</string>
     <string name="settings.playback.auto_rewind.title">Аўтаматычна перамотваць назад</string>
     <string name="settings.playback.seek_time.title">Перамотваць па</string>

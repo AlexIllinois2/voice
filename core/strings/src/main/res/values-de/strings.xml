@@ -50,9 +50,7 @@
     <string name="library.category.current.title">Aktuell</string>
     <string name="library.category.not_started.title">Neu</string>
     <string name="library.empty.add_first_book">Füge Deinen Hörbuchordner hinzu, damit Du mit dem Hören beginnen kannst!</string>
-    <string name="library.folders.title">Hörbuch-Ordner</string>
-    <string name="library.folders.moved.dialog.title">Hörbuch-Ordner verschoben</string>
-    <string name="library.folders.moved.dialog.message">Du kannst Hörbuch-Ordner jetzt in den Einstellungen verwalten.</string>
+<string name="library.folders.title">Hörbuch-Ordner</string>
     <string name="library.search.hint">Wonach suchst Du?</string>
     <string name="library.storage_permission_bug.action">Berechtigung erteilen</string>
     <string name="library.storage_permission_bug.message">Für bestimmte Geräte fehlt einer System-App die notwendige Berechtigung, auf den externen Speicher zuzugreifen. Dieser Zugriff ist jedoch für Voice essentiell, um Deine Hörbücher lesen zu können.</string>
@@ -108,7 +106,6 @@
     <string name="settings.auto_sleep_timer.start.label">Startzeit</string>
     <string name="settings.auto_sleep_timer.summary">Den Einschlaf-Timer automatisch starten, wenn die Wiedergabe zwischen %1$s und %2$s Uhr beginnt</string>
     <string name="settings.auto_sleep_timer.title">Automatischer Einschlaf-Timer</string>
-    <string name="settings.library.folders.summary">Ordner verwalten, die nach Hörbüchern durchsucht werden sollen</string>
     <string name="settings.library.use_grid.title">Raster-Layout verwenden</string>
     <string name="settings.playback.auto_rewind.title">Automatisch zurückspulen</string>
     <string name="settings.playback.seek_time.title">Vor- und zurückspulen</string>

@@ -49,7 +49,7 @@
     <string name="library.category.current.title">الحالي</string>
     <string name="library.category.not_started.title">لم يبدأ بعد</string>
     <string name="library.empty.add_first_book">دعنا نضيف مجلد كتبك الصوتية لتبدأ الاستماع!</string>
-    <string name="library.folders.title">مجلدات الكتب الصوتية</string>
+<string name="library.folders.title">مجلدات الكتب الصوتية</string>
     <string name="library.search.hint">هل أنت متحقق من ذلك؟</string>
     <string name="library.storage_permission_bug.action">امنح الإذن</string>
     <string name="library.storage_permission_bug.message">بالنسبة لأجهزة معينة، يفقد تطبيق النظام الإذن اللازم للوصول إلى وحدة التخزين الخارجية. يعد هذا الوصول ضروريًا لـفويس لقراءة كتبك الصوتية.</string>

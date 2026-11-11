@@ -54,9 +54,7 @@
     <string name="library.category.current.title">Поточні</string>
     <string name="library.category.not_started.title">Ще не початі</string>
     <string name="library.empty.add_first_book">Давайте додамо папку з аудіокнигами, щоб ви могли почати прослуховування!</string>
-    <string name="library.folders.title">Папки з аудіокнигами</string>
-    <string name="library.folders.moved.dialog.title">Папки аудіокниг переміщено</string>
-    <string name="library.folders.moved.dialog.message">Тепер папками аудіокниг можна керувати в налаштуваннях.</string>
+<string name="library.folders.title">Папки з аудіокнигами</string>
     <string name="library.search.hint">Що ви шукаєте?</string>
     <string name="library.storage_permission_bug.action">Надати дозвіл</string>
     <string name="library.storage_permission_bug.message">На деяких пристроях системні програми не мають необхідного дозволу на доступ до зовнішнього накопичувача. Цей дозвіл необхідний для того, аби Voice мав змогу читати ваші аудіокниги.</string>
@@ -112,7 +110,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Час початку</string>
     <string name="settings.auto_sleep_timer.summary">Автоматично запустити таймер сну, коли програш починається між %1$s та %2$s</string>
     <string name="settings.auto_sleep_timer.title">Автоматичний таймер сну</string>
-    <string name="settings.library.folders.summary">Налаштування папок, які скануються для пошуку аудіокних</string>
     <string name="settings.library.use_grid.title">Сіточний макет</string>
     <string name="settings.playback.auto_rewind.title">Інтервал автовідмотування</string>
     <string name="settings.playback.seek_time.title">Інтервал перемотування</string>

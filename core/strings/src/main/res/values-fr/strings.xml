@@ -52,9 +52,7 @@
     <string name="library.category.current.title">En cours</string>
     <string name="library.category.not_started.title">Pas encore commencé</string>
     <string name="library.empty.add_first_book">Ajoutons un dossier de livres audio pour commencer à les écouter !</string>
-    <string name="library.folders.title">Dossiers de livres audio</string>
-    <string name="library.folders.moved.dialog.title">Dossiers de livres audio déplacés</string>
-    <string name="library.folders.moved.dialog.message">Vous pouvez désormais gérer les dossiers de livres audio dans les Préférences.</string>
+<string name="library.folders.title">Dossiers de livres audio</string>
     <string name="library.search.hint">Que cherchez-vous ?</string>
     <string name="library.storage_permission_bug.action">Accorder la permission</string>
     <string name="library.storage_permission_bug.message">Sur certains appareils, il manque les permissions nécessaires à une application système pour accéder au stockage externe. Cet accès est essentiel pour que Voice puisse lire les livres audio.</string>
@@ -110,7 +108,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Heure de début</string>
     <string name="settings.auto_sleep_timer.summary">Démarrer automatiquement le minuteur de veille lorsque la lecture commence entre %1$s et %2$s</string>
     <string name="settings.auto_sleep_timer.title">Minuteur de veille automatique</string>
-    <string name="settings.library.folders.summary">Gérer les dossiers analysés pour les livres audio</string>
     <string name="settings.library.use_grid.title">Utiliser la mise en page en grille</string>
     <string name="settings.playback.auto_rewind.title">Rembobinage automatique</string>
     <string name="settings.playback.seek_time.title">Sauter de</string>

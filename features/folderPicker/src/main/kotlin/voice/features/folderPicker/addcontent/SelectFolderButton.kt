@@ -15,9 +15,11 @@ internal fun SelectFolderButton(
   icon: ImageVector,
   text: String,
   onClick: () -> Unit,
+  enabled: Boolean = true,
 ) {
   FilledTonalButton(
     onClick = onClick,
+    enabled = enabled,
   ) {
     Icon(
       modifier = Modifier.size(ButtonDefaults.IconSize),

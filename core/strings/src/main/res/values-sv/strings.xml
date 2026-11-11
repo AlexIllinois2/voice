@@ -50,9 +50,7 @@
     <string name="library.category.current.title">Pågående</string>
     <string name="library.category.not_started.title">Inte påbörjade</string>
     <string name="library.empty.add_first_book">Lägg till din ljudboksmapp för att börja lyssna!</string>
-    <string name="library.folders.title">Ljudboksmappar</string>
-    <string name="library.folders.moved.dialog.title">Ljudboksmapparna har flyttats</string>
-    <string name="library.folders.moved.dialog.message">Du kan nu hantera ljudboksmappar under Inställningar.</string>
+<string name="library.folders.title">Ljudboksmappar</string>
     <string name="library.search.hint">Vad letar du efter?</string>
     <string name="library.storage_permission_bug.action">Ge behörighet</string>
     <string name="library.storage_permission_bug.message">På vissa enheter saknar en systemapp den behörighet som krävs för att komma åt den externa lagringen. Den åtkomsten är nödvändig för att Voice ska kunna läsa dina ljudböcker.</string>
@@ -108,7 +106,6 @@
     <string name="settings.auto_sleep_timer.start.label" weblate-flags="max-length:16">Ange starttid</string>
     <string name="settings.auto_sleep_timer.summary">Starta en insomningstimer automatiskt när uppspelningen börjar mellan %1$s och %2$s</string>
     <string name="settings.auto_sleep_timer.title">Automatisk insomningstimer</string>
-    <string name="settings.library.folders.summary">Hantera mappar som genomsöks efter ljudböcker</string>
     <string name="settings.library.use_grid.title">Använd rutnätslayout</string>
     <string name="settings.playback.auto_rewind.title">Automatisk bakåtspolning</string>
     <string name="settings.playback.seek_time.title">Hopplängd</string>
