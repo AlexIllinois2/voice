@@ -28,6 +28,7 @@ private val supportedAudioFormats = setOf(
   "rtx",
   "wav",
   "webm",
+  "wma",
   "xmf",
 )
 

@@ -50,18 +50,6 @@
     <string name="folder.add.type.file">Plik</string>
     <string name="folder.add.type.folder">Folder</string>
     <string name="folder.add.type.subtitle">Chcesz dodać książkę w formie pojedynczego pliku czy folderu?</string>
-    <string name="folder.mode.author.title">Tryb autor-książka: Podfoldery to autorzy a dalsze podfoldery to książki.</string>
-    <string name="folder.mode.root.title">Tryb folderu z wieloma audiobookami: Jeden podfolder to jedna książka</string>
-    <string name="folder.mode.single.title">Tryb pojedynczej książki: Jeden folder równa się jednej książce.</string>
-    <string name="folder.type.book_example.empty">Voice nie wykrył żadnych książek. Czy na pewno są tam pliki audio?</string>
-    <string name="folder.type.book_example.header">Będzie to skutkowało wykryciem następujących książek</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d plik audio</item>
-        <item quantity="few">%d pliki audio</item>
-        <item quantity="many">%d plików audio</item>
-        <item quantity="other">%d plików audio</item>
-    </plurals>
-    <string name="folder.type.title">Jaka jest struktura twoich plików?</string>
     <string name="library.category.completed.title">Ukończone</string>
     <string name="library.category.current.title">Aktualne</string>
     <string name="library.category.not_started.title">Nierozpoczęte</string>
@@ -98,7 +86,6 @@
     <string name="playback.chapter.current.content_description">Aktualny rozdział</string>
     <string name="playback.chapter.next">Następna ścieżka</string>
     <string name="playback.chapter.previous">Poprzednia ścieżka</string>
-    <string name="playback.option.skip_silence">Pomiń ciszę</string>
     <string name="playback.option.volume_boost">Zwiększ głośność</string>
     <string name="playback.speed.title">Szybkość odtwarzania</string>
     <string name="review.feedback.action.cancel">Anuluj</string>

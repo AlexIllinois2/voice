@@ -4,7 +4,8 @@ import org.ebml.io.DataSource
 import java.nio.ByteBuffer
 import kotlin.math.max
 
-internal class BytesSeekableDataSource(private val bytes: ByteArray) : DataSource,
+internal class BytesSeekableDataSource(private val bytes: ByteArray) :
+  DataSource,
   AutoCloseable {
 
   private var position = 0L

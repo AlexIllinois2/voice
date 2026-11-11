@@ -16,6 +16,7 @@ import voice.core.data.toUri
 import voice.core.documentfile.CachedDocumentFile
 import voice.core.documentfile.CachedDocumentFileFactory
 import voice.core.logging.api.Logger
+import voice.core.transcode.TranscodeManager
 import voice.core.zip.ZipArchiveProvider
 import voice.core.zip.ZipUriCodec
 import java.util.concurrent.ConcurrentHashMap
@@ -36,6 +37,7 @@ internal class ChapterEnricher(
   private val fileFactory: CachedDocumentFileFactory,
   private val zipArchiveProvider: ZipArchiveProvider,
   private val zipParseAttemptRepo: ZipParseAttemptRepo,
+  private val transcodeManager: TranscodeManager,
 ) {
 
   /**
@@ -148,6 +150,19 @@ internal class ChapterEnricher(
     // the player may have already resolved the duration while this chapter was pending
     if (chapter.duration > 0L && !force) return true
 
+    // formats that ExoPlayer can not play are not parsed by the MediaAnalyzer either: their
+    // duration is probed through ffmpeg instead
+    val uri = pending.chapter.id.toUri()
+    if (transcodeManager.isTranscodeNeeded(uri)) {
+      val duration = transcodeManager.probeDurationMs(uri)
+      if (duration == null) {
+        Logger.w("Could not probe the duration of $uri")
+        return false
+      }
+      chapterRepo.put(chapter.copy(duration = duration))
+      return true
+    }
+
     val file = documentFileFor(pending.chapter.id.toUri())
     if (file == null) {
       Logger.w("Could not resolve the document file for ${pending.chapter.id.toUri()}")
@@ -206,9 +221,11 @@ internal class ChapterEnricher(
   ): Boolean {
     return when (mode) {
       Mode.Auto -> {
+        // probing the duration of formats that need transcoding is cheap, so it is not gated
+        // by the once-per-lifetime zip parsing
         chapter.duration <= 0L &&
           (failedAttempts[chapter.id] ?: 0) < MAX_ATTEMPTS &&
-          zipNotAutoParsed(chapter, autoParsedZips)
+          (transcodeManager.isTranscodeNeeded(chapter.id.toUri()) || zipNotAutoParsed(chapter, autoParsedZips))
       }
       Mode.Retry -> chapter.duration <= 0L
       Mode.Reparse -> true

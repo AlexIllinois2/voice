@@ -1,7 +1,6 @@
 package voice.features.playbackScreen.view
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -17,11 +16,7 @@ import voice.core.strings.R
 import voice.core.ui.icons.VoiceIcons
 
 @Composable
-internal fun OverflowMenu(
-  skipSilence: Boolean,
-  onSkipSilenceClick: () -> Unit,
-  onVolumeBoostClick: () -> Unit,
-) {
+internal fun OverflowMenu(onVolumeBoostClick: () -> Unit) {
   Box {
     var expanded by remember { mutableStateOf(false) }
     IconButton(
@@ -38,24 +33,6 @@ internal fun OverflowMenu(
       expanded = expanded,
       onDismissRequest = { expanded = false },
     ) {
-      DropdownMenuItem(
-        onClick = {
-          expanded = false
-          onSkipSilenceClick()
-        },
-        text = {
-          Text(text = stringResource(id = R.string.playback_option_skip_silence))
-        },
-        trailingIcon = {
-          Checkbox(
-            checked = skipSilence,
-            onCheckedChange = {
-              expanded = false
-              onSkipSilenceClick()
-            },
-          )
-        },
-      )
       DropdownMenuItem(
         onClick = {
           expanded = false

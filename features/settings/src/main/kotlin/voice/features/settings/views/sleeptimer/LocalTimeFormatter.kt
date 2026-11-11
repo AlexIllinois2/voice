@@ -21,12 +21,11 @@ internal fun rememberLocalTimeFormatter(): DateTimeFormatter {
 }
 
 @Suppress("DEPRECATION")
-private fun primaryLocale(configuration: Configuration): Locale =
-  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-    configuration.locales.get(0) ?: configuration.locale
-  } else {
-    configuration.locale
-  }
+private fun primaryLocale(configuration: Configuration): Locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+  configuration.locales.get(0) ?: configuration.locale
+} else {
+  configuration.locale
+}
 
 internal fun localTimeFormatter(
   is24HourFormat: Boolean,

@@ -64,7 +64,10 @@ internal class BookParser(
    * never touched: it always stays the name of the file or folder it was added with. Books that
    * were renamed by the user are skipped entirely.
    */
-  suspend fun fillMetadata(bookId: BookId, metadata: Metadata) {
+  suspend fun fillMetadata(
+    bookId: BookId,
+    metadata: Metadata,
+  ) {
     val content = contentRepo.get(bookId) ?: return
     val bookFile = fileFactory.create(bookId.toUri())
     if (content.name != bookFile.bookDisplayName()) return

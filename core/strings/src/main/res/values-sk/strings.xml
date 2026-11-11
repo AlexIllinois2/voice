@@ -50,18 +50,6 @@
     <string name="folder.add.type.file">Súbor</string>
     <string name="folder.add.type.folder">Priečinok</string>
     <string name="folder.add.type.subtitle">Želáte si pridať jediný súbor so zvukovou knihou alebo priečinok?</string>
-    <string name="folder.mode.author.title">Režim autorov a kníh: Podpriečinky sú pomenované podľa mien autorov, v ktorých sú vnorené priečinky pomenované podľa názvov kníh.</string>
-    <string name="folder.mode.root.title">Režim nadradeného priečinka: Podpriečinky predstavujú jednotlivé knihy.</string>
-    <string name="folder.mode.single.title">Režim jedinej knihy: Priečinok predstavuje samostatnú knihu.</string>
-    <string name="folder.type.book_example.empty">Nie je možné identifikovať žiadne knihy. Sú vo vybratom umiestnení zvukové súbory?</string>
-    <string name="folder.type.book_example.header">Podľa zvoleného nastavenia sú identifikované nasledujúce knihy</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d zvukový súbor</item>
-        <item quantity="few">%d zvukové súbory</item>
-        <item quantity="many">%d zvukových súborov</item>
-        <item quantity="other">%d zvukových súborov</item>
-    </plurals>
-    <string name="folder.type.title">Ako sú organizované vaše súbory?</string>
     <string name="library.category.completed.title">Vypočuté</string>
     <string name="library.category.current.title">Rozpočúvané</string>
     <string name="library.category.not_started.title">Ešte nepočúvané</string>
@@ -98,7 +86,6 @@
     <string name="playback.chapter.current.content_description">Aktuálna kapitola</string>
     <string name="playback.chapter.next">Nasledujúca skladba</string>
     <string name="playback.chapter.previous">Predchádzajúca skladba</string>
-    <string name="playback.option.skip_silence">Preskočiť ticho</string>
     <string name="playback.option.volume_boost">Zvýrazniť hlasitosť</string>
     <string name="playback.speed.title">Rýchlosť prehrávania</string>
     <string name="review.feedback.action.cancel">Zrušiť</string>

@@ -1,12 +1,12 @@
 package voice.core.playback.session
 
 import androidx.media3.common.C
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.runner.RunWith
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import voice.core.data.BookId
 import voice.core.data.Chapter
 import voice.core.data.ChapterId

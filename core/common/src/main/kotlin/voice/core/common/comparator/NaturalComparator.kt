@@ -243,7 +243,10 @@ internal object NaturalComparator : Comparator<String> {
     else -> -1L
   }
 
-  private class NumberToken(val value: Long, val length: Int)
+  private class NumberToken(
+    val value: Long,
+    val length: Int,
+  )
 
   private fun compareCharRange(
     s1: String,

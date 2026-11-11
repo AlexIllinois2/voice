@@ -48,17 +48,6 @@
     <string name="folder.add.type.file">קובץ</string>
     <string name="folder.add.type.folder">תיקייה</string>
     <string name="folder.add.type.subtitle">האם ברצונך להוסיף קובץ בודד כספר או כתיקייה?</string>
-    <string name="folder.mode.author.title">מצב מחבר-ספר: תיקיות משנה הן מחברים, תיקיות משנה הן ספרים.</string>
-    <string name="folder.mode.root.title">מצב ספר ברמה עליונה: תיקיות משנה הן ספרים</string>
-    <string name="folder.mode.single.title">מצב ספר בודד: תיקייה אחת שווה ספר אחד.</string>
-    <string name="folder.type.book_example.empty">Voice לא זיהה ספרים. האם יש קבצי שמע?</string>
-    <string name="folder.type.book_example.header">זה יוביל לגילוי הספרים הבאים</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d קובץ שמע</item>
-        <item quantity="two">%d קבצי שמע</item>
-        <item quantity="other">%d קבצי שמע</item>
-    </plurals>
-    <string name="folder.type.title">איך הקבצים שלך מסודרים?</string>
     <string name="library.category.completed.title">הושלמו</string>
     <string name="library.category.current.title">נוכחי</string>
     <string name="library.category.not_started.title">לא שמעתי עדיין</string>
@@ -95,7 +84,6 @@
     <string name="playback.chapter.current.content_description">פרק נוכחי</string>
     <string name="playback.chapter.next">רצועה הבאה</string>
     <string name="playback.chapter.previous">רצועה קודמת</string>
-    <string name="playback.option.skip_silence">דלג על קטעים שקטים</string>
     <string name="playback.option.volume_boost">הגבר עוצמה</string>
     <string name="playback.speed.title">מהירות השמעה</string>
     <string name="review.feedback.action.cancel">ביטול</string>

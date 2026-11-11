@@ -45,16 +45,6 @@
     <string name="folder.add.type.file">Fájl</string>
     <string name="folder.add.type.folder">Mappa</string>
     <string name="folder.add.type.subtitle">Hogyan kívánja hozzáadni a könyvet: egyedi fájlként vagy hangfájlmappaként?</string>
-    <string name="folder.mode.author.title">Szerző üzemmód: az almappák szerzők, az alalmappák könyvek.</string>
-    <string name="folder.mode.root.title">Főmappa üzemmód: minden almappa egy-egy könyv</string>
-    <string name="folder.mode.single.title">Könyv üzemmód: minden mappa egy-egy könyv.</string>
-    <string name="folder.type.book_example.empty">Voice nem talált egy könyvet se. Léteznek erre hangfájlok?</string>
-    <string name="folder.type.book_example.header">Ezzel az akcióval ezeket a könyveket találtuk meg</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d hangfájl</item>
-        <item quantity="other">%d hangfájl</item>
-    </plurals>
-    <string name="folder.type.title">Hogyan vannak elrendezve a hangfájlok?</string>
     <string name="library.category.completed.title">Befejezett</string>
     <string name="library.category.current.title">Jelenlegi</string>
     <string name="library.category.not_started.title">Még nem elkezdett</string>
@@ -83,7 +73,6 @@
     <string name="playback.battery_optimization.rationale">Lejátszási szakadozások történhetnek az ön energiabeállítasai miatt.</string>
     <string name="playback.chapter.next">Következő hangfelvétel</string>
     <string name="playback.chapter.previous">Előző hangfelvétel</string>
-    <string name="playback.option.skip_silence">Csend kihagyása</string>
     <string name="playback.option.volume_boost">Hangerőnövelés</string>
     <string name="playback.speed.title">Lejátszási sebesség</string>
     <string name="review.feedback.action.cancel">Mégse</string>

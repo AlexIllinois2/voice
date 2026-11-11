@@ -46,16 +46,6 @@
     <string name="folder.add.type.file">Dosya</string>
     <string name="folder.add.type.folder">Klasör</string>
     <string name="folder.add.type.subtitle">Tek bir dosyayı kitap olarak mı yoksa klasör olarak mı eklemek istiyorsunuz?</string>
-    <string name="folder.mode.author.title">Yazar-Kitap Modu: Alt klasörler yazarlar, onların alt klasörleri kitaplardır.</string>
-    <string name="folder.mode.root.title">EnÜst Seviye Kitap Modu: Alt klasörler kitaplardır</string>
-    <string name="folder.mode.single.title">Tek kitap modu: Bir dosyada bir kitap bulunur.</string>
-    <string name="folder.type.book_example.empty">Voice herhangi bir kitap algılayamadı. Hiç ses dosyası var mı?</string>
-    <string name="folder.type.book_example.header">Bu, aşağıdaki kitapların algılanmasını sağlayacaktır</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d ses dosyası</item>
-        <item quantity="other">%d ses dosyası</item>
-    </plurals>
-    <string name="folder.type.title">Dosyalarınız nasıl yapılandırılıyor?</string>
     <string name="library.category.completed.title">Tamamlandı</string>
     <string name="library.category.current.title">Geçerli</string>
     <string name="library.category.not_started.title">Henüz başlamadı</string>
@@ -92,7 +82,6 @@
     <string name="playback.chapter.current.content_description">Şu anki bölüm</string>
     <string name="playback.chapter.next">Sonraki parça</string>
     <string name="playback.chapter.previous">Önceki parça</string>
-    <string name="playback.option.skip_silence">Sessizliği Geç</string>
     <string name="playback.option.volume_boost">Ses yükseltme</string>
     <string name="playback.speed.title">Oynatma hızı</string>
     <string name="review.feedback.action.cancel">İptal et</string>

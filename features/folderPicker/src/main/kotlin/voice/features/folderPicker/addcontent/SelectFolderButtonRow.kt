@@ -18,6 +18,13 @@ import voice.core.strings.R
 import voice.core.ui.icons.VoiceIcons
 import voice.features.folderPicker.folderPicker.FileTypeSelection
 
+private val ZIP_MIME_TYPES =
+  arrayOf(
+    "application/zip",
+    "application/x-zip-compressed",
+    "application/octet-stream",
+  )
+
 @Composable
 internal fun SelectFolderButtonRow(onAdd: (FileTypeSelection, Uri) -> Unit) {
   Row(
@@ -55,7 +62,7 @@ internal fun SelectFolderButtonRow(onAdd: (FileTypeSelection, Uri) -> Unit) {
       text = stringResource(id = R.string.folder_add_type_file),
       onClick = {
         try {
-          openDocumentLauncher.launch(arrayOf("*/*"))
+          openDocumentLauncher.launch(ZIP_MIME_TYPES)
         } catch (e: ActivityNotFoundException) {
           Logger.w(e, "Could not add file")
         }

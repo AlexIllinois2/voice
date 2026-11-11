@@ -102,7 +102,11 @@ class AdtsDurationReaderTest {
       object : DataSource {
         override fun addTransferListener(transferListener: TransferListener) = Unit
         override fun open(dataSpec: DataSpec) = 0L
-        override fun read(buffer: ByteArray, offset: Int, length: Int) = C.RESULT_END_OF_INPUT
+        override fun read(
+          buffer: ByteArray,
+          offset: Int,
+          length: Int,
+        ) = C.RESULT_END_OF_INPUT
         override fun getUri(): Uri = Uri.EMPTY
         override fun close() = Unit
       }

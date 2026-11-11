@@ -11,10 +11,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
-import voice.core.documentfile.CachedDocumentFile
-import voice.core.logging.api.Logger
 import net.lingala.zip4j.ZipFile
 import net.lingala.zip4j.exception.ZipException
+import voice.core.documentfile.CachedDocumentFile
+import voice.core.logging.api.Logger
 import java.io.File
 import java.io.InputStream
 import java.nio.charset.Charset
@@ -258,11 +258,15 @@ class ZipArchiveProvider(
     val displayName = file.name
     var failedAttempt = false
     while (true) {
-      val saved: String? = if (failedAttempt) null else try {
-        passwordsStore.password(zipUri.toString())
-      } catch (e: Exception) {
-        Logger.w(e, "Failed to read saved zip password")
+      val saved: String? = if (failedAttempt) {
         null
+      } else {
+        try {
+          passwordsStore.password(zipUri.toString())
+        } catch (e: Exception) {
+          Logger.w(e, "Failed to read saved zip password")
+          null
+        }
       }
       val password = saved
         ?: passwordRequester.request(zipUri, displayName, failedAttempt)

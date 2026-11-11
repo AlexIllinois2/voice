@@ -11,9 +11,7 @@ import java.io.IOException
 
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
-public class ZipParseAttemptRepoImpl(
-  @ZipParseAttemptStore private val store: DataStore<Set<String>>,
-) : ZipParseAttemptRepo {
+public class ZipParseAttemptRepoImpl(@ZipParseAttemptStore private val store: DataStore<Set<String>>) : ZipParseAttemptRepo {
 
   override suspend fun attemptedZips(): Set<String> {
     return try {

@@ -1,12 +1,14 @@
 # Organizing Audiobooks
 
-Voice offers three simple ways to organize your audiobooks based on how you store them on your device. Pick the option that matches your
-setup best:
+Adding a book in Voice adds exactly one book per operation: pick either a zip archive or a folder, and it is added as a single book. A zip's
+audio entries and a folder's audio files become the chapters of that book.
 
-## 1. **Audiobooks in Separate Folders** (recommended)
+Previously added folders can still use these structures; they keep working on rescans:
 
-Each folder within your selected directory is treated as a separate audiobook. Any audio files directly inside that directory (not in a
-subfolder) will also be recognized as individual audiobooks.
+## 1. **Audiobooks in Separate Folders**
+
+Each folder within a previously selected directory is treated as a separate audiobook. Any audio files directly inside that directory (not in
+a subfolder) will also be recognized as individual audiobooks.
 
 **Example:**
 

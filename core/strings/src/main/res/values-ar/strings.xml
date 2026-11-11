@@ -45,20 +45,6 @@
     <string name="folder.add.type.file">ملف</string>
     <string name="folder.add.type.folder">مجلد</string>
     <string name="folder.add.type.subtitle">هل تريد إضافة ملف مفرد ككتاب أو مجلد؟</string>
-    <string name="folder.mode.author.title">وضع المؤلفين: كل مجلد فرعي مؤلف وكل مجلد فرعي في ذاك المجلد كتاب لذاك المؤلف.</string>
-    <string name="folder.mode.root.title">وضع المجلد الحاوي للكتب: كل مجلد فرعي كتاب مستقل</string>
-    <string name="folder.mode.single.title">وضع الكتاب المفرد: كل مجلد يعني كتاب واحد.</string>
-    <string name="folder.type.book_example.empty">لم يتمكن فويس من اكتشاف أي كتب. هل هناك أي ملفات صوتية؟</string>
-    <string name="folder.type.book_example.header">سيؤدي هذا إلى اكتشاف الكتاب التالي</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="zero">%dملف صوتي</item>
-        <item quantity="one">%d ملف صوتي واحد</item>
-        <item quantity="two">%d ملفين صوتيين</item>
-        <item quantity="few">%d ملفات صوتية</item>
-        <item quantity="many">%d ملفاً صوتياً</item>
-        <item quantity="other">%d ملف صوتي</item>
-    </plurals>
-    <string name="folder.type.title">ما هي هيكلية ملفاتك؟</string>
     <string name="library.category.completed.title">انتهى</string>
     <string name="library.category.current.title">الحالي</string>
     <string name="library.category.not_started.title">لم يبدأ بعد</string>
@@ -87,7 +73,6 @@
     <string name="playback.battery_optimization.rationale">نظراً لقيود الطاقة، فقد ينقطع التشغيل.</string>
     <string name="playback.chapter.next">المسار التالي</string>
     <string name="playback.chapter.previous">الشريط السابق</string>
-    <string name="playback.option.skip_silence">تخطَ الصمت</string>
     <string name="playback.option.volume_boost">مكبر الصوت</string>
     <string name="playback.speed.title">سرعة التشغيل</string>
     <string name="review.feedback.action.cancel">ألغ</string>

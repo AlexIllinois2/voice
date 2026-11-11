@@ -46,16 +46,6 @@
     <string name="folder.add.type.file">Fil</string>
     <string name="folder.add.type.folder">Mapp</string>
     <string name="folder.add.type.subtitle">Vill du lägga till en enskild fil som bok eller en hel mapp?</string>
-    <string name="folder.mode.author.title">Författarläge: Undermappar är författare och deras undermappar är böcker.</string>
-    <string name="folder.mode.root.title">Bokläge på översta nivån: Undermappar är böcker</string>
-    <string name="folder.mode.single.title">Enboksläge: En mapp motsvarar en bok.</string>
-    <string name="folder.type.book_example.empty">Voice kunde inte hitta några böcker. Finns det några ljudfiler?</string>
-    <string name="folder.type.book_example.header">Följande böcker skulle då hittas</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d ljudfil</item>
-        <item quantity="other">%d ljudfiler</item>
-    </plurals>
-    <string name="folder.type.title">Hur är dina filer organiserade?</string>
     <string name="library.category.completed.title">Färdiglyssnade</string>
     <string name="library.category.current.title">Pågående</string>
     <string name="library.category.not_started.title">Inte påbörjade</string>
@@ -92,7 +82,6 @@
     <string name="playback.chapter.current.content_description">Aktuellt kapitel</string>
     <string name="playback.chapter.next">Nästa spår</string>
     <string name="playback.chapter.previous">Föregående spår</string>
-    <string name="playback.option.skip_silence">Hoppa över tystnad</string>
     <string name="playback.option.volume_boost">Volymförstärkning</string>
     <string name="playback.speed.title">Uppspelningshastighet</string>
     <string name="review.feedback.action.cancel">Avbryt</string>

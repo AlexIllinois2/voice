@@ -2976,7 +2976,6 @@ object VoiceIcons {
       }
       .build()
 
-
   /*
    * Source: https://fonts.gstatic.com/render/v1/Material+Symbols+Outlined/24dp/timer_off.kt?var=opsz,wght,FILL,GRAD,ROND@24,400,0,0,50
    * Generated: 2026-11-01T09:30:00Z

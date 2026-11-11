@@ -34,7 +34,10 @@ class ZipPasswordsStore(private val context: Application) {
     return store.data.first()[zipUri]
   }
 
-  suspend fun store(zipUri: String, password: String) {
+  suspend fun store(
+    zipUri: String,
+    password: String,
+  ) {
     store.updateData { it + (zipUri to password) }
   }
 

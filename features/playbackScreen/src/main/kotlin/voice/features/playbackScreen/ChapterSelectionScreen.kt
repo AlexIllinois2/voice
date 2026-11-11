@@ -42,16 +42,18 @@ interface ChapterSelectionProvider {
 
   @Provides
   @IntoSet
-  fun chapterSelectionNavEntryProvider(): NavEntryProvider<*> =
-    NavEntryProvider<Destination.ChapterSelection> { key ->
-      NavEntry(key) {
-        ChapterSelectionScreen(bookId = key.bookId)
-      }
+  fun chapterSelectionNavEntryProvider(): NavEntryProvider<*> = NavEntryProvider<Destination.ChapterSelection> { key ->
+    NavEntry(key) {
+      ChapterSelectionScreen(bookId = key.bookId)
     }
+  }
 }
 
 @Composable
-fun ChapterSelectionScreen(bookId: BookId) {
+fun ChapterSelectionScreen(
+  bookId: BookId,
+  modifier: Modifier = Modifier,
+) {
   val viewModel = retain(bookId.value) {
     rootGraphAs<BookPlayGraph>()
       .bookPlayViewModelFactory
@@ -59,6 +61,7 @@ fun ChapterSelectionScreen(bookId: BookId) {
   }
   val viewState = viewModel.chapterListViewState() ?: return
   Scaffold(
+    modifier = modifier,
     topBar = {
       TopAppBar(
         title = { Text(text = viewState.title) },

@@ -45,16 +45,6 @@
     <string name="folder.add.type.file">Fil</string>
     <string name="folder.add.type.folder">Mappe</string>
     <string name="folder.add.type.subtitle">Vil du tilføje en enkelt fil som en bog eller som en mappe?</string>
-    <string name="folder.mode.author.title">Forfatter-Bog-tilstand: Undermapper er forfattere, under-undermapper er bøger.</string>
-    <string name="folder.mode.root.title">Rodmappe til lydbøger. Én undermappe er én bog</string>
-    <string name="folder.mode.single.title">Enkelt bog-mode: Én mappe er èn bog.</string>
-    <string name="folder.type.book_example.empty">Voice kunne ikke finde nogle bøger. Ligger der nogle lydfiler?</string>
-    <string name="folder.type.book_example.header">Dette vil medføre at følgende bøger bliver opdaget</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d lydfil</item>
-        <item quantity="other">%d lydfiler</item>
-    </plurals>
-    <string name="folder.type.title">Hvordan er dine filer struktureret?</string>
     <string name="library.category.completed.title">Afsluttet</string>
     <string name="library.category.current.title">Nuværende</string>
     <string name="library.category.not_started.title">Endnu ikke startet</string>
@@ -83,7 +73,6 @@
     <string name="playback.battery_optimization.rationale">På grund af dine strømbegrænsninger kan der forekommer afbrydelser i afspilningen.</string>
     <string name="playback.chapter.next">Næste nummer</string>
     <string name="playback.chapter.previous">Forrige nummer</string>
-    <string name="playback.option.skip_silence">Spring stilhed over</string>
     <string name="playback.option.volume_boost">Lydstyrkeforøgelse</string>
     <string name="playback.speed.title">Afspilningshastighed</string>
     <string name="review.feedback.action.cancel">Annulér</string>

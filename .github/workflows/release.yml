@@ -49,11 +49,11 @@ jobs:
 
       - name: Build debug-signed release APKs
         run: |
-          ./gradlew :app:assembleFreeRelease \
+          ./gradlew :app:assembleRelease \
             -Pvoice.versionName="${{ steps.version.outputs.version_name }}" \
             -Pvoice.versionCode="${{ steps.version.outputs.version_code }}"
           mkdir -p artifacts
-          cp app/build/outputs/apk/free/release/*.apk artifacts/
+          cp app/build/outputs/apk/release/*.apk artifacts/
 
       - name: Verify debug signature
         run: |

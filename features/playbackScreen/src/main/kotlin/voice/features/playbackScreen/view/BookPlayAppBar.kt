@@ -27,7 +27,6 @@ internal fun BookPlayAppBar(
   onBookmarkClick: () -> Unit,
   onBookmarkLongClick: () -> Unit,
   onSpeedChangeClick: () -> Unit,
-  onSkipSilenceClick: () -> Unit,
   onVolumeBoostClick: () -> Unit,
   onCloseClick: () -> Unit,
   useLandscapeLayout: Boolean,
@@ -67,8 +66,6 @@ internal fun BookPlayAppBar(
       )
     }
     OverflowMenu(
-      skipSilence = viewState.skipSilence,
-      onSkipSilenceClick = onSkipSilenceClick,
       onVolumeBoostClick = onVolumeBoostClick,
     )
   }

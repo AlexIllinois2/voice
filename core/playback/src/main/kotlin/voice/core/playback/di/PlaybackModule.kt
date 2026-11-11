@@ -31,11 +31,14 @@ import voice.core.playback.playstate.PlayStateDelegatingListener
 import voice.core.playback.playstate.PositionUpdater
 import voice.core.playback.session.LibrarySessionCallback
 import voice.core.playback.session.PlaybackService
+import voice.core.playback.transcode.TranscodePreloader
+import voice.core.playback.transcode.TranscodingDataSourceFactory
 import voice.core.playback.zip.SchemeDispatchingDataSourceFactory
 import voice.core.playback.zip.ZipEntryDataSource
 import voice.core.playback.zip.ZipPreloader
-import voice.core.strings.R as StringsR
+import voice.core.transcode.TranscodeManager
 import voice.core.zip.ZipPlaybackCache
+import voice.core.strings.R as StringsR
 
 @ContributesTo(PlaybackScope::class)
 interface PlaybackModule {
@@ -45,18 +48,23 @@ interface PlaybackModule {
   fun mediaSourceFactory(
     context: Context,
     zipPlaybackCache: ZipPlaybackCache,
+    transcodeManager: TranscodeManager,
   ): MediaSource.Factory {
     val dataSourceFactory = DefaultDataSource.Factory(context)
     val zipDataSourceFactory = DataSource.Factory {
       ZipEntryDataSource(zipPlaybackCache)
     }
-    val dispatchingDataSourceFactory = SchemeDispatchingDataSourceFactory(
-      defaultFactory = dataSourceFactory,
-      zipFactory = zipDataSourceFactory,
+    // the transcode check comes first, so wma entries of zips are converted as well
+    val transcodeDataSourceFactory = TranscodingDataSourceFactory(
+      fallbackFactory = SchemeDispatchingDataSourceFactory(
+        defaultFactory = dataSourceFactory,
+        zipFactory = zipDataSourceFactory,
+      ),
+      transcodeManager = transcodeManager,
     )
     val extractorsFactory = DefaultExtractorsFactory()
       .setConstantBitrateSeekingEnabled(true)
-    return DefaultMediaSourceFactory(dispatchingDataSourceFactory, extractorsFactory)
+    return DefaultMediaSourceFactory(transcodeDataSourceFactory, extractorsFactory)
   }
 
   @Provides
@@ -70,6 +78,7 @@ interface PlaybackModule {
     volumeGain: VolumeGain,
     durationInconsistenciesUpdater: DurationInconsistenciesUpdater,
     zipPreloader: ZipPreloader,
+    transcodePreloader: TranscodePreloader,
     @Media3AudioOffloadFeatureFlagQualifier media3AudioOffloadFeatureFlag: FeatureFlag<Boolean>,
   ): Player {
     val audioAttributes = AudioAttributes.Builder()
@@ -99,6 +108,7 @@ interface PlaybackModule {
         positionUpdater.attachTo(player)
         durationInconsistenciesUpdater.attachTo(player)
         zipPreloader.attachTo(player)
+        transcodePreloader.attachTo(player)
         player.onAudioSessionIdChanged {
           volumeGain.audioSessionId = it
         }

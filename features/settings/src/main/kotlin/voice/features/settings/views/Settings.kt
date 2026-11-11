@@ -1,6 +1,12 @@
 package voice.features.settings.views
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,10 +24,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.retain.retain
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavEntry
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesTo
@@ -327,25 +335,33 @@ private fun HiFiModeRow(
   hiFiModeEnabled: Boolean,
   toggle: () -> Unit,
 ) {
-  ListItem(
-    modifier = Modifier.clickable { toggle() },
-    leadingContent = {
-      Icon(
-        imageVector = VoiceIcons.AudioFile,
-        contentDescription = null,
-      )
-    },
-    supportingContent = {
-      Text(text = stringResource(StringsR.string.settings_playback_hifi_mode_summary))
-    },
-    trailingContent = {
-      Switch(
-        checked = hiFiModeEnabled,
-        onCheckedChange = { toggle() },
-      )
-    },
+  // Material3 ListItem only centers the leading icon within the default item height,
+  // so a row taller than three lines shows the icon top-aligned. Use a plain row
+  // with CenterVertically instead.
+  Row(
+    modifier = Modifier
+      .clickable { toggle() }
+      .fillMaxWidth()
+      .padding(horizontal = 16.dp, vertical = 12.dp),
+    verticalAlignment = Alignment.CenterVertically,
   ) {
-    Text(text = stringResource(StringsR.string.settings_playback_hifi_mode_title))
+    Icon(
+      imageVector = VoiceIcons.AudioFile,
+      contentDescription = null,
+    )
+    Spacer(modifier = Modifier.width(16.dp))
+    Column(modifier = Modifier.weight(1F)) {
+      Text(text = stringResource(StringsR.string.settings_playback_hifi_mode_title))
+      Text(
+        text = stringResource(StringsR.string.settings_playback_hifi_mode_summary),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+      )
+    }
+    Switch(
+      checked = hiFiModeEnabled,
+      onCheckedChange = { toggle() },
+    )
   }
 }
 

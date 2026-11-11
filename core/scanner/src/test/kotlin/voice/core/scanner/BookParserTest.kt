@@ -299,7 +299,10 @@ class BookParserTest {
     part = null,
   )
 
-  private fun content(id: BookId, name: String): BookContent {
+  private fun content(
+    id: BookId,
+    name: String,
+  ): BookContent {
     val chapterId = ChapterId("chapter")
     return BookContent(
       id = id,

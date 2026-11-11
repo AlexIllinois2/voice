@@ -40,10 +40,10 @@ import voice.core.logging.api.Logger
 import voice.core.ui.icons.VoiceIcons
 import voice.navigation.Destination
 import voice.navigation.NavEntryProvider
-import voice.core.strings.R as StringsR
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import voice.core.strings.R as StringsR
 
 private val FILE_NAME_TIME_FORMAT: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")
   .withZone(ZoneId.systemDefault())
@@ -160,6 +160,7 @@ private fun LogEntryRow(entry: LogViewerViewState.LogEntryViewState) {
     )
   }
 }
+
 @Composable
 private fun severityTextRes(entry: LogViewerViewState.LogEntryViewState): Int {
   return if (entry.severity == Logger.Severity.Error) {

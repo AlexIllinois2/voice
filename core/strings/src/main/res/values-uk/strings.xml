@@ -50,18 +50,6 @@
     <string name="folder.add.type.file">Файл</string>
     <string name="folder.add.type.folder">Каталог</string>
     <string name="folder.add.type.subtitle">Ви хочете додати книгу як окремий файл або каталог?</string>
-    <string name="folder.mode.author.title">Режим «Автор–Книга»: підкаталоги це автори, під-підкаталоги – книги</string>
-    <string name="folder.mode.root.title">Книжковий режим верхнього рівня: підкаталоги – це книги</string>
-    <string name="folder.mode.single.title">Режим однієї книги: один каталог відповідає одній книзі</string>
-    <string name="folder.type.book_example.empty">Voice не виявив жодної книги. Тут є аудіофайли?</string>
-    <string name="folder.type.book_example.header">Пошук книг</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d аудіофайл</item>
-        <item quantity="few">%d аудіофайли</item>
-        <item quantity="many">%d аудіофайлів</item>
-        <item quantity="other">%d аудіофайлів</item>
-    </plurals>
-    <string name="folder.type.title">Як структуровані ваші файли?</string>
     <string name="library.category.completed.title">Завершені</string>
     <string name="library.category.current.title">Поточні</string>
     <string name="library.category.not_started.title">Ще не початі</string>
@@ -98,7 +86,6 @@
     <string name="playback.chapter.current.content_description">Глава</string>
     <string name="playback.chapter.next">Наступний запис</string>
     <string name="playback.chapter.previous">Попередній запис</string>
-    <string name="playback.option.skip_silence">Пропускати тишу</string>
     <string name="playback.option.volume_boost">Збільшення гучності</string>
     <string name="playback.speed.title">Швидкість відтворення</string>
     <string name="review.feedback.action.cancel">Скасування</string>

@@ -27,7 +27,6 @@ internal fun BookPlayView(
   onBookmarkClick: () -> Unit,
   onBookmarkLongClick: () -> Unit,
   onSpeedChangeClick: () -> Unit,
-  onSkipSilenceClick: () -> Unit,
   onVolumeBoostClick: () -> Unit,
   onSkipToNext: () -> Unit,
   onSkipToPrevious: () -> Unit,
@@ -46,7 +45,6 @@ internal fun BookPlayView(
         onBookmarkClick = onBookmarkClick,
         onBookmarkLongClick = onBookmarkLongClick,
         onSpeedChangeClick = onSpeedChangeClick,
-        onSkipSilenceClick = onSkipSilenceClick,
         onVolumeBoostClick = onVolumeBoostClick,
         onCloseClick = onCloseClick,
         useLandscapeLayout = useLandscapeLayout,
@@ -88,7 +86,6 @@ private fun BookPlayPreview(
       onBookmarkClick = {},
       onBookmarkLongClick = {},
       onSpeedChangeClick = {},
-      onSkipSilenceClick = {},
       onVolumeBoostClick = {},
       onSkipToNext = {},
       onSkipToPrevious = {},
@@ -108,7 +105,6 @@ private class BookPlayViewStatePreviewProvider : PreviewParameterProvider<BookPl
       duration = 10.minutes,
       playedTime = 3.minutes,
       playing = true,
-      skipSilence = true,
       sleepTimerState = BookPlayViewState.SleepTimerViewState.Disabled,
       title = "Das Ende der Welt",
     )
@@ -117,7 +113,6 @@ private class BookPlayViewStatePreviewProvider : PreviewParameterProvider<BookPl
       initial.copy(
         showPreviousNextButtons = !initial.showPreviousNextButtons,
         playing = !initial.playing,
-        skipSilence = !initial.skipSilence,
       ),
     )
     yield(initial.copy(chapterName = null))

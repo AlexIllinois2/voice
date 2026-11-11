@@ -41,16 +41,6 @@
     <string name="folder.add.type.file">फाइल</string>
     <string name="folder.add.type.folder">फोल्डर</string>
     <string name="folder.add.type.subtitle">के तपाईं एउटा एकल फाइललाई पुस्तक वा फोल्डर को रूपमा थप्न चाहनुहुन्छ?</string>
-    <string name="folder.mode.author.title">लेखक-पुस्तक मोड: सबफोल्डरहरू लेखकहरू हुन्, उप-सबफोल्डरहरू पुस्तक हुन्।</string>
-    <string name="folder.mode.root.title">शीर्ष-स्तर पुस्तक मोड: सबफोल्डरहरू पुस्तक हुन्</string>
-    <string name="folder.mode.single.title">एकल पुस्तक मोड: एउटा फोल्डर एक पुस्तक बराबर।</string>
-    <string name="folder.type.book_example.empty">Voice ले कुनै पनि पुस्तकहरू पत्ता लगाउन सकेन। के त्यहाँ कुनै अडियो फाइलहरू छन्?</string>
-    <string name="folder.type.book_example.header">यसले निम्न पुस्तकहरू पत्ता लगाउन नेतृत्व गर्नेछ</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d अडियो फाइल</item>
-        <item quantity="other">%d अडियो फाइलहरू</item>
-    </plurals>
-    <string name="folder.type.title">तपाईंको फाइलहरू कसरी संरचित छन्?</string>
     <string name="library.category.completed.title">सम्पन्न भयो</string>
     <string name="library.category.current.title">हालको</string>
     <string name="library.category.not_started.title">सुरु भएको छैन</string>
@@ -79,7 +69,6 @@
     <string name="playback.battery_optimization.rationale">तपाईंको पावर प्रतिबन्धहरूको कारण, प्लेब्याक अवरोधहरू हुन सक्छ।</string>
     <string name="playback.chapter.next">अर्को ट्र्याक</string>
     <string name="playback.chapter.previous">अघिल्लो ट्र्याक</string>
-    <string name="playback.option.skip_silence">शान्तिले स्किप गर्नुहोस्</string>
     <string name="playback.option.volume_boost">आवाज बूस्ट</string>
     <string name="playback.speed.title">प्लेब्याक गती</string>
     <string name="review.feedback.action.cancel">रद्द गर्नहोस्</string>

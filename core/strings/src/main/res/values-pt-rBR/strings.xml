@@ -48,17 +48,6 @@
     <string name="folder.add.type.file">Ficheiro</string>
     <string name="folder.add.type.folder">Pasta</string>
     <string name="folder.add.type.subtitle">Gostaria de adicionar um único arquivo como um livro ou pasta?</string>
-    <string name="folder.mode.author.title">Modo Autor de Livro: Subpastas são autores, sub-subpasta são livros.</string>
-    <string name="folder.mode.root.title">Pasta de Audiobook padrão. Cada subpasta representa um livro/volume diferente.</string>
-    <string name="folder.mode.single.title">Pasta única de Audiobook. Cada pasta representa um único livro.</string>
-    <string name="folder.type.book_example.empty">Voice não conseguiu encontrar nenhum livro. O ficheiro está no formato certo?</string>
-    <string name="folder.type.book_example.header">Isto fará com que os respectivos livros sejam reconhecidos</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d ficheiro de áudio</item>
-        <item quantity="many">%d ficheiros de áudio</item>
-        <item quantity="other">%d ficheiros de áudio</item>
-    </plurals>
-    <string name="folder.type.title">Como os seus ficheiros estão organizados?</string>
     <string name="library.category.completed.title">Concluído</string>
     <string name="library.category.current.title">Actual</string>
     <string name="library.category.not_started.title">Não iniciado ainda</string>
@@ -95,7 +84,6 @@
     <string name="playback.chapter.current.content_description">Capítulo atual</string>
     <string name="playback.chapter.next">Próximo capítulo</string>
     <string name="playback.chapter.previous">Capítulo anterior</string>
-    <string name="playback.option.skip_silence">Pular silêncio</string>
     <string name="playback.option.volume_boost">Aumento de volume</string>
     <string name="playback.speed.title">Velocidade de reprodução</string>
     <string name="review.feedback.action.cancel">Cancelar</string>

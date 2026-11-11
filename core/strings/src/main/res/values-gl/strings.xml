@@ -46,16 +46,6 @@
     <string name="folder.add.type.file">Ficheiro</string>
     <string name="folder.add.type.folder">Cartafol</string>
     <string name="folder.add.type.subtitle">Queres engadir un só ficheiro como libro ou un cartafol?</string>
-    <string name="folder.mode.author.title">Modo Libro-Autoría: cada subcartafol equivale a unha autoría, os sub-subcartafoles son libros.</string>
-    <string name="folder.mode.root.title">Modo Libro do nivel superior: os subcartafoles son libros</string>
-    <string name="folder.mode.single.title">Modo de Libro Simple: un cartafol equivale a un libro.</string>
-    <string name="folder.type.book_example.empty">Voice non atopou ningún libro. Hai aí algún ficheiro de audio?</string>
-    <string name="folder.type.book_example.header">Isto fai que se detecten os seguintes libros</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d ficheiro de audio</item>
-        <item quantity="other">%d ficheiros de audio</item>
-    </plurals>
-    <string name="folder.type.title">Como se organizan os ficheiros?</string>
     <string name="library.category.completed.title">Escoitado</string>
     <string name="library.category.current.title">Actual</string>
     <string name="library.category.not_started.title">Aínda non escoitado</string>
@@ -92,7 +82,6 @@
     <string name="playback.chapter.current.content_description">Capítulo actual</string>
     <string name="playback.chapter.next">Pista seguinte</string>
     <string name="playback.chapter.previous">Pista anterior</string>
-    <string name="playback.option.skip_silence">Omitir silencio</string>
     <string name="playback.option.volume_boost">Potenciar volume</string>
     <string name="playback.speed.title">Velocidade de reprodución</string>
     <string name="review.feedback.action.cancel">Desbotar</string>

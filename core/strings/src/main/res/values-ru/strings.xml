@@ -50,18 +50,6 @@
     <string name="folder.add.type.file">Файл</string>
     <string name="folder.add.type.folder">Папка</string>
     <string name="folder.add.type.subtitle">Хотите добавить один файл в виде книги или папки?</string>
-    <string name="folder.mode.author.title">Режим автор-книга: подпапки - авторы, подподпапки - книги.</string>
-    <string name="folder.mode.root.title">Книжный режим верхнего уровня: подпапки — это книги</string>
-    <string name="folder.mode.single.title">Режим одной книги: одна папка соответствует одной книге.</string>
-    <string name="folder.type.book_example.empty">Не удалось обнаружить аудиокниги. Присутствуют ли аудиофайлы?</string>
-    <string name="folder.type.book_example.header">Будут обнаружены следующие книги</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d аудиофайл</item>
-        <item quantity="few">%d аудиофайла</item>
-        <item quantity="many">%d аудиофайлов</item>
-        <item quantity="other">%d аудиофайлов</item>
-    </plurals>
-    <string name="folder.type.title">Как упорядочены ваши файлы?</string>
     <string name="library.category.completed.title">Прослушанные</string>
     <string name="library.category.current.title">Слушаю</string>
     <string name="library.category.not_started.title">Непрослушанные</string>
@@ -98,7 +86,6 @@
     <string name="playback.chapter.current.content_description">Текущая глава</string>
     <string name="playback.chapter.next">Следующий файл</string>
     <string name="playback.chapter.previous">Предыдущий файл</string>
-    <string name="playback.option.skip_silence">Пропускать тишину</string>
     <string name="playback.option.volume_boost">Усиление звука</string>
     <string name="playback.speed.title">Скорость воспроизведения</string>
     <string name="review.feedback.action.cancel">Отмена</string>

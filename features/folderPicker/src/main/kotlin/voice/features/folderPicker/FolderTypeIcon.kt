@@ -28,9 +28,9 @@ private fun FolderType.contentDescription(): String {
   val res = when (this) {
     FolderType.SingleFile,
     FolderType.SingleFolder,
-    -> StringsR.string.folder_mode_single_title
-    FolderType.Root -> StringsR.string.folder_mode_root_title
-    FolderType.Author -> StringsR.string.folder_mode_author_title
+    -> StringsR.string.folder_type_single_book
+    FolderType.Root -> StringsR.string.folder_type_multiple_books
+    FolderType.Author -> StringsR.string.folder_type_author_books
   }
   return stringResource(res)
 }

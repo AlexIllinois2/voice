@@ -48,17 +48,6 @@
     <string name="folder.add.type.file">Fichier</string>
     <string name="folder.add.type.folder">Dossier</string>
     <string name="folder.add.type.subtitle">Les livres sont-ils des fichiers ou des dossiers ?</string>
-    <string name="folder.mode.author.title">Mode auteurs : chaque sous-dossier est un auteur, dont chaque sous-dossier est un livre.</string>
-    <string name="folder.mode.root.title">Mode livres : chaque sous-dossier est un livre</string>
-    <string name="folder.mode.single.title">Mode livre unique : un dossier est un livre.</string>
-    <string name="folder.type.book_example.empty">Voice n\'a pu détecter aucun livre. Y a-t-il des fichiers audio ?</string>
-    <string name="folder.type.book_example.header">Cela conduirait à la détection des livres suivants</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d fichier audio</item>
-        <item quantity="many">%d fichiers audio</item>
-        <item quantity="other">%d fichiers audio</item>
-    </plurals>
-    <string name="folder.type.title">Comment vos fichiers sont ils structurés ?</string>
     <string name="library.category.completed.title">Terminé</string>
     <string name="library.category.current.title">En cours</string>
     <string name="library.category.not_started.title">Pas encore commencé</string>
@@ -95,7 +84,6 @@
     <string name="playback.chapter.current.content_description">Chapitre en cours</string>
     <string name="playback.chapter.next">Piste suivante</string>
     <string name="playback.chapter.previous">Piste précédente</string>
-    <string name="playback.option.skip_silence">Sauter les silences</string>
     <string name="playback.option.volume_boost">Augmentation du volume</string>
     <string name="playback.speed.title">Vitesse de lecture</string>
     <string name="review.feedback.action.cancel">Annuler</string>

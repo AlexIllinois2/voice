@@ -47,17 +47,6 @@
     <string name="folder.add.type.file">Fitxer</string>
     <string name="folder.add.type.folder">Carpeta</string>
     <string name="folder.add.type.subtitle">Voleu afegir un sol fitxer com a llibre o una carpeta?</string>
-    <string name="folder.mode.author.title">Mode llibre d\'autor: les subcarpetes són autors, les subcarpetes de les subcarpetes són llibres.</string>
-    <string name="folder.mode.root.title">Mode llibre de nivell superior: les subcarpetes són llibres</string>
-    <string name="folder.mode.single.title">Mode llibre: cada carpeta és un llibre.</string>
-    <string name="folder.type.book_example.empty">El Voice no ha pogut detectar cap llibre. Hi ha cap fitxer d\'àudio?</string>
-    <string name="folder.type.book_example.header">Això faria que es detectessin els llibres següents</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d fitxer d\'àudio</item>
-        <item quantity="many">%d fitxers d\'àudio</item>
-        <item quantity="other">%d fitxers d\'àudio</item>
-    </plurals>
-    <string name="folder.type.title">Com s\'estructuren els fitxers?</string>
     <string name="library.category.completed.title">Completat</string>
     <string name="library.category.current.title">Actual</string>
     <string name="library.category.not_started.title">Encara no s\'ha iniciat</string>
@@ -86,7 +75,6 @@
     <string name="playback.battery_optimization.rationale">A causa de les restriccions d\'energia, és possible que es produeixin interrupcions en la reproducció.</string>
     <string name="playback.chapter.next">Pista següent</string>
     <string name="playback.chapter.previous">Pista anterior</string>
-    <string name="playback.option.skip_silence">Omet el silenci</string>
     <string name="playback.option.volume_boost">Augment del volum</string>
     <string name="playback.speed.title">Velocitat de reproducció</string>
     <string name="review.feedback.action.cancel">Cancel·la</string>

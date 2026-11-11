@@ -5,17 +5,17 @@ import androidx.core.net.toUri
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.mockk.mockk
-import java.io.File
-import java.util.zip.ZipEntry
-import java.util.zip.ZipOutputStream
-import kotlin.test.Test
-import kotlin.test.assertTrue
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
 import org.junit.runner.RunWith
 import voice.core.zip.ZipArchiveProvider
 import voice.core.zip.ZipUriCodec
+import java.io.File
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+import kotlin.test.Test
+import kotlin.test.assertTrue
 
 @RunWith(AndroidJUnit4::class)
 internal class CoverExtractorTest {

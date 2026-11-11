@@ -48,17 +48,6 @@
     <string name="folder.add.type.file">File</string>
     <string name="folder.add.type.folder">Cartella</string>
     <string name="folder.add.type.subtitle">Vuoi aggiungere un singolo file come un libro o una cartella?</string>
-    <string name="folder.mode.author.title">Modalità autore-libro: le sottocartelle sono gli autori, le sottocartelle sono i libri.</string>
-    <string name="folder.mode.root.title">Modalità libro di primo livello: le sottocartelle sono libri</string>
-    <string name="folder.mode.single.title">Modalità libro singolo: una cartella equivale a un libro.</string>
-    <string name="folder.type.book_example.empty">Voice non ha rilevato alcun libro. Ci sono file audio?</string>
-    <string name="folder.type.book_example.header">Questo porterebbe al rilevamento dei seguenti libri</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d file audio</item>
-        <item quantity="many">%d file audio</item>
-        <item quantity="other">%d file audio</item>
-    </plurals>
-    <string name="folder.type.title">Come sono organizzati i tuoi file?</string>
     <string name="library.category.completed.title">Completato</string>
     <string name="library.category.current.title">Corrente</string>
     <string name="library.category.not_started.title">Non ancora iniziato</string>
@@ -95,7 +84,6 @@
     <string name="playback.chapter.current.content_description">Capitolo corrente</string>
     <string name="playback.chapter.next">Traccia successiva</string>
     <string name="playback.chapter.previous">Traccia precedente</string>
-    <string name="playback.option.skip_silence">Salta silenzio</string>
     <string name="playback.option.volume_boost">Aumento del volume</string>
     <string name="playback.speed.title">Velocità di riproduzione</string>
     <string name="review.feedback.action.cancel">Cancella</string>

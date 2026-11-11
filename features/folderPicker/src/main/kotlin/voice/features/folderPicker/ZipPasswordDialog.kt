@@ -13,9 +13,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import voice.core.strings.R as StringsR
 import voice.core.zip.ZipPasswordRequester
 import voice.core.zip.ZipPasswordUiRequest
+import voice.core.strings.R as StringsR
 
 @Composable
 fun ZipPasswordDialogHost(requester: ZipPasswordRequester) {

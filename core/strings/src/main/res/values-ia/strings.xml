@@ -46,16 +46,6 @@
     <string name="folder.add.type.file">File</string>
     <string name="folder.add.type.folder">Dossier</string>
     <string name="folder.add.type.subtitle">Desira tu adder un sol file como libro o dossier?</string>
-    <string name="folder.mode.author.title">Modo Libro-Autor: Subdossieres es autores, lor subdossieres es libros.</string>
-    <string name="folder.mode.root.title">Modo libro de nivello superior: Le subdossieres es libros</string>
-    <string name="folder.mode.single.title">Modo de libro single: Un dossier es equal a un libro.</string>
-    <string name="folder.type.book_example.empty">Voice non poteva deteger necun libro? Il ha alcun files de audio?</string>
-    <string name="folder.type.book_example.header">Isto poterea facer que le sequente libros sia detegite</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d file de audio</item>
-        <item quantity="other">%d files de audio</item>
-    </plurals>
-    <string name="folder.type.title">Como es structurate tu files?</string>
     <string name="library.category.completed.title">Completate</string>
     <string name="library.category.current.title">Actual</string>
     <string name="library.category.not_started.title">Ancora non ha comenciate</string>
@@ -92,7 +82,6 @@
     <string name="playback.chapter.current.content_description">Capitulo actual</string>
     <string name="playback.chapter.next">Tracia sequente</string>
     <string name="playback.chapter.previous">Tracia precedente</string>
-    <string name="playback.option.skip_silence">Saltar le silentio</string>
     <string name="playback.option.volume_boost">Augmentar le volumine</string>
     <string name="playback.speed.title">Velocitate de reproduction</string>
     <string name="review.feedback.action.cancel">Cancellar</string>

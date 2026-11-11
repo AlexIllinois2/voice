@@ -44,15 +44,6 @@
     <string name="folder.add.type.file">ファイル</string>
     <string name="folder.add.type.folder">フォルダー</string>
     <string name="folder.add.type.subtitle">単一ファイルをブックとして追加しますか、それともフォルダーを追加しますか？</string>
-    <string name="folder.mode.author.title">著者・ブックモード: サブフォルダーが著者、その下のサブフォルダーがブックです。</string>
-    <string name="folder.mode.root.title">オーディオブックのルートフォルダー (1つのサブフォルダーが1冊のブック)</string>
-    <string name="folder.mode.single.title">単一のオーディオブックフォルダー</string>
-    <string name="folder.type.book_example.empty">Voiceはブックを検出できませんでした。音声ファイルはありますか？</string>
-    <string name="folder.type.book_example.header">この場合、以下のブックが検出されます。</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="other">%d 音声ファイル</item>
-    </plurals>
-    <string name="folder.type.title">ファイルの構成はどうなっていますか？</string>
     <string name="library.category.completed.title">完了</string>
     <string name="library.category.current.title">現在</string>
     <string name="library.category.not_started.title">未再生</string>
@@ -89,7 +80,6 @@
     <string name="playback.chapter.current.content_description">現在のチャプター</string>
     <string name="playback.chapter.next">次のトラック</string>
     <string name="playback.chapter.previous">前のトラック</string>
-    <string name="playback.option.skip_silence">無音をスキップ</string>
     <string name="playback.option.volume_boost">音量ブースト</string>
     <string name="playback.speed.title">再生速度</string>
     <string name="review.feedback.action.cancel">キャンセル</string>

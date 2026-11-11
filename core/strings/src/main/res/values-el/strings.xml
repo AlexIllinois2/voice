@@ -32,15 +32,6 @@
         <item quantity="one">%d δευτερόλεπτο</item>
         <item quantity="other">%d δευτερόλεπτα</item>
     </plurals>
-    <string name="folder.mode.root.title">Αρχικός φάκελος βιβλίων. Ένας υποφάκελος = ένα βιβλίο.</string>
-    <string name="folder.mode.single.title">Φάκελος ενός βιβλίου</string>
-    <string name="folder.type.book_example.empty">Το Voice δεν μπόρεσε να εντοπίσει βιβλία. Υπάρχουν αρχεία ήχου;</string>
-    <string name="folder.type.book_example.header">Αυτό θα οδηγήσει στον εντοπισμό των παρακάτω βιβλίων</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d αρχείο ήχου</item>
-        <item quantity="other">%d αρχεία ήχου</item>
-    </plurals>
-    <string name="folder.type.title">Πώς είναι δομημένα τα αρχεία σας;</string>
     <string name="library.category.completed.title">Ολοκληρωμένα</string>
     <string name="library.category.current.title">Τρέχον</string>
     <string name="library.category.not_started.title">Μη διαβασμένα</string>
@@ -58,7 +49,6 @@
     <string name="playback.battery_optimization.rationale">Λόγω των περιορισμών χρήσης μπαταρίας, ενδέχεται να υπάρξουν διακοπές στην αναπαραγωγή.</string>
     <string name="playback.chapter.next">Επόμενο κομμάτι</string>
     <string name="playback.chapter.previous">Προηγούμενο κομμάτι</string>
-    <string name="playback.option.skip_silence">Παράλειψη ησυχίας</string>
     <string name="playback.option.volume_boost">Ενίσχυση έντασης</string>
     <string name="playback.speed.title">Ταχύτητα αναπαραγωγής</string>
     <string name="settings.about.app_version.title">Έκδοση εφαρμογής</string>

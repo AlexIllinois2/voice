@@ -71,7 +71,10 @@ class ZipPlaybackCache(private val provider: ZipArchiveProvider) {
    * Estimates how long it takes to extract an entry of [nextEntrySize] bytes
    * from the zip at [zipUri]. Uses the measured average when available.
    */
-  fun estimateExtractDuration(zipUri: Uri, nextEntrySize: Long): Duration {
+  fun estimateExtractDuration(
+    zipUri: Uri,
+    nextEntrySize: Long,
+  ): Duration {
     val timings = synchronized(extractTimings) { extractTimings[zipUri.toString()] }
     val avg = timings
       ?.takeIf { it.isNotEmpty() }

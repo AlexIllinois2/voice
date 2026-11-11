@@ -52,19 +52,6 @@
     <string name="folder.add.type.file">Comhad</string>
     <string name="folder.add.type.folder">Fillteán</string>
     <string name="folder.add.type.subtitle">Ar mhaith leat comhad amháin a chur leis mar leabhar nó mar fhillteán?</string>
-    <string name="folder.mode.author.title">Mód Údair-Leabhar: Is údair iad fofhillteáin, is leabhair iad fo-fhillteáin.</string>
-    <string name="folder.mode.root.title">Mód Leabhar Barrleibhéil: Is leabhair iad fofhillteáin</string>
-    <string name="folder.mode.single.title">Mód Leabhar Aonair: Is ionann fillteán amháin agus leabhar amháin.</string>
-    <string name="folder.type.book_example.empty">Níorbh fhéidir le Voice aon leabhar a bhrath. An bhfuil aon chomhaid fuaime ann?</string>
-    <string name="folder.type.book_example.header">D’fhágfadh sin go mbraithfí na leabhair seo a leanas</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d comhad fuaime</item>
-        <item quantity="two">%d comhaid fuaime</item>
-        <item quantity="few">%d comhaid fuaime</item>
-        <item quantity="many">%d comhaid fuaime</item>
-        <item quantity="other">%d comhaid fuaime</item>
-    </plurals>
-    <string name="folder.type.title">Cén struchtúr atá ar do chuid comhad?</string>
     <string name="library.category.completed.title">Críochnaithe</string>
     <string name="library.category.current.title">Reatha</string>
     <string name="library.category.not_started.title">Níl tosnaithe go fóill</string>
@@ -101,7 +88,6 @@
     <string name="playback.chapter.current.content_description">Caibidil reatha</string>
     <string name="playback.chapter.next">An rian ina dhiaidh</string>
     <string name="playback.chapter.previous">An rian roimhe</string>
-    <string name="playback.option.skip_silence">Scipeáil ar Chiúin</string>
     <string name="playback.option.volume_boost">Treisiú toirte</string>
     <string name="playback.speed.title">Luas an seinntora</string>
     <string name="review.feedback.action.cancel">Cealaigh</string>

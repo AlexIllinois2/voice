@@ -46,16 +46,6 @@
     <string name="folder.add.type.file">Fail</string>
     <string name="folder.add.type.folder">Kaust</string>
     <string name="folder.add.type.subtitle">Kas sa sooviksid üheks raamatuks lisada faili või kausta?</string>
-    <string name="folder.mode.author.title">Autoritega kaustavaade: alamkaustad on autorid, nende alamkaustad on raamatud.</string>
-    <string name="folder.mode.root.title">Kahetasemeline raamatuvaade: alamkaustad on raamatud</string>
-    <string name="folder.mode.single.title">Ühetasemeline raamatuvaade: iga kaust on raamat.</string>
-    <string name="folder.type.book_example.empty">Voice ei suutnud tuvastada ühtegi heliraamatut. Kas nutiseadmes üldse on helifaile?</string>
-    <string name="folder.type.book_example.header">Sellega tuvastatakse järgnevad raamatud</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d helifail</item>
-        <item quantity="other">%d helifaili</item>
-    </plurals>
-    <string name="folder.type.title">Kuidas on sinu heliraamatute failid struktureeritud?</string>
     <string name="library.category.completed.title">Kuulatud</string>
     <string name="library.category.current.title">Praegune</string>
     <string name="library.category.not_started.title">Kuulamise ootel</string>
@@ -92,7 +82,6 @@
     <string name="playback.chapter.current.content_description">Praegune peatükk</string>
     <string name="playback.chapter.next">Järgmine lugu</string>
     <string name="playback.chapter.previous">Eelmine lugu</string>
-    <string name="playback.option.skip_silence">Jäta vaikus vahele</string>
     <string name="playback.option.volume_boost">Lubatust valjem heli</string>
     <string name="playback.speed.title">Taasesituse kiirus</string>
     <string name="review.feedback.action.cancel">Katkesta</string>

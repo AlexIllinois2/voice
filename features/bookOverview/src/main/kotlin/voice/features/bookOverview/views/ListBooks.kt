@@ -34,11 +34,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import voice.core.data.BookId
-import voice.core.strings.R as StringsR
 import voice.core.ui.icons.VoiceIcons
 import voice.core.ui.sharedCoverElementModifier
 import voice.features.bookOverview.overview.BookOverviewCategory
 import voice.features.bookOverview.overview.BookOverviewItemViewState
+import voice.core.strings.R as StringsR
 import voice.core.ui.R as UiR
 
 @Composable

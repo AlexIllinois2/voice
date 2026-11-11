@@ -46,16 +46,6 @@
     <string name="folder.add.type.file">Fil</string>
     <string name="folder.add.type.folder">Mappe</string>
     <string name="folder.add.type.subtitle">Vil du legge til en enkelt fil som en bok eller en mappe?</string>
-    <string name="folder.mode.author.title">Samlet forfatter/kategori-modus: undermapper er forfattere, hver mappe under er én bok.</string>
-    <string name="folder.mode.root.title">Samlet lydboksmappe: hver undermappe er én bok</string>
-    <string name="folder.mode.single.title">Enkelvis lydboksmappe: denne mappen er én bok.</string>
-    <string name="folder.type.book_example.empty">Voice klarte ikke å finne noen bøker. Finnes det noen lydfiler?</string>
-    <string name="folder.type.book_example.header">Dette vil føre til at følgende bøker oppdages</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d lydfil</item>
-        <item quantity="other">%d lydfiler</item>
-    </plurals>
-    <string name="folder.type.title">Hvilken struktur har filene dine?</string>
     <string name="library.category.completed.title">Fullført</string>
     <string name="library.category.current.title">Nåværende</string>
     <string name="library.category.not_started.title">Ikke startet enda</string>
@@ -92,7 +82,6 @@
     <string name="playback.chapter.current.content_description">Gjeldende kapittel</string>
     <string name="playback.chapter.next">Neste spor</string>
     <string name="playback.chapter.previous">Forrige spor</string>
-    <string name="playback.option.skip_silence">Hopp over stillhet</string>
     <string name="playback.option.volume_boost">Lydstyrkeforsterkning</string>
     <string name="playback.speed.title">Avspillingshastighet</string>
     <string name="review.feedback.action.cancel">Avbryt</string>

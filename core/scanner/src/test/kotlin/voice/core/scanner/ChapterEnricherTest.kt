@@ -25,6 +25,7 @@ import voice.core.data.repo.ChapterRepo
 import voice.core.data.repo.ZipParseAttemptRepo
 import voice.core.documentfile.CachedDocumentFileFactory
 import voice.core.documentfile.FileBasedDocumentFile
+import voice.core.transcode.TranscodeManager
 import voice.core.zip.ZipArchiveProvider
 import voice.core.zip.ZipUriCodec
 import java.io.File
@@ -50,6 +51,9 @@ class ChapterEnricherTest {
   private val bookParser = mockk<BookParser>()
   private val fileFactory = mockk<CachedDocumentFileFactory>()
   private val zipArchiveProvider = mockk<ZipArchiveProvider>()
+  private val transcodeManager = mockk<TranscodeManager> {
+    every { isTranscodeNeeded(any()) } returns false
+  }
 
   // stands in for the persisted store, so a new enricher sees the zips of the previous one
   private val zipParseAttempts = mutableSetOf<String>()
@@ -331,6 +335,7 @@ class ChapterEnricherTest {
       fileFactory = fileFactory,
       zipArchiveProvider = zipArchiveProvider,
       zipParseAttemptRepo = zipParseAttemptRepo,
+      transcodeManager = transcodeManager,
     )
   }
 

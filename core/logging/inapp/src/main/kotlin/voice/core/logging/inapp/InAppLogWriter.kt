@@ -1,8 +1,8 @@
 package voice.core.logging.inapp
 
 import dev.zacsweers.metro.Inject
-import voice.core.logging.api.Logger
 import voice.core.logging.api.LogWriter
+import voice.core.logging.api.Logger
 
 /**
  * A [LogWriter] that keeps warnings and errors in the [LogStore] so that the user can inspect

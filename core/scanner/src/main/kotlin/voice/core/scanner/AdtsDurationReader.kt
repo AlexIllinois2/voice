@@ -21,7 +21,10 @@ import kotlin.time.Duration.Companion.microseconds
  */
 internal object AdtsDurationReader {
 
-  suspend fun readDuration(uri: Uri, dataSourceFactory: DataSource.Factory): Duration? {
+  suspend fun readDuration(
+    uri: Uri,
+    dataSourceFactory: DataSource.Factory,
+  ): Duration? {
     val dataSource = dataSourceFactory.createDataSource()
     return try {
       dataSource.open(DataSpec(uri))

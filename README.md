@@ -41,12 +41,12 @@ The upstream app is available on [Google Play](https://play.google.com/store/app
 Requirements: JDK 25 and an Android SDK.
 
 ```bash
-./gradlew :app:assembleFreeDebug      # free flavor, debug APK
-./gradlew :app:assembleFreeRelease    # free flavor, release APK
-./gradlew voiceUnitTest               # all unit tests
+./gradlew :app:assembleDebug       # debug APK
+./gradlew :app:assembleRelease     # release APK
+./gradlew voiceUnitTest            # all unit tests
 ```
 
-Release builds are configured for the `free` flavor; `assembleRelease` defaults to it as well. Pass `-Pvoice.abiSplits=true` for per-ABI APKs.
+APKs are packaged for `arm64-v8a` only; pass `-Pvoice.abiFilters=arm64-v8a,x86_64` to include other ABIs.
 
 ## Contributing
 

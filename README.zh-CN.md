@@ -41,12 +41,12 @@
 环境要求：JDK 25 与 Android SDK。
 
 ```bash
-./gradlew :app:assembleFreeDebug      # free 渠道的 debug APK
-./gradlew :app:assembleFreeRelease    # free 渠道的 release APK
-./gradlew voiceUnitTest               # 运行全部单元测试
+./gradlew :app:assembleDebug       # debug APK
+./gradlew :app:assembleRelease     # release APK
+./gradlew voiceUnitTest            # 运行全部单元测试
 ```
 
-release 构建已按 `free` 渠道配置，`assembleRelease` 默认也使用该渠道。需要按 ABI 拆分时追加 `-Pvoice.abiSplits=true`。
+APK 默认只打包 `arm64-v8a`，需要其他 ABI 时追加 `-Pvoice.abiFilters=arm64-v8a,x86_64`。
 
 ## 参与贡献
 

@@ -13,7 +13,6 @@ import voice.core.scanner.MediaScanTrigger
 import voice.features.folderPicker.folderPicker.FileTypeSelection
 import voice.navigation.Destination
 import voice.navigation.Destination.OnboardingCompletion
-import voice.navigation.Destination.SelectFolderType
 import voice.navigation.Navigator
 import voice.navigation.Origin
 
@@ -33,28 +32,21 @@ class AddContentViewModel(
     uri: Uri,
     type: FileTypeSelection,
   ) {
-    when (type) {
-      FileTypeSelection.File -> {
-        scope.launch {
-          audiobookFolders.add(uri, FolderType.SingleFile)
-          mediaScanTrigger.scan(restartIfScanning = true)
-          when (origin) {
-            Origin.Default -> {
-              navigator.setRoot(Destination.BookOverview)
-            }
-            Origin.Onboarding -> {
-              navigator.goTo(OnboardingCompletion)
-            }
-          }
-        }
+    scope.launch {
+      // Both a zip file and a folder are added as a single book.
+      val folderType = when (type) {
+        FileTypeSelection.File -> FolderType.SingleFile
+        FileTypeSelection.Folder -> FolderType.SingleFolder
       }
-      FileTypeSelection.Folder -> {
-        navigator.goTo(
-          SelectFolderType(
-            uri = uri,
-            origin = origin,
-          ),
-        )
+      audiobookFolders.add(uri, folderType)
+      mediaScanTrigger.scan(restartIfScanning = true)
+      when (origin) {
+        Origin.Default -> {
+          navigator.setRoot(Destination.BookOverview)
+        }
+        Origin.Onboarding -> {
+          navigator.goTo(OnboardingCompletion)
+        }
       }
     }
   }

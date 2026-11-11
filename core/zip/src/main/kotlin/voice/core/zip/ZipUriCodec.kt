@@ -9,7 +9,10 @@ object ZipUriCodec {
 
   fun isZipUri(uri: Uri): Boolean = uri.scheme == SCHEME
 
-  fun encode(zipUri: Uri, entryPath: String): Uri {
+  fun encode(
+    zipUri: Uri,
+    entryPath: String,
+  ): Uri {
     val encodedZip = Uri.encode(zipUri.toString())
     val encodedEntry = entryPath.split("/")
       .filter { it.isNotEmpty() }

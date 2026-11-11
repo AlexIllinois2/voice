@@ -78,7 +78,6 @@ fun Project.baseSetup() {
   dependencies.run {
     add("coreLibraryDesugaring", libs.findLibrary("desugar-jdk-libs").get())
     add("implementation", platform(libs.findLibrary("compose-bom").get()))
-    add("implementation", platform(libs.findLibrary("firebase-bom").get()))
     add("implementation", libs.findLibrary("coroutines.core").get())
     add("implementation", libs.findLibrary("coroutines.android").get())
     if (project.path != ":core:logging:api") {

@@ -46,16 +46,6 @@
     <string name="folder.add.type.file">கோப்பு</string>
     <string name="folder.add.type.folder">கோப்புறை</string>
     <string name="folder.add.type.subtitle">ஒற்றை கோப்பை ஒரு புத்தகமாக அல்லது கோப்புறையாக சேர்க்க விரும்புகிறீர்களா?</string>
-    <string name="folder.mode.author.title">ஆசிரியர்-புத்தக பயன்முறை: துணை கோப்புறைகள் ஆசிரியர்கள், துணை துணைக் கலர்கள் புத்தகங்கள்.</string>
-    <string name="folder.mode.root.title">உயர்மட்ட புத்தக பயன்முறை: துணை கோப்புறைகள் புத்தகங்கள்</string>
-    <string name="folder.mode.single.title">ஒற்றை புத்தக முறை: ஒரு கோப்புறை ஒரு புத்தகத்திற்கு சமம்.</string>
-    <string name="folder.type.book_example.empty">குரலால் எந்த புத்தகங்களையும் கண்டறிய முடியவில்லை. ஏதேனும் ஆடியோ கோப்புகள் உள்ளதா?</string>
-    <string name="folder.type.book_example.header">இது பின்வரும் புத்தகங்கள் கண்டறியப்படுவதற்கு வழிவகுக்கும்</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d ஆடியோ கோப்பு</item>
-        <item quantity="other">%d ஆடியோ கோப்புகள்</item>
-    </plurals>
-    <string name="folder.type.title">உங்கள் கோப்புகள் எவ்வாறு கட்டமைக்கப்பட்டுள்ளன?</string>
     <string name="library.category.completed.title">முடிந்தது</string>
     <string name="library.category.current.title">மின்னோட்ட்ம், ஓட்டம்</string>
     <string name="library.category.not_started.title">இன்னும் தொடங்கப்படவில்லை</string>
@@ -92,7 +82,6 @@
     <string name="playback.chapter.current.content_description">தற்போதைய பாடம்</string>
     <string name="playback.chapter.next">அடுத்த பாடல்</string>
     <string name="playback.chapter.previous">முந்தைய பாடல்</string>
-    <string name="playback.option.skip_silence">ம .னத்தைத் தவிர்க்கவும்</string>
     <string name="playback.option.volume_boost">தொகுதி ஊக்க</string>
     <string name="playback.speed.title">பின்னணி விரைவு</string>
     <string name="review.feedback.action.cancel">ரத்துசெய்</string>

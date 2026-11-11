@@ -50,18 +50,6 @@
     <string name="folder.add.type.file">Файл</string>
     <string name="folder.add.type.folder">Папка</string>
     <string name="folder.add.type.subtitle">Вы хочаце дадаць адзін файл як кнігу або папку?</string>
-    <string name="folder.mode.author.title">Рэжым Аўтар-Кніга: падпапкі – гэта аўтары, пад-падпапкі – кнігі.</string>
-    <string name="folder.mode.root.title">Рэжым паліцы: кожная падпапка – гэта кніга</string>
-    <string name="folder.mode.single.title">Рэжым адной кнігі: адна папка – гэта адна кніга.</string>
-    <string name="folder.type.book_example.empty">Voice не выявіў ніводнай кнігі. Ці ёсць аўдыяфайлы ў гэтай папцы?</string>
-    <string name="folder.type.book_example.header">Будуць выяўлены наступныя кнігі</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d аўдыяфайл</item>
-        <item quantity="few">%d аўдыяфайлы</item>
-        <item quantity="many">%d аўдыяфайлаў</item>
-        <item quantity="other">%d аўдыяфайлаў</item>
-    </plurals>
-    <string name="folder.type.title">Як спарадкаваны вашы файлы?</string>
     <string name="library.category.completed.title">Завершаныя</string>
     <string name="library.category.current.title">Чытанае зараз</string>
     <string name="library.category.not_started.title">Яшчэ не пачатыя</string>
@@ -98,7 +86,6 @@
     <string name="playback.chapter.current.content_description">Бягучы раздзел</string>
     <string name="playback.chapter.next">Наступны трэк</string>
     <string name="playback.chapter.previous">Папярэдні трэк</string>
-    <string name="playback.option.skip_silence">Прапускаць цішыню</string>
     <string name="playback.option.volume_boost">Узмацненне гучнасці</string>
     <string name="playback.speed.title">Хуткасць прайгравання</string>
     <string name="review.feedback.action.cancel">Скасаваць</string>

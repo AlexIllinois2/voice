@@ -18,8 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import voice.core.data.BookId
-import voice.core.strings.R as StringsR
 import voice.core.ui.icons.VoiceIcons
+import voice.core.strings.R as StringsR
 
 @Composable
 internal fun BookCard(

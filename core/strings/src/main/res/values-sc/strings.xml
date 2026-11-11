@@ -46,16 +46,6 @@
     <string name="folder.add.type.file">Documentu</string>
     <string name="folder.add.type.folder">Cartella</string>
     <string name="folder.add.type.subtitle">Boles annànghere unu documentu sìngulu comente libru o cartella?</string>
-    <string name="folder.mode.author.title">Modalidade autore-libru: Sas sutacartella sunt autores, sas suta-sutacartellas sunt libros.</string>
-    <string name="folder.mode.root.title">Modalidade libru de livellu superiore: sas suta-cartellas sunt libros</string>
-    <string name="folder.mode.single.title">Modalidade libru sìngulu: una cartella bolet nàrrere unu libru.</string>
-    <string name="folder.type.book_example.empty">Voice no at pòdidu rilevare perunu libru. Bi sunt documentos àudio?</string>
-    <string name="folder.type.book_example.header">Custu diat causare su rilevamentu de sos libros chi sighint</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d documentu àudio</item>
-        <item quantity="other">%d documentos àudio</item>
-    </plurals>
-    <string name="folder.type.title">Comente sunt istruturados sos documentos tuos?</string>
     <string name="library.category.completed.title">Acabbadu</string>
     <string name="library.category.current.title">Atuale</string>
     <string name="library.category.not_started.title">Galu no incumintzadu</string>
@@ -92,7 +82,6 @@
     <string name="playback.chapter.current.content_description">Capìtulu atuale</string>
     <string name="playback.chapter.next">Rasta imbeniente</string>
     <string name="playback.chapter.previous">Rasta anteposta</string>
-    <string name="playback.option.skip_silence">Brinca su silèntziu</string>
     <string name="playback.option.volume_boost">Crèschida de volùmene</string>
     <string name="playback.speed.title">Lestresa de riprodutzione</string>
     <string name="review.feedback.action.cancel">Annulla</string>

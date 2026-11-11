@@ -26,7 +26,10 @@ class NaturalOrderComparatorTest {
 
   private fun assertSorted(values: List<String>) = assertSortedWith(values, NaturalOrderComparator.stringComparator)
 
-  private fun <T> assertSortedWith(values: List<T>, comparator: Comparator<T>) {
+  private fun <T> assertSortedWith(
+    values: List<T>,
+    comparator: Comparator<T>,
+  ) {
     assertEquals(
       expected = values,
       actual = values.toMutableList()
@@ -131,7 +134,10 @@ class NaturalOrderComparatorTest {
 
   @Test
   fun uriComparatorZipEntries() {
-    fun zipUri(zipName: String, entry: String): Uri {
+    fun zipUri(
+      zipName: String,
+      entry: String,
+    ): Uri {
       val encodedZip = Uri.encode("content://media/$zipName.zip")
       val encodedEntry = entry.split("/").joinToString("/") { Uri.encode(it) }
       return Uri.parse("zip:///$encodedZip/$encodedEntry")

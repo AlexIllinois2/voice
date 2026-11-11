@@ -41,6 +41,8 @@ import voice.core.sleeptimer.SleepTimer
 import voice.core.sleeptimer.SleepTimerMode
 import voice.core.sleeptimer.SleepTimerMode.TimedWithDuration
 import voice.core.sleeptimer.SleepTimerState
+import voice.core.transcode.TranscodeManager
+import voice.core.transcode.TranscodeState
 import voice.core.ui.formatTime
 import voice.features.playbackScreen.batteryOptimization.BatteryOptimization
 import voice.features.sleepTimer.SleepTimerViewState
@@ -71,6 +73,7 @@ class BookPlayViewModel(
   private val experimentalPlaybackPersistenceFeatureFlag: FeatureFlag<Boolean>,
   @KioskModeFeatureFlagQualifier
   private val kioskModeFeatureFlag: FeatureFlag<Boolean>,
+  private val transcodeManager: TranscodeManager,
   @Assisted
   private val bookId: BookId,
 ) {
@@ -82,6 +85,18 @@ class BookPlayViewModel(
 
   internal val dialogState: State<BookPlayDialogViewState?>
     field = mutableStateOf<BookPlayDialogViewState?>(null)
+
+  /**
+   * The state of the transcode that is currently running or failed, null when idle.
+   */
+  @Composable
+  internal fun transcodeState(): TranscodeState? {
+    return remember { transcodeManager.state }.collectAsState().value
+  }
+
+  fun dismissTranscodeError() {
+    transcodeManager.dismissError()
+  }
 
   init {
     scope.launch {
@@ -135,7 +150,6 @@ class BookPlayViewModel(
       duration = currentMark.durationMs.milliseconds,
       playedTime = positionInCurrentMark.milliseconds,
       cover = book.content.coverUrl,
-      skipSilence = book.content.skipSilence,
     )
   }
 
@@ -151,7 +165,6 @@ class BookPlayViewModel(
       duration = 14.hours + 27.minutes,
       playedTime = 10.hours + 24.minutes,
       cover = book.coverUrl,
-      skipSilence = false,
     )
   }
 
@@ -279,7 +292,7 @@ class BookPlayViewModel(
           number = previousChapters.sumOf { it.chapterMarks.count() } + markIndex + 1,
           name = chapterMark.name ?: "",
           active = chapterMark == book.currentMark && chapter == book.currentChapter,
-          time = formatTime(previousChapters.sumOf { it.duration } + chapterMark.startMs),
+          time = formatTime(chapterMark.endMs - chapterMark.startMs),
         )
       }
     }
@@ -367,13 +380,6 @@ class BookPlayViewModel(
 
   fun onBatteryOptimizationRequested() {
     navigator.goTo(Destination.BatteryOptimization)
-  }
-
-  fun toggleSkipSilence() {
-    scope.launch {
-      val skipSilence = currentBook()?.content?.skipSilence ?: return@launch
-      player.skipSilence(!skipSilence)
-    }
   }
 
   private suspend fun currentBook(): Book? {

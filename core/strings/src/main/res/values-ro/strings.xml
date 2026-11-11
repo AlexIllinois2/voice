@@ -47,17 +47,6 @@
     <string name="folder.add.type.file">Fișier</string>
     <string name="folder.add.type.folder">Director</string>
     <string name="folder.add.type.subtitle">Doriți să adăugați o carte bazată pe un singur fișier sau pe un director?</string>
-    <string name="folder.mode.author.title">Modul Autor: Fiecare subdirector reprezintă un autor, iar în fiecare sub-subdirector găsim câte-o carte.</string>
-    <string name="folder.mode.root.title">Modul Director: Fiecare subdirector conține o singură carte</string>
-    <string name="folder.mode.single.title">Modul Carte: Un director, o singură carte.</string>
-    <string name="folder.type.book_example.empty">Voice nu a găsit nicio carte. Există fișiere audio?</string>
-    <string name="folder.type.book_example.header">În acest fel, au fost detectate următoarele cărți</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d fișier audio</item>
-        <item quantity="few">%d fișiere audio</item>
-        <item quantity="other">%d fișiere audio</item>
-    </plurals>
-    <string name="folder.type.title">Cum sunt structurate fișierele dumneavoastră?</string>
     <string name="library.category.completed.title">Cărți citite</string>
     <string name="library.category.current.title">Cărți în lectură</string>
     <string name="library.category.not_started.title">Cărți neascultate încă</string>
@@ -86,7 +75,6 @@
     <string name="playback.battery_optimization.rationale">Din cauza restricțiilor de alimentare, s-ar putea să apară întreruperi în playback.</string>
     <string name="playback.chapter.next">Piesa următoare</string>
     <string name="playback.chapter.previous">Pista anterioară</string>
-    <string name="playback.option.skip_silence">Omitere liniște</string>
     <string name="playback.option.volume_boost">Amplificare volum</string>
     <string name="playback.speed.title">Viteză de redare</string>
     <string name="review.feedback.action.cancel">Anulare</string>

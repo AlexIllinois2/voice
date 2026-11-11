@@ -47,7 +47,10 @@ class UIAppStartInitializer(
       .launchIn(scope)
   }
 
-  private fun isDark(application: Application, themeMode: ThemeMode): Boolean {
+  private fun isDark(
+    application: Application,
+    themeMode: ThemeMode,
+  ): Boolean {
     return when (themeMode) {
       ThemeMode.FollowSystem -> {
         val uiMode = application.resources.configuration.uiMode

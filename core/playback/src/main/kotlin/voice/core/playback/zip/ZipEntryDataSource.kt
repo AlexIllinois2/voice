@@ -11,9 +11,7 @@ import java.io.IOException
 /**
  * Serves zip archive entries by keeping them fully extracted in memory.
  */
-internal class ZipEntryDataSource(
-  private val playbackCache: ZipPlaybackCache,
-) : BaseDataSource(false) {
+internal class ZipEntryDataSource(private val playbackCache: ZipPlaybackCache) : BaseDataSource(false) {
 
   private var bytes: ByteArray? = null
   private var uri: Uri? = null

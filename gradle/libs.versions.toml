@@ -20,6 +20,7 @@ retrofit = "3.0.0"
 metro = "1.4.2"
 navigation3 = "1.1.7"
 androidx-lifecycle = "2.11.0"
+ffmpeg-kit = "6.0.LTS"
 
 [libraries]
 androidPluginForGradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -53,16 +54,12 @@ clikt = "com.github.ajalt.clikt:clikt:5.1.0"
 jebml = "org.jitsi:jebml:2.4.4-6-gb310849"
 slf4j-noop = "org.slf4j:slf4j-nop:2.0.19"
 zip4j = "net.lingala.zip4j:zip4j:2.11.5"
+ffmpeg-kit-audio = { module = "com.arthenica:ffmpeg-kit-audio", version.ref = "ffmpeg-kit" }
 
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
-
-firebase-bom = "com.google.firebase:firebase-bom:34.19.0"
-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
-firebase-remoteconfig = { module = "com.google.firebase:firebase-config" }
 
 serialization-json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0"
 
@@ -146,8 +143,6 @@ retrofit = [
 android-app = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-crashlytics = { id = "com.google.firebase.crashlytics", version = "3.0.8" }
-googleServices = { id = "com.google.gms.google-services", version = "4.5.0" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

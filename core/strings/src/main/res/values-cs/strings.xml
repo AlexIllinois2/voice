@@ -50,18 +50,6 @@
     <string name="folder.add.type.file">Soubor</string>
     <string name="folder.add.type.folder">Složka</string>
     <string name="folder.add.type.subtitle">Chcete přidat jeden soubor jako knihu nebo jako složku?</string>
-    <string name="folder.mode.author.title">Režim autor-kniha: Podsložky jsou autoři, pod-podsložky jsou knihy.</string>
-    <string name="folder.mode.root.title">Režim knihy nejvyšší úrovně: Podsložky jsou knihy</string>
-    <string name="folder.mode.single.title">Režim jedné knihy: Jedna složka se rovná jedné knize.</string>
-    <string name="folder.type.book_example.empty">Voice nenalezl žádné knihy. Jsou ve složkách opravdu zvukové soubory?</string>
-    <string name="folder.type.book_example.header">Povede k nalezení následujících knih</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d zvukový soubor</item>
-        <item quantity="few">%d zvukové soubory</item>
-        <item quantity="many">%d zvukových souborů</item>
-        <item quantity="other">%d zvukových souborů</item>
-    </plurals>
-    <string name="folder.type.title">Jak jsou organizované vaše soubory?</string>
     <string name="library.category.completed.title">Dokončeno</string>
     <string name="library.category.current.title">Aktuální</string>
     <string name="library.category.not_started.title">Doposud nespuštěno</string>
@@ -98,7 +86,6 @@
     <string name="playback.chapter.current.content_description">Aktuální kapitola</string>
     <string name="playback.chapter.next">Následující skladba</string>
     <string name="playback.chapter.previous">Předchozí skladba</string>
-    <string name="playback.option.skip_silence">Přeskočit ticho</string>
     <string name="playback.option.volume_boost">Zesílení hlasitosti</string>
     <string name="playback.speed.title">Rychlost přehrávání</string>
     <string name="review.feedback.action.cancel">Zrušit</string>

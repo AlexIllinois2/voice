@@ -17,11 +17,11 @@
 
 ## Commands
 
-- Assemble the free debug app: `./gradlew :app:assembleFreeDebug`.
-- Assemble release: `./gradlew assembleRelease` (defaults to the free flavor, universal APK only; pass `-Pvoice.abiSplits=true` for per-ABI splits).
+- Assemble the debug app: `./gradlew :app:assembleDebug`.
+- Assemble release: `./gradlew :app:assembleRelease` (arm64-v8a APK only; pass `-Pvoice.abiFilters=arm64-v8a,x86_64` for other ABIs, e.g. x86 emulators).
 - Run all unit tests: `./gradlew voiceUnitTest`.
 - Run unit tests for a library module: `./gradlew :<moduleName>:testDebugUnitTest`.
-- Run app unit tests: `./gradlew :app:testFreeDebugUnitTest`.
+- Run app unit tests: `./gradlew :app:testDebugUnitTest`.
 - Create and register a new module: `./scripts/new_module.main.kts :features:<name>`.
 - Discover available Gradle tasks with `./gradlew tasks --all` when unsure.
 

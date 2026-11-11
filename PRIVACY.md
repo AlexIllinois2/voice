@@ -41,8 +41,6 @@ Please note that the Application utilizes third-party services that have their o
 to the Privacy Policy of the third-party service providers used by the Application:
 
 * [Google Play Services](https://www.google.com/policies/privacy/)
-* [Google Analytics for Firebase](https://firebase.google.com/support/privacy)
-* [Firebase Crashlytics](https://firebase.google.com/support/privacy/)
 
 The Service Provider may disclose User Provided and Automatically Collected Information:
 

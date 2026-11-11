@@ -46,16 +46,6 @@
     <string name="folder.add.type.file">Bestand</string>
     <string name="folder.add.type.folder">Map</string>
     <string name="folder.add.type.subtitle">Wil je een enkel bestand toevoegen als een boek of een folder?</string>
-    <string name="folder.mode.author.title">Auteur-boek mode: Subfolders zijn auteurs, sub-subfolders bevatten boeken.</string>
-    <string name="folder.mode.root.title">Hoofdmap met luisterboeken: Subfolders bevatten boeken.</string>
-    <string name="folder.mode.single.title">Losse luisterboekmap: één folder bevat één boek.</string>
-    <string name="folder.type.book_example.empty">Er zijn geen boeken aangetroffen. Zijn er audiobestanden aanwezig?</string>
-    <string name="folder.type.book_example.header">Hierdoor worden de volgende boeken opgenomen</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d audiobestand</item>
-        <item quantity="other">%d audiobestanden</item>
-    </plurals>
-    <string name="folder.type.title">Hoe zijn de bestanden onderverdeeld?</string>
     <string name="library.category.completed.title">Voltooid</string>
     <string name="library.category.current.title">Huidig</string>
     <string name="library.category.not_started.title">Nog niet begonnen</string>
@@ -92,7 +82,6 @@
     <string name="playback.chapter.current.content_description">Huidig hoofdstuk</string>
     <string name="playback.chapter.next">Volgend gedeelte</string>
     <string name="playback.chapter.previous">Vorig nummer</string>
-    <string name="playback.option.skip_silence">Stilte overslaan</string>
     <string name="playback.option.volume_boost">Volumeversterking</string>
     <string name="playback.speed.title">Afspeelsnelheid</string>
     <string name="review.feedback.action.cancel">Annuleer</string>

@@ -46,16 +46,6 @@
     <string name="folder.add.type.file">Tiedosto</string>
     <string name="folder.add.type.folder">Kansio</string>
     <string name="folder.add.type.subtitle">Haluatko lisätä yksittäisen kirjan tiedostona vai kansiona?</string>
-    <string name="folder.mode.author.title">Tekijä-Kirja-tila: Alikansiot ovat tekijöitä, ali-alikansiot ovat kirjoja.</string>
-    <string name="folder.mode.root.title">Ylätasokirjatila: Alikansiot ovat kirjoja</string>
-    <string name="folder.mode.single.title">Yksittäisten kirjojen tila: Yksi kansio on yhtä kuin yksi kirja.</string>
-    <string name="folder.type.book_example.empty">Voice ei havainnut yhtään kirjaa. Onko äänitiedostoja olemassa?</string>
-    <string name="folder.type.book_example.header">Tämä johtaisi seuraavien kirjojen havaitsemiseen</string>
-    <plurals name="folder.type.file_count">
-        <item quantity="one">%d äänitiedosto</item>
-        <item quantity="other">%d äänitiedostoa</item>
-    </plurals>
-    <string name="folder.type.title">Miten tiedostosi on järjestelty?</string>
     <string name="library.category.completed.title">Valmiina</string>
     <string name="library.category.current.title">Nykyinen</string>
     <string name="library.category.not_started.title">Ei vielä aloitettu</string>
@@ -92,7 +82,6 @@
     <string name="playback.chapter.current.content_description">Nykyinen luku</string>
     <string name="playback.chapter.next">Seuraava ääniraita</string>
     <string name="playback.chapter.previous">Edellinen ääniraita</string>
-    <string name="playback.option.skip_silence">Ohita hiljaisuus</string>
     <string name="playback.option.volume_boost">Äänenvoimakkuuden tehostus</string>
     <string name="playback.speed.title">Toiston nopeus</string>
     <string name="review.feedback.action.cancel">Peruuta</string>

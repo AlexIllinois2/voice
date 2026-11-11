@@ -21,12 +21,12 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import voice.core.data.BookId
 import voice.core.scanner.ScanProgress
-import voice.core.strings.R as StringsR
 import voice.core.ui.VoiceTheme
 import voice.features.bookOverview.overview.BookOverviewLayoutMode
 import voice.features.bookOverview.overview.BookOverviewViewState
 import voice.features.bookOverview.search.BookSearchViewState
 import kotlin.time.Duration.Companion.seconds
+import voice.core.strings.R as StringsR
 
 @Composable
 internal fun BookOverviewTopBar(

@@ -31,7 +31,7 @@ jobs:
       - name: Check locale config
         run: ./scripts/check_locale_config.main.kts
       - name: Tests + Formatting + Build
-        run: ./gradlew voiceUnitTest lintKotlin :app:assembleFreeDebug
+        run: ./gradlew voiceUnitTest lintKotlin :app:assembleDebug
       - name: Publish JUnit Report
         uses: mikepenz/action-junit-report@v6
         if: always()
