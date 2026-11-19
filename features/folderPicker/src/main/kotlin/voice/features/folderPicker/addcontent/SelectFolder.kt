@@ -4,6 +4,8 @@ import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -92,7 +94,8 @@ internal fun SelectFolder(
             LinearProgressIndicator(
               modifier = Modifier
                 .padding(horizontal = 24.dp)
-                .size(width = 200.dp, height = 4.dp),
+                .fillMaxWidth()
+                .height(4.dp),
             )
           }
           SelectFolderButtonRow(onAdd, enabled = !adding)
